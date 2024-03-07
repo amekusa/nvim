@@ -16,7 +16,7 @@ vim.opt.timeoutlen = 300
 
 ---- UI ----
 -- hide those ugly '~' (tilde) symbols
-vim.wo.fillchars='eob: '
+vim.opt.fillchars = 'eob: '
 -- line numbers
 vim.opt.number = true
 vim.opt.relativenumber = false
