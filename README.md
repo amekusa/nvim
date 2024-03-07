@@ -13,7 +13,8 @@ nvim ~/.config/nvim/init.lua
 
 `init.lua`:
 ```lua
-require("custom.core")
-require("custom.plugins")
+require('custom.core')
+require('custom.keymaps')
+require('custom.plugins')
 ```
 
