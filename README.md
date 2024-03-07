@@ -14,6 +14,6 @@ nvim ~/.config/nvim/init.lua
 `init.lua`:
 ```lua
 require("custom.core")
-require("lazy").setup("custom.plugins")
+require("custom.plugins")
 ```
 
