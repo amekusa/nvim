@@ -4,6 +4,8 @@ local map = vim.keymap
 -- <leader> key
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+-- use semicolon as colon to start typing a command
+map.set({'n','v'}, ';', ':')
 -- clear search highlight
 map.set('n', '<Esc>', '<Cmd>nohlsearch<CR>')
 -- move line up/down
