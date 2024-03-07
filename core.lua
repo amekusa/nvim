@@ -1,53 +1,48 @@
----- KEY BINDINGS ----
--- space: <leader> key
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
--- (normal mode) esc: clear search highlight
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+local opt = vim.opt
 
 ---- GENERAL ----
 -- clipboard support
-vim.opt.clipboard = 'unnamedplus'
+opt.clipboard = 'unnamedplus'
 -- mouse support ('a' for all modes)
-vim.opt.mouse = 'a'
+opt.mouse = 'a'
 -- decrease update time
-vim.opt.updatetime = 250
-vim.opt.timeoutlen = 300
+--opt.updatetime = 250
+--opt.timeoutlen = 300
 
 ---- UI ----
 -- hide those ugly '~' (tilde) symbols
-vim.opt.fillchars = 'eob: '
+opt.fillchars = 'eob: '
 -- line numbers
-vim.opt.number = true
-vim.opt.relativenumber = false
+opt.number = true
+opt.relativenumber = true
 -- mode indicator
-vim.opt.showmode = true
+opt.showmode = true
 -- sign column
-vim.opt.signcolumn = 'yes'
+opt.signcolumn = 'yes'
 -- how new splits should be opened
-vim.opt.splitright = true
-vim.opt.splitbelow = true
+opt.splitright = true
+opt.splitbelow = true
 
 ---- EDITOR ----
 -- show whitespace chars
-vim.opt.list = true
-vim.opt.listchars = {
+opt.list = true
+opt.listchars = {
 	tab   = '» ',
 	trail = '·',
 	nbsp  = '␣'
 }
 -- break indent
-vim.opt.breakindent = true
+opt.breakindent = true
 -- preview substitutions as you type
-vim.opt.inccommand = 'split'
+opt.inccommand = 'split'
 -- highlight the current line
-vim.opt.cursorline = true
+opt.cursorline = true
 -- minimal number of screen lines to keep above and below the cursor
-vim.opt.scrolloff = 10
+opt.scrolloff = 10
 
 ---- SEARCH ----
 -- case-insensitive search unless \C or capital in query
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
+opt.ignorecase = true
+opt.smartcase = true
 -- set highlight on search
-vim.opt.hlsearch = true
+opt.hlsearch = true
