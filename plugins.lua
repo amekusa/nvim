@@ -33,7 +33,8 @@ require('lazy').setup({
 
 			require('nvim-tree').setup({
 				filters = {
-					git_ignored = false -- do not hide ignored files
+					git_ignored = false, -- do not hide ignored files
+					custom = {'.git', '.DS_Store'},
 				}
 			})
 		end
