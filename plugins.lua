@@ -1,24 +1,59 @@
+---- PLUGINS & THEMES ----
+
+local theme = 'kanagawa' -- choose from below
+local themes = {
+	gruvbox = {'ellisonleao/gruvbox.nvim'},
+	kanagawa = {'rebelot/kanagawa.nvim'},
+	tokyonight = {'folke/tokyonight.nvim', opts = {style = 'moon'}},
+}
+
 local map = vim.keymap.set
-
--- setup lazy.nvim (plugin manager)
-local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		'git', 'clone', '--filter=blob:none',
-		'https://github.com/folke/lazy.nvim.git',
-		'--branch=stable', -- latest stable release
-		lazypath,
-	})
-end
-vim.opt.rtp:prepend(lazypath)
-
--- load plugins
-require('lazy').setup({
+local plugins = {
 	{
-		-- theme: gruvbox
-		"ellisonleao/gruvbox.nvim",
-		priority = 1000,
-		config = true,
+		-- lsp package manager
+		'williamboman/mason.nvim',
+		opts = {},
+	},
+	{
+		'williamboman/mason-lspconfig.nvim',
+		dependencies = {'williamboman/mason.nvim'},
+		config = function()
+			require("mason-lspconfig").setup()
+			require("mason-lspconfig").setup_handlers {
+				-- The first entry (without a key) will be the default handler
+				-- and will be called for each installed server that doesn't have
+				-- a dedicated handler.
+				function (server_name) -- default handler (optional)
+					require("lspconfig")[server_name].setup {}
+				end,
+				-- Next, you can provide a dedicated handler for specific servers.
+				-- For example, a handler override for the `rust_analyzer`:
+				-- ["rust_analyzer"] = function ()
+				-- 	require("rust-tools").setup {}
+				-- end
+			}
+		end,
+	},
+	{
+		'neovim/nvim-lspconfig',
+		dependencies = {'williamboman/mason-lspconfig.nvim'},
+	},
+	{
+		'nmac427/guess-indent.nvim',
+		opts = {
+			auto_cmd = true,
+			override_editorconfig = false,
+			filetype_exclude = {
+				'netrw',
+				'tutor',
+			},
+			buftype_exclude = {
+				'help',
+				'nofile',
+				'terminal',
+				'prompt',
+			},
+		},
 	},
 	{
 		-- file-tree widget
@@ -127,6 +162,11 @@ require('lazy').setup({
 				[[%s/\(\n\n\)\n\+/\1/]], -- replace multiple blank lines with a single line
 			},
 		}
+	},
+	{
+		"kylechui/nvim-surround",
+		event = "VeryLazy",
+		opts = {}
 	},
 	{
 		-- language parser
@@ -245,4 +285,30 @@ require('lazy').setup({
 		},
 	},
 
-})
+}
+
+-- configure theme
+local _theme = themes[theme]
+_theme.lazy = false
+_theme.priority = 1000
+_theme.config = function(plugin, opts)
+	require(plugin.main or theme).setup(opts)
+	vim.cmd.colorscheme(theme)
+end
+table.insert(plugins, _theme)
+
+-- setup lazy.nvim (plugin manager)
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+if not vim.loop.fs_stat(lazypath) then
+	vim.fn.system({
+		'git', 'clone', '--filter=blob:none',
+		'https://github.com/folke/lazy.nvim.git',
+		'--branch=stable', -- latest stable release
+		lazypath,
+	})
+end
+vim.opt.rtp:prepend(lazypath)
+
+-- install plugins
+require('lazy').setup(plugins)
+
