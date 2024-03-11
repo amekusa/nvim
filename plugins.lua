@@ -119,6 +119,8 @@ require('lazy').setup({
 		"cappyzawa/trim.nvim",
 		opts = {
 			trim_on_write = true,
+			trim_first_line = true,
+			trim_last_line = false,
 			highlight = false,
 			ft_blocklist = {'markdown'},
 			patterns = {
