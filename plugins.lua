@@ -203,6 +203,45 @@ require('lazy').setup({
 				row = 0,
 				col = 1
 			},
+			on_attach = function(bufnr)
+				local api = package.loaded.gitsigns
+				local function desc(s, opts)
+					local r = opts or {}
+					r.desc = 'gitsigns: ' .. s
+					r.buffer = bufnr
+					return r
+				end
+				map('n', ']c',
+					function()
+						if vim.wo.diff then return ']c' end
+						vim.schedule(api.next_hunk)
+						return '<Ignore>'
+					end,
+					desc('Next hunk', {expr = true})
+				)
+				map('n', '[c',
+					function()
+						if vim.wo.diff then return '[c' end
+						vim.schedule(api.prev_hunk)
+						return '<Ignore>'
+					end,
+					desc('Previous hunk', {expr = true})
+				)
+				map('n', '<leader>hs', api.stage_hunk, desc 'Stage hunk')
+				map('n', '<leader>hr', api.reset_hunk, desc 'Reset hunk')
+				map('v', '<leader>hs', function() api.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end, desc 'Stage hunk')
+				map('v', '<leader>hr', function() api.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end, desc 'Reset hunk')
+				map('n', '<leader>hS', api.stage_buffer, desc 'Stage buffer')
+				map('n', '<leader>hu', api.undo_stage_hunk, desc 'Undo stage hunk')
+				map('n', '<leader>hR', api.reset_buffer, desc 'Reset buffer')
+				map('n', '<leader>hp', api.preview_hunk, desc 'Preview hunk')
+				map('n', '<leader>hb', function() api.blame_line {full = true} end, desc 'Blame line')
+				map('n', '<leader>tb', api.toggle_current_line_blame, desc 'Toggle blame')
+				map('n', '<leader>hd', api.diffthis, desc 'Diff')
+				map('n', '<leader>hD', function() api.diffthis('~') end, desc 'Diff')
+				map('n', '<leader>td', api.toggle_deleted, desc 'Toggle deleted')
+				map({'o','x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>', desc 'Select hunk')
+			end
 		},
 	},
 
