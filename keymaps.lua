@@ -1,24 +1,29 @@
 ---- KEYMAPS ----
-local map = vim.keymap
+local map = vim.keymap.set
+local function desc(s)
+	return {desc = 'custom: ' .. s}
+end
 
 -- <leader> key
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 -- use semicolon as colon to start typing a command
-map.set({'n','v'}, ';', ':')
+map({'n','v'}, ';', ':', desc 'Use semicolon as colon')
 -- clear search highlight
-map.set('n', '<Esc>', '<Cmd>nohlsearch<CR>')
+map('n', '<Esc>', '<Cmd>nohlsearch<CR>', desc 'Clear search highlight')
 -- move line up/down
-map.set('n', '<C-k>', ':m .-2<CR>==')
-map.set('n', '<C-j>', ':m .+1<CR>==')
+map('n', '<C-k>', ':m .-2<CR>==', desc 'Move line up')
+map('n', '<C-j>', ':m .+1<CR>==', desc 'Move line down')
 -- move line up/down (visual mode)
-map.set('v', '<C-k>', ":m '<-2<CR>gv=gv")
-map.set('v', '<C-j>', ":m '>+1<CR>gv=gv")
+map('v', '<C-k>', ":m '<-2<CR>gv=gv", desc 'Move line up')
+map('v', '<C-j>', ":m '>+1<CR>gv=gv", desc 'Move line down')
 -- move to prev/next word
-map.set({'n','v'}, '<M-Left>',  'b')
-map.set({'n','v'}, '<M-Right>', 'w')
+map({'n','v'}, '<M-Left>',  'b', desc 'Move to next word')
+map({'n','v'}, '<M-Right>', 'w', desc 'Move to previous word')
 -- move to prev/next word (insert mode)
-map.set('i', '<M-Left>',  '<C-o>b')
-map.set('i', '<M-Right>', '<C-o>w')
--- nvim-tree
-map.set({'n','v','i'}, '<C-n>', '<Cmd>NvimTreeOpen<CR>')
+map('i', '<M-Left>',  '<C-o>b', desc 'Move to next word')
+map('i', '<M-Right>', '<C-o>w', desc 'Move to previous word')
+-- quit
+map({'n','v','i'}, '<C-q>', '<Cmd>qa<CR>', desc 'Quit')
+-- save
+map({'n','v','i'}, '<C-s>', '<Cmd>w<CR>', desc 'Save')
