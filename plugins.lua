@@ -156,6 +156,15 @@ require('lazy').setup({
 	{
 		-- cheatsheet
 		'sudormrfbin/cheatsheet.nvim',
+		dependencies = {'nvim-telescope/telescope.nvim'},
+		opts = {
+			bundled_cheatsheets = {
+				enabled = {'default'}
+			},
+			bundled_plugin_cheatsheets = {
+				enabled = {'telescope.nvim'}
+			},
+		}
 	},
 	{
 		-- shows pending keybinds
