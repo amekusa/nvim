@@ -1,6 +1,6 @@
 ---- PLUGINS & THEMES ----
 
-local theme = 'kanagawa' -- choose from below
+local theme = 'kanagawa' -- choose from below, or assign empty
 local themes = {
 	gruvbox = {'ellisonleao/gruvbox.nvim'},
 	kanagawa = {'rebelot/kanagawa.nvim'},
@@ -288,14 +288,16 @@ local plugins = {
 }
 
 -- configure theme
-local _theme = themes[theme]
-_theme.lazy = false
-_theme.priority = 1000
-_theme.config = function(plugin, opts)
-	require(plugin.main or theme).setup(opts)
-	vim.cmd.colorscheme(theme)
+if theme ~= '' then
+	local _theme = themes[theme]
+	_theme.lazy = false
+	_theme.priority = 1000
+	_theme.config = function(plugin, opts)
+		require(plugin.main or theme).setup(opts)
+		vim.cmd.colorscheme(theme)
+	end
+	table.insert(plugins, _theme)
 end
-table.insert(plugins, _theme)
 
 -- setup lazy.nvim (plugin manager)
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
