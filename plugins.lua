@@ -293,7 +293,8 @@ if theme ~= '' then
 	_theme.lazy = false
 	_theme.priority = 1000
 	_theme.config = function(plugin, opts)
-		require(plugin.main or theme).setup(opts)
+		theme = plugin.main or theme
+		require(theme).setup(opts)
 		vim.cmd.colorscheme(theme)
 	end
 	table.insert(plugins, _theme)
