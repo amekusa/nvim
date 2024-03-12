@@ -1,4 +1,5 @@
 local opt = vim.opt
+local autocmd = vim.api.nvim_create_autocmd
 
 ---- GENERAL ----
 -- clipboard support
@@ -46,3 +47,22 @@ opt.ignorecase = true
 opt.smartcase = true
 -- set highlight on search
 opt.hlsearch = true
+
+
+---- LIBRARY ----
+
+local function regex_ext(ext) -- returns a regex that matches with given file extensions
+	if type(ext) ~= 'table' then ext = {ext} end
+	return vim.regex([[\.\(]]..table.concat(ext, [[\|]])..[[\)$]])
+end
+
+autocmd('BufWritePre', {
+	desc = 'Trim trailing whitespaces on save',
+	pattern = '*',
+	callback = function(ev)
+		local ignore = {'md'}
+		if regex_ext(ignore):match_str(ev.file) then return end
+		vim.cmd([[silent! %s/\s\+$//g]]) -- trim
+	end
+})
+
