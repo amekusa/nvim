@@ -313,5 +313,9 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- install plugins
-require('lazy').setup(plugins)
+require('lazy').setup(plugins, {
+	lockfile =
+		vim.fn.stdpath('config')..'/lua/'..
+		ns_custom:gsub('%.', '/')..'plugins-lock.json'
+})
 

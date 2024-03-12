@@ -59,9 +59,9 @@ vim.opt.hlsearch = true
 
 
 ---- KEYMAPS & PLUGINS ----
-local base = (...):match([[(.-)[^%.]+$]])
-require(base..'keymaps')
-require(base..'plugins')
+ns_custom = (...):match([[(.-)[^%.]+$]])
+require(ns_custom..'keymaps')
+require(ns_custom..'plugins')
 
 
 ---- AUTO COMMANDS ----
