@@ -1,6 +1,6 @@
 ---- PLUGINS & THEMES ----
 
-local theme = 'kanagawa' -- choose from below, or assign empty
+local theme = 'tokyonight' -- choose from below, or assign empty
 local themes = {
 	gruvbox = {'ellisonleao/gruvbox.nvim'},
 	kanagawa = {'rebelot/kanagawa.nvim'},
