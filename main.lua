@@ -1,55 +1,71 @@
-local opt = vim.opt
-local autocmd = vim.api.nvim_create_autocmd
+---< NeoVim Configuration @ amekusa >---
 
----- GENERAL ----
+
+---- OS RELATED ----
 -- clipboard support
-opt.clipboard = 'unnamedplus'
+vim.opt.clipboard = 'unnamedplus'
 -- mouse support ('a' for all modes)
-opt.mouse = 'a'
+vim.opt.mouse = 'a'
+
+
+---- PERFORMANCE ----
 -- decrease update time
---opt.updatetime = 250
---opt.timeoutlen = 300
+vim.opt.updatetime = 250
+vim.opt.timeoutlen = 300
+
+vim.opt.lazyredraw = true
+--vim.opt.regexpengine = 1
+
 
 ---- UI ----
 -- hide those ugly '~' (tilde) symbols
-opt.fillchars = 'eob: '
+vim.opt.fillchars = 'eob: '
 -- line numbers
-opt.number = true
-opt.relativenumber = true
+vim.opt.number = true
+vim.opt.relativenumber = true
 -- mode indicator
-opt.showmode = true
+vim.opt.showmode = true
 -- sign column
-opt.signcolumn = 'yes'
+vim.opt.signcolumn = 'yes'
 -- how new splits should be opened
-opt.splitright = true
-opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+
 
 ---- EDITOR ----
 -- show whitespace chars
-opt.list = true
-opt.listchars = {
+vim.opt.list = true
+vim.opt.listchars = {
 	tab   = '» ',
 	trail = '·',
 	nbsp  = '␣'
 }
 -- break indent
-opt.breakindent = true
+vim.opt.breakindent = true
 -- preview substitutions as you type
-opt.inccommand = 'split'
+vim.opt.inccommand = 'split'
 -- highlight the current line
-opt.cursorline = true
+vim.opt.cursorline = true
 -- minimal number of screen lines to keep above and below the cursor
-opt.scrolloff = 10
+vim.opt.scrolloff = 10
+
 
 ---- SEARCH ----
 -- case-insensitive search unless \C or capital in query
-opt.ignorecase = true
-opt.smartcase = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 -- set highlight on search
-opt.hlsearch = true
+vim.opt.hlsearch = true
 
 
----- LIBRARY ----
+---- KEYMAPS & PLUGINS ----
+local base = (...):match([[(.-)[^%.]+$]])
+require(base..'keymaps')
+require(base..'plugins')
+
+
+---- AUTO COMMANDS ----
+local autocmd = vim.api.nvim_create_autocmd
 
 local function regex_ext(ext) -- returns a regex that matches with given file extensions
 	if type(ext) ~= 'table' then ext = {ext} end
