@@ -178,20 +178,6 @@ local plugins = {
 		end
 	},
 	{
-		-- trim trailing whitespaces
-		"cappyzawa/trim.nvim",
-		opts = {
-			trim_on_write = true,
-			trim_first_line = true,
-			trim_last_line = false,
-			highlight = false,
-			ft_blocklist = {'markdown'},
-			patterns = {
-				[[%s/\(\n\n\)\n\+/\1/]], -- replace multiple blank lines with a single line
-			},
-		}
-	},
-	{
 		"kylechui/nvim-surround",
 		event = "VeryLazy",
 		opts = {}
