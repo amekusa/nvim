@@ -10,6 +10,34 @@ local themes = {
 local map = vim.keymap.set
 local plugins = {
 	{
+		-- jump around with keypresses (* 9/10)
+		'ggandor/leap.nvim',
+		enable = true,
+		lazy = false,
+		dependencies = {'tpope/vim-repeat'},
+		config = function()
+			local api = require('leap')
+
+			-- options
+			local opts = api.opts
+			opts.case_sensitive = true
+			opts.max_highlighted_traversal_targets = 12
+			opts.special_keys = {
+				next_target = '<enter>',
+				prev_target = '<tab>',
+				next_group = '<space>',
+				prev_group = '<tab>',
+			}
+
+			-- default keymaps
+			-- api.create_default_mappings()
+
+			-- custom keymaps
+			map('n', '<leader>l', '<Plug>(leap-forward)', {desc = 'Leap forward'})
+			map('n', '<leader>L', '<Plug>(leap-backward)', {desc = 'Leap backward'})
+		end
+	},
+	{
 		-- lsp package manager
 		'williamboman/mason.nvim',
 		opts = {},
