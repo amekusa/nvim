@@ -162,7 +162,7 @@ local plugins = {
 				end,
 			})
 			-- toggle focus nvim-tree
-			map({'n','v','i'}, '<C-e>',
+			map({'n','v','i','t'}, '<C-e>',
 				function()
 					if api.tree.is_tree_buf() then -- is current pane nvim-tree?
 						local key = '<C-w>p' -- ctrl+w,p = switch to previous pane
