@@ -12,8 +12,9 @@ local plugins = {
 	{
 		-- jump around with keypresses (* 9/10)
 		'ggandor/leap.nvim',
-		enable = true,
-		lazy = false,
+		enabled = true,
+		lazy = true,
+		event = 'BufEnter',
 		dependencies = {'tpope/vim-repeat'},
 		config = function()
 			local api = require('leap')
@@ -68,6 +69,9 @@ local plugins = {
 	},
 	{
 		'nmac427/guess-indent.nvim',
+		enabled = true,
+		lazy = true,
+		event = 'VeryLazy',
 		opts = {
 			auto_cmd = true,
 			override_editorconfig = false,
@@ -86,7 +90,7 @@ local plugins = {
 	{
 		-- file-tree widget
 		'nvim-tree/nvim-tree.lua',
-		version = '*',
+		enabled = true,
 		lazy = false,
 		dependencies = {
 			'nvim-tree/nvim-web-devicons',
@@ -223,6 +227,8 @@ local plugins = {
 	{
 		-- shows pending keybinds
 		'folke/which-key.nvim',
+		enabled = true,
+		lazy = true,
 		event = 'VeryLazy',
 		config = function()
 			local api = require('which-key')
@@ -239,8 +245,11 @@ local plugins = {
 		end,
 	},
 	{
-		-- shows git related signs to the gutter
+		-- shows git related signs to the gutter (*****)
 		'lewis6991/gitsigns.nvim',
+		enabled = true,
+		lazy = true,
+		event = 'BufReadPre',
 		opts = {
 			signs = {
 				add = { text = '+' },
