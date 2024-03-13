@@ -10,7 +10,7 @@ local themes = {
 local map = vim.keymap.set
 local plugins = {
 	{
-		-- jump around with keypresses (* 9/10)
+		-- jump around with keypresses (*****)
 		'ggandor/leap.nvim',
 		enabled = true,
 		lazy = true,
@@ -30,12 +30,13 @@ local plugins = {
 				prev_group = '<tab>',
 			}
 
-			-- default keymaps
-			-- api.create_default_mappings()
-
-			-- custom keymaps
-			map('n', '<leader>l', '<Plug>(leap-forward)', {desc = 'Leap forward'})
-			map('n', '<leader>L', '<Plug>(leap-backward)', {desc = 'Leap backward'})
+			-- keymaps
+			if true then -- use default?
+				api.create_default_mappings()
+			else -- custom keymaps
+				map({'n','x','o'}, '<leader>l', '<Plug>(leap-forward)', {desc = 'Leap forward'})
+				map({'n','x','o'}, '<leader>L', '<Plug>(leap-backward)', {desc = 'Leap backward'})
+			end
 		end
 	},
 	{
@@ -68,6 +69,7 @@ local plugins = {
 		dependencies = {'williamboman/mason-lspconfig.nvim'},
 	},
 	{
+		-- guess indent style (***..)
 		'nmac427/guess-indent.nvim',
 		enabled = true,
 		lazy = true,
@@ -88,18 +90,17 @@ local plugins = {
 		},
 	},
 	{
-		-- file-tree widget
+		-- file-tree widget (***..)
 		'nvim-tree/nvim-tree.lua',
 		enabled = true,
 		lazy = false,
-		dependencies = {
-			'nvim-tree/nvim-web-devicons',
-		},
-		config = function()
+		dependencies = {'nvim-tree/nvim-web-devicons'},
+		init = function()
 			-- disable netrw
 			vim.g.loaded_netrw = 1
 			vim.g.loaded_netrwPlugin = 1
-
+		end,
+		config = function()
 			local api = require('nvim-tree.api')
 			require('nvim-tree').setup({
 				filters = {
@@ -114,7 +115,7 @@ local plugins = {
 					map('n', '<C-]>', api.tree.change_root_to_node,          desc('CD'))
 					--map('n', '<C-e>', api.node.open.replace_tree_buffer,     desc('Open: In Place'))
 					map('n', '<C-k>', api.node.show_info_popup,              desc('Info'))
-					map('n', '<C-r>', api.fs.rename_sub,                     desc('Rename: Omit Filename'))
+					--map('n', '<C-r>', api.fs.rename_sub,                     desc('Rename: Omit Filename'))
 					map('n', '<C-t>', api.node.open.tab,                     desc('Open: New Tab'))
 					map('n', '<C-v>', api.node.open.vertical,                desc('Open: Vertical Split'))
 					map('n', '<C-x>', api.node.open.horizontal,              desc('Open: Horizontal Split'))
@@ -127,17 +128,17 @@ local plugins = {
 					map('n', '-',     api.tree.change_root_to_parent,        desc('Up'))
 					map('n', 'a',     api.fs.create,                         desc('Create'))
 					map('n', 'bmv',   api.marks.bulk.move,                   desc('Move Bookmarked'))
-					map('n', 'B',     api.tree.toggle_no_buffer_filter,      desc('Toggle No Buffer'))
+					--map('n', 'B',     api.tree.toggle_no_buffer_filter,      desc('Toggle No Buffer'))
 					map('n', 'c',     api.fs.copy.node,                      desc('Copy'))
-					map('n', 'C',     api.tree.toggle_git_clean_filter,      desc('Toggle Git Clean'))
+					--map('n', 'C',     api.tree.toggle_git_clean_filter,      desc('Toggle Git Clean'))
 					map('n', '[c',    api.node.navigate.git.prev,            desc('Prev Git'))
 					map('n', ']c',    api.node.navigate.git.next,            desc('Next Git'))
 					map('n', 'd',     api.fs.remove,                         desc('Delete'))
 					map('n', 'D',     api.fs.trash,                          desc('Trash'))
 					map('n', 'E',     api.tree.expand_all,                   desc('Expand All'))
 					map('n', 'e',     api.fs.rename_basename,                desc('Rename: Basename'))
-					map('n', ']e',    api.node.navigate.diagnostics.next,    desc('Next Diagnostic'))
-					map('n', '[e',    api.node.navigate.diagnostics.prev,    desc('Prev Diagnostic'))
+					--map('n', ']e',    api.node.navigate.diagnostics.next,    desc('Next Diagnostic'))
+					--map('n', '[e',    api.node.navigate.diagnostics.prev,    desc('Prev Diagnostic'))
 					map('n', 'F',     api.live_filter.clear,                 desc('Clean Filter'))
 					map('n', 'f',     api.live_filter.start,                 desc('Filter'))
 					map('n', 'g?',    api.tree.toggle_help,                  desc('Help'))
@@ -154,8 +155,8 @@ local plugins = {
 					map('n', 'q',     api.tree.close,                        desc('Close'))
 					map('n', 'r',     api.fs.rename,                         desc('Rename'))
 					map('n', 'R',     api.tree.reload,                       desc('Refresh'))
-					map('n', 's',     api.node.run.system,                   desc('Run System'))
-					map('n', 'S',     api.tree.search_node,                  desc('Search'))
+					--map('n', 's',     api.node.run.system,                   desc('Run System'))
+					--map('n', 'S',     api.tree.search_node,                  desc('Search'))
 					map('n', 'U',     api.tree.toggle_custom_filter,         desc('Toggle Hidden'))
 					map('n', 'W',     api.tree.collapse_all,                 desc('Collapse'))
 					map('n', 'x',     api.fs.cut,                            desc('Cut'))
