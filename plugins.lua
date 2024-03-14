@@ -316,10 +316,10 @@ for k,v in pairs(themes) do
 	if k == theme then
 		v.cond = true
 		v.priority = 1000
-		theme = v.main or v.name or theme
+		local main = v.main or v.name or theme
 		v.config = function(_, opts)
-			require(theme).setup(opts)
-			vim.cmd.colorscheme(theme)
+			require(main).setup(opts)
+			vim.cmd.colorscheme(main)
 		end
 	else
 		v.cond = false
