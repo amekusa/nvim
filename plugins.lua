@@ -312,16 +312,20 @@ local plugins = {
 }
 
 -- configure theme
-if theme ~= '' then
-	local _theme = themes[theme]
-	_theme.lazy = false
-	_theme.priority = 1000
-	_theme.config = function(plugin, opts)
-		theme = plugin.main or theme
-		require(theme).setup(opts)
-		vim.cmd.colorscheme(theme)
+for k,v in pairs(themes) do
+	if k == theme then
+		v.cond = true
+		v.priority = 1000
+		theme = v.main or v.name or theme
+		v.config = function(_, opts)
+			require(theme).setup(opts)
+			vim.cmd.colorscheme(theme)
+		end
+	else
+		v.cond = false
+		v.config = true
 	end
-	table.insert(plugins, _theme)
+	table.insert(plugins, v)
 end
 
 -- setup lazy.nvim (plugin manager)
