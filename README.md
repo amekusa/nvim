@@ -13,6 +13,6 @@ nvim ~/.config/nvim/init.lua
 
 `init.lua`:
 ```lua
-require('custom.main')
+require('custom')
 ```
 
