@@ -1,4 +1,4 @@
----- PLUGINS & THEMES ----
+---- PLUGINS ----
 
 local theme = 'tokyonight' -- choose from below, or assign empty
 local themes = {
@@ -9,6 +9,11 @@ local themes = {
 
 local map = vim.keymap.set
 local plugins = {
+	{
+		'bfredl/nvim-luadev',
+		enabled = true,
+		lazy = false,
+	},
 	{
 		-- jump around with keypresses (*****)
 		'ggandor/leap.nvim',
@@ -37,59 +42,6 @@ local plugins = {
 				map({'n','x','o'}, '<leader>l', '<Plug>(leap-forward)', {desc = 'Leap forward'})
 				map({'n','x','o'}, '<leader>L', '<Plug>(leap-backward)', {desc = 'Leap backward'})
 			end
-		end
-	},
-	{
-		-- language server manager
-		'williamboman/mason-lspconfig.nvim',
-		enabled = true,
-		lazy = true,
-		event = 'VeryLazy',
-		dependencies = {
-			'williamboman/mason.nvim', -- lsp package manager
-			'neovim/nvim-lspconfig', -- lsp configurator
-			'hrsh7th/nvim-cmp', -- auto completion
-
-			-- auto completion sources
-			'hrsh7th/cmp-nvim-lsp',
-		},
-		config = function()
-			require('mason').setup()
-			require('cmp').setup()
-			local api = require('mason-lspconfig')
-			local lsp = require('lspconfig')
-			api.setup({
-				ensure_installed = {
-					-- language servers to install
-					'lua_ls', -- lua
-					'tsserver', -- js
-				},
-				handlers = {
-					-- setup language servers
-					['lua_ls'] = function()
-						lsp.lua_ls.setup({
-							settings = {
-								Lua = {
-									diagnostics = {
-										globals = {'vim'} -- suppress warnings for global variables
-									}
-								}
-							}
-						})
-					end,
-					['tsserver'] = function()
-						lsp.tsserver.setup({
-							filetypes = {
-								'javascript'
-							},
-							root_dir = function() return vim.loop.cwd() end
-						})
-					end,
-					function(server_name) -- default handler
-						lsp[server_name].setup({})
-					end,
-				}
-			})
 		end
 	},
 	{
@@ -129,7 +81,10 @@ local plugins = {
 			require('nvim-tree').setup({
 				filters = {
 					git_ignored = false, -- do not hide ignored files
-					custom = {'.git', '.DS_Store'},
+					custom = {
+						'.git',
+						'.DS_Store'
+					},
 				},
 				on_attach = function(bufnr)
 					local function desc(s)
@@ -210,22 +165,6 @@ local plugins = {
 		"kylechui/nvim-surround",
 		event = "VeryLazy",
 		opts = {}
-	},
-	{
-		-- language parser
-		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
-		config = function ()
-			require("nvim-treesitter.configs").setup({
-				ensure_installed = {
-					'lua', "vim", "vimdoc",
-					"javascript", "html", 'css'
-				},
-				sync_install = false,
-				highlight = { enable = true },
-				indent = { enable = true },
-			})
-		end
 	},
 	{
 		-- fuzzy finder
@@ -335,6 +274,9 @@ local plugins = {
 
 }
 
+-- configure lsp, syntax-highlighter, etc.
+require(ns_custom..'langs')(plugins)
+
 -- configure theme
 for k,v in pairs(themes) do
 	if k == theme then
@@ -370,8 +312,8 @@ require('lazy').setup(plugins, {
 		lazy = false,
 		version = '*', -- try installing the latest stable versions of plugins
 	},
-	lockfile =
-		vim.fn.stdpath('config')..'/lua/'..
-		ns_custom:gsub('%.', '/')..'plugins-lock.json'
+	lockfile = vim.fn.stdpath('config')..'/lua/'..
+		ns_custom:gsub('%.', '/').. -- replace '.' with '/'
+		'plugins-lock.json'
 })
 
