@@ -1,4 +1,5 @@
----< NeoVim Configuration @ amekusa >---
+---[ amekusa's NeoVim Configuration ]---
+---- github.com/amekusa/nvim
 
 
 ---- OS RELATED ----
@@ -6,6 +7,8 @@
 vim.opt.clipboard = 'unnamedplus'
 -- mouse support ('a' for all modes)
 vim.opt.mouse = 'a'
+-- enable 24-bit color
+vim.opt.termguicolors = true
 
 
 ---- PERFORMANCE ----
@@ -47,7 +50,7 @@ vim.opt.inccommand = 'split'
 -- highlight the current line
 vim.opt.cursorline = true
 -- minimal number of screen lines to keep above and below the cursor
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 24
 
 
 ---- SEARCH ----
