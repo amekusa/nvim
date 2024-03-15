@@ -40,33 +40,57 @@ local plugins = {
 		end
 	},
 	{
-		-- lsp package manager
-		'williamboman/mason.nvim',
-		opts = {},
-	},
-	{
+		-- language server manager
 		'williamboman/mason-lspconfig.nvim',
-		dependencies = {'williamboman/mason.nvim'},
+		enabled = true,
+		lazy = true,
+		event = 'VeryLazy',
+		dependencies = {
+			'williamboman/mason.nvim', -- lsp package manager
+			'neovim/nvim-lspconfig', -- lsp configurator
+			'hrsh7th/nvim-cmp', -- auto completion
+
+			-- auto completion sources
+			'hrsh7th/cmp-nvim-lsp',
+		},
 		config = function()
-			require("mason-lspconfig").setup()
-			require("mason-lspconfig").setup_handlers {
-				-- The first entry (without a key) will be the default handler
-				-- and will be called for each installed server that doesn't have
-				-- a dedicated handler.
-				function (server_name) -- default handler (optional)
-					require("lspconfig")[server_name].setup {}
-				end,
-				-- Next, you can provide a dedicated handler for specific servers.
-				-- For example, a handler override for the `rust_analyzer`:
-				-- ["rust_analyzer"] = function ()
-				-- 	require("rust-tools").setup {}
-				-- end
-			}
-		end,
-	},
-	{
-		'neovim/nvim-lspconfig',
-		dependencies = {'williamboman/mason-lspconfig.nvim'},
+			require('mason').setup()
+			require('cmp').setup()
+			local api = require('mason-lspconfig')
+			local lsp = require('lspconfig')
+			api.setup({
+				ensure_installed = {
+					-- language servers to install
+					'lua_ls', -- lua
+					'tsserver', -- js
+				},
+				handlers = {
+					-- setup language servers
+					['lua_ls'] = function()
+						lsp.lua_ls.setup({
+							settings = {
+								Lua = {
+									diagnostics = {
+										globals = {'vim'} -- suppress warnings for global variables
+									}
+								}
+							}
+						})
+					end,
+					['tsserver'] = function()
+						lsp.tsserver.setup({
+							filetypes = {
+								'javascript'
+							},
+							root_dir = function() return vim.loop.cwd() end
+						})
+					end,
+					function(server_name) -- default handler
+						lsp[server_name].setup({})
+					end,
+				}
+			})
+		end
 	},
 	{
 		-- guess indent style (***..)
