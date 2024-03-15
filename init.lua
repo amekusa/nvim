@@ -62,7 +62,7 @@ vim.opt.hlsearch = true
 
 
 ---- KEYMAPS & PLUGINS ----
-ns_custom = (...):match([[(.-)[^%.]+$]])
+ns_custom = (...)..'.'
 require(ns_custom..'keymaps')
 require(ns_custom..'plugins')
 
