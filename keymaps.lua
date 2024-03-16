@@ -15,11 +15,9 @@ local unmap = vim.keymap.del
 
 -- mode combos
 local nv = {'n','v'}
-local nx = {'n','x'}
 local nvo = {'n','v','o'}
-local nxo = {'n','x','0'}
 local nvi = {'n','v','i'}
-local nxi = {'n','x','i'}
+local ni = {'n','i'}
 
 local function desc(s) -- keymap description
 	return {desc = 'custom: '..s}
@@ -71,13 +69,19 @@ map(nvi, '<C-s>', '<Cmd>w<CR>', desc 'Save')
 -- clear search highlight
 map('n', '<Esc>', '<Cmd>nohlsearch<CR>', desc 'Clear search highlight')
 
-map('n', '<C-f>', [[:%s/\v//g<Left><Left>]])
-map('i', '<C-f>', [[<C-o>:%s/\v//g<Left><Left>]])
-
-map('n', '<leader>f', ':%s/<C-r><C-w>//g<Left><Left>', desc 'Search & replace the word')
-map('v', '<leader>f', ':%s/<C-r>"//g<Left><Left>', desc 'Search & replace selected text')
+-- search with "magic (\v)"
+map(nv,  '/', [[/\v]],  desc 'Search (with "magic")')
+--   NOTE: "magic" allows you to use regex-special chars without escaping.
 
 -- search & replace with "magic (\v)"
-map(nv,  '/', [[:%s/\v//gc<Left><Left><Left><Left>]],  desc 'Search & replace')
-map('v', '/', [[:s/\v%V//gc<Left><Left><Left><Left>]], desc 'Search & replace in selected range')
---   NOTE: "magic" allows you to use regex-special chars without escaping.
+map('n', '<C-f>', [[:%s/\v//gc<Left><Left><Left><Left>]],       desc 'Search & replace')
+map('i', '<C-f>', [[<Esc>:%s/\v//gc<Left><Left><Left><Left>]],  desc 'Search & replace')
+map('v', '<C-f>', [[:s/\v%V//gc<Left><Left><Left><Left>]],      desc 'Search & replace in the selected range')
+
+-- search & replace the current word
+map('n', '<leader>f', ':%s/<C-r><C-w>//gc<Left><Left><Left>', desc 'Search & replace the word')
+
+-- search & replace the selected text
+map('v', '<leader>f', 'y:%s/<C-r>"//gc<Left><Left><Left>',    desc 'Search & replace the selected text')
+--   NOTE: <C-r>" outputs the last yanked text
+
