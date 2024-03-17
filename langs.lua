@@ -57,6 +57,7 @@ return function(plugins)
 					-- language servers to install
 					'lua_ls', -- lua
 					'tsserver', -- js
+					'eslint',
 				},
 				handlers = {
 					-- setup language servers
@@ -73,6 +74,13 @@ return function(plugins)
 								}
 							}
 						})
+					end,
+					['eslint'] = function()
+						lsp.eslint.setup {
+							settings = {
+								packageManager = 'npm',
+							}
+						}
 					end,
 					['tsserver'] = function()
 						lsp.tsserver.setup({
