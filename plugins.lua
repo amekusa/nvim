@@ -15,6 +15,14 @@ local plugins = {
 		lazy = false,
 	},
 	{
+		-- automatically close blocks (****.)
+		'windwp/nvim-autopairs',
+		enabled = true,
+		lazy = true,
+		event = 'VeryLazy',
+		opts = {},
+	},
+	{
 		-- jump around with keypresses (*****)
 		'ggandor/leap.nvim',
 		enabled = true,
