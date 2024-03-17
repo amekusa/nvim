@@ -43,11 +43,14 @@ map(nvo, '<PageDown>', 'Lzz',       desc 'Page down')
 map('i', '<PageDown>', '<Esc>Lzzi', desc 'Page down')
 
 -- move line(s) up/down
-map('n', '<C-k>', ':m .-2<CR>==',     desc 'Move line up')
-map('n', '<C-j>', ':m .+1<CR>==',     desc 'Move line down')
-map('v', '<C-k>', ":m '<-2<CR>gv=gv", desc 'Move lines up')
-map('v', '<C-j>', ":m '>+1<CR>gv=gv", desc 'Move lines down')
-
+map('n', '<C-k>', '<Cmd>m.-2<CR>==', desc 'Move line up')
+map('n', '<C-j>', '<Cmd>m.+1<CR>==', desc 'Move line down')
+map('v', '<C-k>', "<Esc><Cmd>'<,'>m'<-2<CR>gv=gv", desc 'Move lines up')
+map('v', '<C-j>', "<Esc><Cmd>'<,'>m'>+1<CR>gv=gv", desc 'Move lines down')
+--   NOTE: m  = move command
+--         .  = current line number
+--         '< = beginning line of the selection
+--         '> =       end line of the selection
 
 -- normal mode
 map('i', 'jk', '<Esc>', desc 'Normal mode')
