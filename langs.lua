@@ -78,7 +78,7 @@ return function(plugins)
 					['eslint'] = function()
 						lsp.eslint.setup {
 							settings = {
-								packageManager = 'npm',
+								packageManager = 'npm', -- this enables the lsp to find the global eslint
 							}
 						}
 					end,
