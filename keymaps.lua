@@ -61,8 +61,8 @@ map('i', ';;', '<Esc>:', desc 'Command line mode')
 -- quit
 map(nvi, '<C-q>', '<Cmd>q<CR>', desc 'Quit')
 map('c', '<C-q>', '<C-c>',      desc 'Escape command line')
---   NOTE: for some reason, <Esc> doesn't work as rhs for command line.
---         so, use <C-c> instead.
+--   NOTE: for some reason, <Esc> as rhs for command line, works like <Esc><CR> actually,
+--         which is unwanted behavior. so, use <C-c> instead.
 
 -- save
 map(nvi, '<C-s>', '<Cmd>w<CR>', desc 'Save')
