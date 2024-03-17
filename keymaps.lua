@@ -70,6 +70,9 @@ map('c', '<C-q>', '<C-c>',      desc 'Escape command line')
 -- save
 map(nvi, '<C-s>', '<Cmd>w<CR>', desc 'Save')
 
+-- undo
+map(nvi, '<C-z>', '<Cmd>u<CR>', desc 'Undo')
+
 
 -- clear search highlight
 map('n', '<Esc>', '<Cmd>nohlsearch<CR>', desc 'Clear search highlight')
