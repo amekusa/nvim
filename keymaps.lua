@@ -17,7 +17,6 @@ local unmap = vim.keymap.del
 local nv = {'n','v'}
 local nvo = {'n','v','o'}
 local nvi = {'n','v','i'}
-local ni = {'n','i'}
 
 local function desc(s) -- keymap description
 	return {desc = 'custom: '..s}
@@ -61,6 +60,7 @@ map('i', ';;', '<Esc>:', desc 'Command line mode')
 
 -- quit
 map(nvi, '<C-q>', '<Cmd>q<CR>', desc 'Quit')
+map('c', '<C-q>', '<C-c>',      desc 'Escape command line')
 
 -- save
 map(nvi, '<C-s>', '<Cmd>w<CR>', desc 'Save')
