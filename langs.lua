@@ -29,8 +29,13 @@ return function(plugins)
 		-- lsp package manager
 		'williamboman/mason.nvim',
 		lazy = true,
-		cmd = {'Mason'},
 		opts = {},
+	})
+
+	table.insert(plugins, {
+		-- lsp configurator
+		'neovim/nvim-lspconfig',
+		lazy = true,
 	})
 
 	table.insert(plugins, {
@@ -39,6 +44,7 @@ return function(plugins)
 		enabled = true,
 		lazy = true,
 		ft = langs,
+		cmd = {'Mason', 'LspInfo', 'LspInstall', 'LspUninstall'},
 		dependencies = {
 			'williamboman/mason.nvim', -- lsp package manager
 			'neovim/nvim-lspconfig', -- lsp configurator
@@ -55,9 +61,9 @@ return function(plugins)
 			api.setup({
 				ensure_installed = {
 					-- language servers to install
-					'lua_ls', -- lua
-					'tsserver', -- js
+					'lua_ls',
 					'eslint',
+					--'tsserver',
 				},
 				handlers = {
 					-- setup language servers

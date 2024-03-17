@@ -50,7 +50,7 @@ vim.opt.inccommand = 'split'
 -- highlight the current line
 vim.opt.cursorline = true
 -- minimal number of screen lines to keep above and below the cursor
-vim.opt.scrolloff = 24
+vim.opt.scrolloff = 10
 
 
 ---- SEARCH ----

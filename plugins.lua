@@ -19,7 +19,7 @@ local plugins = {
 		'windwp/nvim-autopairs',
 		enabled = true,
 		lazy = true,
-		event = 'VeryLazy',
+		event = 'BufEnter',
 		opts = {},
 	},
 	{
