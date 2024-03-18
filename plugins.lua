@@ -249,19 +249,12 @@ local plugins = {
 		event = 'BufReadPre',
 		opts = {
 			signs = {
-				add = { text = '+' },
-				change = { text = '~' },
-				delete = { text = '_' },
-				topdelete = { text = '‾' },
-				changedelete = { text = '~' },
-			},
-			preview_config = {
-				-- options passed to nvim_open_win
-				border = 'single',
-				style = 'minimal',
-				relative = 'cursor',
-				row = 0,
-				col = 1
+				add          = {text = '+'}, -- {text = '│'},
+				change       = {text = '*'}, -- {text = '│'},
+				delete       = {text = '_'},
+				topdelete    = {text = '‾'},
+				changedelete = {text = '~'},
+				untracked    = {text = '┆'},
 			},
 			on_attach = function(bufnr)
 				local api = package.loaded.gitsigns
