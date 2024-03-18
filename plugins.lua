@@ -1,12 +1,4 @@
 ---- PLUGINS ----
-
-local theme = 'tokyonight' -- choose from below, or assign empty
-local themes = {
-	gruvbox = {'ellisonleao/gruvbox.nvim'},
-	kanagawa = {'rebelot/kanagawa.nvim'},
-	tokyonight = {'folke/tokyonight.nvim', opts = {style = 'moon'}},
-}
-
 local map = vim.keymap.set
 local plugins = {
 	{
@@ -318,12 +310,13 @@ local plugins = {
 -- configure lsp, syntax-highlighter, etc.
 require(ns_custom..'langs')(plugins)
 
--- configure theme
-for k,v in pairs(themes) do
-	if k == theme then
+-- themes
+local themes = require(ns_custom..'themes')
+for k,v in pairs(themes.list) do
+	if k == themes.select then
 		v.cond = true
 		v.priority = 1000
-		local main = v.main or v.name or theme
+		local main = v.main or v.name or themes.select
 		v.config = function(_, opts)
 			require(main).setup(opts)
 			vim.cmd.colorscheme(main)
