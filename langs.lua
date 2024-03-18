@@ -1,20 +1,20 @@
 ---- LANGUAGES ----
-return function(plugins)
 
-	-- languages (filetypes) to support
-	local langs = {
-		'lua', 'vim', 'vimdoc',
-		'html', 'css', 'javascript', 'json', 'php',
-	}
+-- languages (filetypes) to support
+local langs = {
+	'lua', 'vim', 'vimdoc',
+	'html', 'css', 'javascript', 'json', 'php',
+}
 
-	table.insert(plugins, {
+local plugins = {
+	{
 		-- language parser & syntax highlighter
 		'nvim-treesitter/nvim-treesitter',
 		enabled = true,
 		lazy = true,
 		ft = langs,
 		build = ':TSUpdate',
-		config = function ()
+		config = function()
 			require('nvim-treesitter.configs').setup({
 				ensure_installed = langs,
 				sync_install = false,
@@ -23,22 +23,19 @@ return function(plugins)
 				highlight = {enable = true},
 			})
 		end
-	})
-
-	table.insert(plugins, {
+	},
+	{
+		-- lsp configurator
+		'neovim/nvim-lspconfig',
+		lazy = true,
+	},
+	{
 		-- lsp package manager
 		'williamboman/mason.nvim',
 		lazy = true,
 		opts = {},
-	})
-
-	table.insert(plugins, {
-		-- lsp configurator
-		'neovim/nvim-lspconfig',
-		lazy = true,
-	})
-
-	table.insert(plugins, {
+	},
+	{
 		-- total lsp management
 		'williamboman/mason-lspconfig.nvim',
 		enabled = true,
@@ -104,7 +101,9 @@ return function(plugins)
 				}
 			})
 		end
-	})
+	},
 
-end
+}
+
+return plugins
 

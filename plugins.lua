@@ -300,8 +300,10 @@ local plugins = {
 
 }
 
--- configure lsp, syntax-highlighter, etc.
-require(ns_custom..'langs')(plugins)
+-- lsp, syntax-highlighter, etc.
+for _,v in ipairs(require(ns_custom..'langs')) do
+	table.insert(plugins, v)
+end
 
 -- themes
 local themes = require(ns_custom..'themes')
