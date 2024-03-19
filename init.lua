@@ -1,6 +1,10 @@
 ---[ amekusa's NeoVim Configuration ]---
 ---- github.com/amekusa/nvim
 
+local config = {
+	trim_trailing_whitespace = true,
+}
+
 
 ---- OS RELATED ----
 -- clipboard support
@@ -11,12 +15,13 @@ vim.opt.mouse = 'a'
 vim.opt.termguicolors = true
 
 
----- PERFORMANCE ----
--- decrease update time
-vim.opt.updatetime = 250
+---- MINOR TWEAKS ----
+-- wait-time for idle state (ms) [default: 4000]
+vim.opt.updatetime = 2000
+-- wait-time for key-combos (ms) [default: 1000]
 vim.opt.timeoutlen = 300
 
-vim.opt.lazyredraw = true
+--vim.opt.lazyredraw = true
 --vim.opt.regexpengine = 1
 
 
@@ -25,7 +30,7 @@ vim.opt.lazyredraw = true
 vim.opt.fillchars = 'eob: '
 -- line numbers
 vim.opt.number = true
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 -- mode indicator
 vim.opt.showmode = true
 -- sign column
@@ -75,13 +80,15 @@ local function regex_ext(ext) -- returns a regex that matches with given file ex
 	return vim.regex([[\.\(]]..table.concat(ext, [[\|]])..[[\)$]])
 end
 
-autocmd('BufWritePre', {
-	desc = 'Trim trailing whitespaces on save',
-	pattern = '*',
-	callback = function(ev)
-		local ignore = {'md'}
-		if regex_ext(ignore):match_str(ev.file) then return end
-		vim.cmd([[silent! %s/\s\+$//g]]) -- trim
-	end
-})
+if config.trim_trailing_whitespace then
+	autocmd('BufWritePre', {
+		desc = 'Trim trailing whitespaces on save',
+		pattern = '*',
+		callback = function(ev)
+			local ignore = {'md'}
+			if regex_ext(ignore):match_str(ev.file) then return end
+			vim.cmd([[silent! %s/\s\+$//g]]) -- trim
+		end
+	})
+end
 
