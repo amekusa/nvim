@@ -52,6 +52,7 @@ map('v', '<C-j>', "<Esc><Cmd>'<,'>m'>+1<CR>gv=gv", desc 'Move lines down')
 --         '< = beginning line of the selection
 --         '> =       end line of the selection
 
+
 -- normal mode
 map('i', 'jk', '<Esc>', desc 'Normal mode')
 map('i', 'kj', '<Esc>', desc 'Normal mode')
@@ -60,6 +61,20 @@ map('v', 'v',  '<Esc>', desc 'Normal mode')
 -- command line mode
 map(nv,  ';',  ':',      desc 'Command line mode')
 map('i', ';;', '<Esc>:', desc 'Command line mode')
+
+-- visual mode
+map('i', '<S-Up>',    '<Esc>v<Up>',    desc 'Up with visual mode')    -- switch to visual mode and move
+map('i', '<S-Right>', '<Esc>v<Right>', desc 'Right with visual mode')
+map('i', '<S-Down>',  '<Esc>v<Down>',  desc 'Down with visual mode')
+map('i', '<S-Left>',  '<Esc>v<Left>',  desc 'Left with visual mode')
+map('n', '<S-Up>',    'v<Up>',         desc 'Up with visual mode')    -- switch to visual mode and move
+map('n', '<S-Right>', 'v<Right>',      desc 'Right with visual mode')
+map('n', '<S-Down>',  'v<Down>',       desc 'Down with visual mode')
+map('n', '<S-Left>',  'v<Left>',       desc 'Left with visual mode')
+map('v', '<S-Up>',    '<Up>',          desc 'Up')                     -- keep moving in visual mode
+map('v', '<S-Right>', '<Right>',       desc 'Right')
+map('v', '<S-Down>',  '<Down>',        desc 'Down')
+map('v', '<S-Left>',  '<Left>',        desc 'Left')
 
 -- quit
 map(nvi, '<C-q>', '<Cmd>q<CR>', desc 'Quit')
