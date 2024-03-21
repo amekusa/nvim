@@ -60,7 +60,6 @@ map('v', 'v',  '<Esc>', desc 'Normal mode')
 
 -- command line mode
 map(nv,  ';',  ':',      desc 'Command line mode')
-map('i', ';;', '<Esc>:', desc 'Command line mode')
 
 -- visual mode
 map('i', '<S-Up>',    '<Esc>v<Up>',    desc 'Up with visual mode')    -- switch to visual mode and move
