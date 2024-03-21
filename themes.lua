@@ -19,13 +19,13 @@ elseif theme == 'kanagawa' then
 		colors = {
 			palette = {
 				---- default palette ----
-				-- sumiink0 = '#16161d', -- border
-				-- sumiink1 = '#181820',
-				-- sumiink2 = '#1a1a22',
-				-- sumiink3 = '#1f1f28', -- background
-				-- sumiink4 = '#2a2a37',
-				-- sumiink5 = '#363646', -- line highlight
-				-- sumiink6 = '#54546d', -- whitespace
+				-- sumiInk0 = '#16161d', -- border
+				-- sumiInk1 = '#181820',
+				-- sumiInk2 = '#1a1a22',
+				-- sumiInk3 = '#1f1f28', -- background
+				-- sumiInk4 = '#2a2a37',
+				-- sumiInk5 = '#363646', -- line highlight
+				-- sumiInk6 = '#54546d', -- whitespace
 				-- fujiGray = '#727169', -- comments
 			},
 			theme = {
