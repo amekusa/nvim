@@ -7,6 +7,7 @@ local filetypes = {
 	'json', 'yaml',
 	'php',
 }
+
 -- languages to support
 local langs = {
 	'vim', 'vimdoc',
@@ -23,7 +24,6 @@ local plugins = {
 			--'nvim-treesitter/nvim-treesitter-textobjects',
 			--'nvim-treesitter/nvim-treesitter-context',
 		},
-		lazy = true,
 		ft = filetypes,
 		cmd = {'TSInstallInfo', 'TSInstall', 'TSUninstall', 'TSUpdate'},
 		build = ':TSUpdate',
@@ -56,21 +56,14 @@ local plugins = {
 	{
 		-- lsp configurator
 		'neovim/nvim-lspconfig',
-		lazy = true,
 	},
 	{
 		-- lsp package manager
 		'williamboman/mason.nvim',
-		lazy = true,
-		opts = {},
 	},
 	{
 		-- total lsp management
-		'williamboman/mason-lspconfig.nvim',
-		enabled = true,
-		lazy = true,
-		ft = filetypes,
-		cmd = {'Mason', 'LspInfo', 'LspInstall', 'LspUninstall'},
+		'williamboman/mason-lspconfig.nvim', enabled = true,
 		dependencies = {
 			'williamboman/mason.nvim', -- lsp package manager
 			'neovim/nvim-lspconfig', -- lsp configurator
@@ -79,6 +72,8 @@ local plugins = {
 			-- auto completion sources
 			'hrsh7th/cmp-nvim-lsp',
 		},
+		ft = filetypes,
+		cmd = {'Mason', 'LspInfo', 'LspInstall', 'LspUninstall'},
 		config = function()
 			require('mason').setup()
 			require('cmp').setup()

@@ -1,11 +1,11 @@
 ---- PLUGINS ----
 local map = vim.keymap.set
+local on_read = {'BufReadPre', 'BufNewFile'}
+
 local plugins = {
 	{
 		-- jump around with keypresses (*****)
-		'folke/flash.nvim',
-		enabled = true,
-		lazy = true,
+		'folke/flash.nvim', enabled = true,
 		event = 'VeryLazy',
 		config = function()
 			local api = require('flash')
@@ -39,20 +39,20 @@ local plugins = {
 		end
 	},
 	{
-		-- automatically close blocks (****.)
-		'windwp/nvim-autopairs',
-		enabled = true,
-		lazy = true,
-		event = 'BufEnter',
-		opts = {},
+		-- automatically close brackets (****.)
+		'windwp/nvim-autopairs', enabled = true,
+		event = 'VeryLazy',
+		config = function()
+			require('nvim-autopairs').setup({
+				-- options
+			})
+		end
 	},
 	{
 		-- jump around with keypresses (*****)
-		'ggandor/leap.nvim',
-		enabled = false,
-		lazy = true,
-		event = 'BufEnter',
+		'ggandor/leap.nvim', enabled = false,
 		dependencies = {'tpope/vim-repeat'},
+		event = 'VeryLazy',
 		config = function()
 			local api = require('leap')
 
@@ -78,31 +78,30 @@ local plugins = {
 	},
 	{
 		-- guess indent style (***..)
-		'nmac427/guess-indent.nvim',
-		enabled = true,
-		lazy = true,
-		event = 'VeryLazy',
-		opts = {
-			auto_cmd = true,
-			override_editorconfig = false,
-			filetype_exclude = {
-				'netrw',
-				'tutor',
-			},
-			buftype_exclude = {
-				'help',
-				'nofile',
-				'terminal',
-				'prompt',
-			},
-		},
+		'nmac427/guess-indent.nvim', enabled = true,
+		event = on_read,
+		config = function()
+			require('guess-indent').setup({
+				auto_cmd = true,
+				override_editorconfig = false,
+				filetype_exclude = {
+					'netrw',
+					'tutor',
+				},
+				buftype_exclude = {
+					'help',
+					'nofile',
+					'terminal',
+					'prompt',
+				},
+			})
+		end
 	},
 	{
 		-- file-tree widget (***..)
-		'nvim-tree/nvim-tree.lua',
-		enabled = true,
-		lazy = false,
+		'nvim-tree/nvim-tree.lua', enabled = true,
 		dependencies = {'nvim-tree/nvim-web-devicons'},
+		lazy = false,
 		init = function()
 			-- disable netrw
 			vim.g.loaded_netrw = 1
@@ -126,12 +125,10 @@ local plugins = {
 				},
 				renderer = {
 					special_files = {},
-
 					highlight_git = 'name', -- none/icon/name/all
 					highlight_diagnostics = 'name',
 					highlight_opened_files = 'none',
 					highlight_modified = 'name',
-
 					icons = {
 						web_devicons = {
 							file = {
@@ -222,112 +219,106 @@ local plugins = {
 						focus = true,
 					})
 				end,
-				{desc='Toggle nvim-tree'}
+				{desc = 'Toggle nvim-tree'}
 			)
 		end
 	},
 	{
-		"kylechui/nvim-surround",
-		event = "VeryLazy",
-		opts = {}
+		-- smartly edit surrounding chars like {}, [], "", etc.
+		'kylechui/nvim-surround', enabled = true,
+		event = 'VeryLazy',
+		config = function()
+			require('nvim-surround').setup({
+				-- options
+			})
+		end
 	},
 	{
 		-- fuzzy finder
-		'nvim-telescope/telescope.nvim',
+		'nvim-telescope/telescope.nvim', enabled = true,
+		dependencies = {'nvim-lua/plenary.nvim'},
 		event = 'VimEnter',
-		branch = '0.1.x',
-		dependencies = {
-			'nvim-lua/plenary.nvim'
-		}
 	},
 	{
 		-- cheatsheet
-		'sudormrfbin/cheatsheet.nvim',
+		'sudormrfbin/cheatsheet.nvim', enabled = true,
 		dependencies = {'nvim-telescope/telescope.nvim'},
-		opts = {
-			bundled_cheatsheets = {
-				enabled = {'default'}
-			},
-			bundled_plugin_cheatsheets = {
-				enabled = {'telescope.nvim'}
-			},
-		}
+		event = 'VeryLazy',
+		config = function()
+			require('cheatsheet').setup({
+				bundled_cheatsheets = {
+					enabled = {'default'}
+				},
+				bundled_plugin_cheatsheets = {
+					enabled = {'telescope.nvim'}
+				},
+			})
+		end
 	},
 	{
 		-- shows pending keybinds
-		'folke/which-key.nvim',
-		enabled = true,
-		lazy = true,
+		'folke/which-key.nvim', enabled = true,
 		event = 'VeryLazy',
 		config = function()
 			local api = require('which-key')
 			api.setup()
-
-			-- document existing key chains
-			api.register {
-				['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-				['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-				['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-				['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-				['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-			}
 		end,
 	},
 	{
 		-- shows git related signs to the gutter (*****)
-		'lewis6991/gitsigns.nvim',
-		enabled = true,
-		lazy = true,
-		event = 'BufReadPre',
-		opts = {
-			signs = {
-				add          = {text = '+'}, -- {text = '│'},
-				change       = {text = '*'}, -- {text = '│'},
-				delete       = {text = '_'},
-				topdelete    = {text = '‾'},
-				changedelete = {text = '~'},
-				untracked    = {text = '┆'},
-			},
-			on_attach = function(bufnr)
-				local api = package.loaded.gitsigns
-				local function desc(s, opts)
-					local r = opts or {}
-					r.desc = 'gitsigns: ' .. s
-					r.buffer = bufnr
-					return r
-				end
-				map('n', ']c',
-					function()
+		'lewis6991/gitsigns.nvim', enabled = true,
+		event = on_read,
+		config = function()
+			require('gitsigns').setup({
+				signs = {
+					add          = {text = '+'}, -- {text = '│'},
+					change       = {text = '*'}, -- {text = '│'},
+					delete       = {text = '_'},
+					topdelete    = {text = '‾'},
+					changedelete = {text = '~'},
+					untracked    = {text = '┆'},
+				},
+				on_attach = function(bufnr)
+					local api = package.loaded.gitsigns
+					local function desc(s, opts)
+						local r = opts or {}
+						r.desc = 'gitsigns: ' .. s
+						r.buffer = bufnr
+						return r
+					end
+					map('n', ']c',
+						function()
 						if vim.wo.diff then return ']c' end
-						vim.schedule(api.next_hunk)
-						return '<Ignore>'
-					end,
-					desc('Next hunk', {expr = true})
-				)
-				map('n', '[c',
-					function()
+							vim.schedule(api.next_hunk)
+							return '<Ignore>'
+						end,
+						desc('Next hunk', {expr = true})
+					)
+					map('n', '[c',
+						function()
 						if vim.wo.diff then return '[c' end
-						vim.schedule(api.prev_hunk)
-						return '<Ignore>'
-					end,
-					desc('Previous hunk', {expr = true})
-				)
-				map('n', '<leader>hs', api.stage_hunk, desc 'Stage hunk')
-				map('n', '<leader>hr', api.reset_hunk, desc 'Reset hunk')
-				map('v', '<leader>hs', function() api.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end, desc 'Stage hunk')
-				map('v', '<leader>hr', function() api.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end, desc 'Reset hunk')
-				map('n', '<leader>hS', api.stage_buffer, desc 'Stage buffer')
-				map('n', '<leader>hu', api.undo_stage_hunk, desc 'Undo stage hunk')
-				map('n', '<leader>hR', api.reset_buffer, desc 'Reset buffer')
-				map('n', '<leader>hp', api.preview_hunk, desc 'Preview hunk')
-				map('n', '<leader>hb', function() api.blame_line {full = true} end, desc 'Blame line')
-				map('n', '<leader>tb', api.toggle_current_line_blame, desc 'Toggle blame')
-				map('n', '<leader>hd', api.diffthis, desc 'Diff')
-				map('n', '<leader>hD', function() api.diffthis('~') end, desc 'Diff')
-				map('n', '<leader>td', api.toggle_deleted, desc 'Toggle deleted')
-				map({'o','x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>', desc 'Select hunk')
-			end
-		},
+							vim.schedule(api.prev_hunk)
+							return '<Ignore>'
+						end,
+						desc('Previous hunk', {expr = true})
+					)
+					map('n', '<leader>hs', api.stage_hunk, desc 'Stage hunk')
+					map('n', '<leader>hr', api.reset_hunk, desc 'Reset hunk')
+					map('v', '<leader>hs', function() api.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end, desc 'Stage hunk')
+					map('v', '<leader>hr', function() api.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end, desc 'Reset hunk')
+					map('n', '<leader>hS', api.stage_buffer, desc 'Stage buffer')
+					map('n', '<leader>hu', api.undo_stage_hunk, desc 'Undo stage hunk')
+					map('n', '<leader>hR', api.reset_buffer, desc 'Reset buffer')
+					map('n', '<leader>hp', api.preview_hunk, desc 'Preview hunk')
+					map('n', '<leader>hb', function() api.blame_line {full = true} end, desc 'Blame line')
+					map('n', '<leader>tb', api.toggle_current_line_blame, desc 'Toggle blame')
+					map('n', '<leader>hd', api.diffthis, desc 'Diff')
+					map('n', '<leader>hD', function() api.diffthis('~') end, desc 'Diff')
+					map('n', '<leader>td', api.toggle_deleted, desc 'Toggle deleted')
+					map({'o','x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>', desc 'Select hunk')
+				end,
+			})
+		end
 	},
 
 }
@@ -352,6 +343,7 @@ for k,v in pairs(themes.list) do
 		v.cond = false
 		v.config = true
 	end
+	v.lazy = false
 	table.insert(plugins, v)
 end
 
@@ -370,7 +362,7 @@ vim.opt.rtp:prepend(lazypath)
 -- install plugins
 require('lazy').setup(plugins, {
 	defaults = { -- default options for each plugin
-		lazy = false,
+		lazy = true,
 		version = '*', -- try installing the latest stable versions of plugins
 	},
 	lockfile = vim.fn.stdpath('config')..'/lua/'..
