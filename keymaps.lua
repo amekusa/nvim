@@ -92,8 +92,8 @@ map(nvi, '<C-z>', '<Cmd>u<CR>', desc 'Undo')
 map('n', '<Esc>', '<Cmd>nohlsearch<CR>', desc 'Clear search highlight')
 
 -- search with "magic (\v)"
-map(nv,  '/', [[/\v]],  desc 'Forward search (with "magic")')
-map(nv,  '?', [[?\v]],  desc 'Backward Search (with "magic")')
+--map(nv,  '/', [[/\v]],  desc 'Forward search (with "magic")')
+--map(nv,  '?', [[?\v]],  desc 'Backward Search (with "magic")')
 --   NOTE: "magic" allows you to use regex-special chars without escaping.
 
 -- search & replace with "magic (\v)"
