@@ -10,7 +10,7 @@ local filetypes = {
 -- languages to support
 local langs = {
 	'vim', 'vimdoc',
-	'json',
+	'jsdoc',
 }
 
 local plugins = {
