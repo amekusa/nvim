@@ -17,9 +17,9 @@ vim.opt.termguicolors = true
 
 ---- MINOR TWEAKS ----
 -- wait-time for idle state (ms) [default: 4000]
-vim.opt.updatetime = 2000
+vim.opt.updatetime = 1000
 -- wait-time for key-combos (ms) [default: 1000]
-vim.opt.timeoutlen = 300
+vim.opt.timeoutlen = 250
 
 --vim.opt.lazyredraw = true
 --vim.opt.regexpengine = 1
