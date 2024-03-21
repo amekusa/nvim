@@ -1,9 +1,16 @@
 ---- LANGUAGES ----
 
--- languages (filetypes) to support
+-- filetypes to support
+local filetypes = {
+	'lua',
+	'html', 'css', 'javascript',
+	'json', 'yaml',
+	'php',
+}
+-- languages to support
 local langs = {
-	'lua', 'vim', 'vimdoc',
-	'html', 'css', 'javascript', 'json', 'php',
+	'vim', 'vimdoc',
+	'json',
 }
 
 local plugins = {
@@ -12,11 +19,11 @@ local plugins = {
 		'nvim-treesitter/nvim-treesitter',
 		enabled = true,
 		lazy = true,
-		ft = langs,
+		ft = filetypes,
 		build = ':TSUpdate',
 		config = function()
 			require('nvim-treesitter.configs').setup({
-				ensure_installed = langs,
+				ensure_installed = vim.list_extend(langs, filetypes),
 				sync_install = false,
 				auto_install = false,
 				indent = {enable = true},
@@ -40,7 +47,7 @@ local plugins = {
 		'williamboman/mason-lspconfig.nvim',
 		enabled = true,
 		lazy = true,
-		ft = langs,
+		ft = filetypes,
 		cmd = {'Mason', 'LspInfo', 'LspInstall', 'LspUninstall'},
 		dependencies = {
 			'williamboman/mason.nvim', -- lsp package manager
