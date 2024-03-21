@@ -16,10 +16,16 @@ local langs = {
 local plugins = {
 	{
 		-- language parser & syntax highlighter
-		'nvim-treesitter/nvim-treesitter',
-		enabled = true,
+		'nvim-treesitter/nvim-treesitter', enabled = true,
+		dependencies = {
+			-- optional modules
+			'nvim-treesitter/nvim-treesitter-refactor',
+			--'nvim-treesitter/nvim-treesitter-textobjects',
+			--'nvim-treesitter/nvim-treesitter-context',
+		},
 		lazy = true,
 		ft = filetypes,
+		cmd = {'TSInstallInfo', 'TSInstall', 'TSUninstall', 'TSUpdate'},
 		build = ':TSUpdate',
 		config = function()
 			require('nvim-treesitter.configs').setup({
@@ -28,6 +34,22 @@ local plugins = {
 				auto_install = false,
 				indent = {enable = true},
 				highlight = {enable = true},
+
+				refactor = {
+					highlight_definitions = {
+						enable = true,
+						clear_on_cursor_move = false,
+					},
+					highlight_current_scope = {
+						enable = false,
+					},
+					smart_rename = {
+						enable = true,
+						keymaps = {
+							smart_rename = '<leader>r',
+						}
+					}
+				}
 			})
 		end
 	},
