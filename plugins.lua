@@ -2,9 +2,41 @@
 local map = vim.keymap.set
 local plugins = {
 	{
-		'bfredl/nvim-luadev',
+		-- jump around with keypresses (*****)
+		'folke/flash.nvim',
 		enabled = true,
-		lazy = false,
+		lazy = true,
+		event = 'VeryLazy',
+		config = function()
+			local api = require('flash')
+			api.setup({
+				search = {
+					mode = 'search', -- exact/search/fuzzy
+					incremental = true,
+				},
+				jump = {
+					nohlsearch = true, -- clear highlight after jump?
+					autojump = true, -- automatically jump when there is only one match?
+				},
+				label = {
+					uppercase = false, -- allow uppercase labels?
+				},
+				modes = {
+					search = { -- '/' mode options
+						enabled = true,
+					},
+					char = { -- 'f' mode options
+						enabled = true,
+						jump_labels = true, -- show jump labels?
+						multi_line = true, -- multi-line or current-line-only
+						keys = {'f','F','t','T'},
+						label = {
+							exclude = 'fthjkliardc', -- exclude these letters from jump labels
+						},
+					},
+				},
+			})
+		end
 	},
 	{
 		-- automatically close blocks (****.)
@@ -17,7 +49,7 @@ local plugins = {
 	{
 		-- jump around with keypresses (*****)
 		'ggandor/leap.nvim',
-		enabled = true,
+		enabled = false,
 		lazy = true,
 		event = 'BufEnter',
 		dependencies = {'tpope/vim-repeat'},
