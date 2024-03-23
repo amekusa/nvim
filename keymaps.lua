@@ -52,6 +52,10 @@ map('v', '<C-j>', "<Esc><Cmd>'<,'>m'>+1<CR>gv=gv", desc 'Move lines down')
 --         '< = beginning line of the selection
 --         '> =       end line of the selection
 
+-- prev/next buffer
+map(nvi, '<C-h>', '<Cmd>bp<CR>', desc 'Prev buffer')
+map(nvi, '<C-l>', '<Cmd>bn<CR>', desc 'Next buffer')
+
 
 -- normal mode
 map('i', 'jk', '<Esc>', desc 'Normal mode')
