@@ -269,7 +269,8 @@ local plugins = {
 		'lewis6991/gitsigns.nvim', enabled = true,
 		event = on_read,
 		config = function()
-			require('gitsigns').setup({
+			local api = require('gitsigns')
+			api.setup({
 				signs = {
 					add          = {text = '+'}, -- {text = '│'},
 					change       = {text = '*'}, -- {text = '│'},
@@ -279,43 +280,54 @@ local plugins = {
 					untracked    = {text = '┆'},
 				},
 				on_attach = function(bufnr)
-					local api = package.loaded.gitsigns
-					local function desc(s, opts)
+					local function desc(msg, opts)
 						local r = opts or {}
-						r.desc = 'gitsigns: ' .. s
+						r.desc = 'gitsigns: '..msg
 						r.buffer = bufnr
 						return r
 					end
-					map('n', ']c',
-						function()
-						if vim.wo.diff then return ']c' end
-							vim.schedule(api.next_hunk)
-							return '<Ignore>'
-						end,
-						desc('Next hunk', {expr = true})
-					)
+					---- KEYMAPS ----
+					-- prev hunk
 					map('n', '[c',
 						function()
-						if vim.wo.diff then return '[c' end
+							if vim.wo.diff then return '[c' end
 							vim.schedule(api.prev_hunk)
 							return '<Ignore>'
 						end,
 						desc('Previous hunk', {expr = true})
 					)
-					map('n', '<leader>hs', api.stage_hunk, desc 'Stage hunk')
-					map('n', '<leader>hr', api.reset_hunk, desc 'Reset hunk')
-					map('v', '<leader>hs', function() api.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end, desc 'Stage hunk')
-					map('v', '<leader>hr', function() api.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end, desc 'Reset hunk')
-					map('n', '<leader>hS', api.stage_buffer, desc 'Stage buffer')
-					map('n', '<leader>hu', api.undo_stage_hunk, desc 'Undo stage hunk')
-					map('n', '<leader>hR', api.reset_buffer, desc 'Reset buffer')
-					map('n', '<leader>hp', api.preview_hunk, desc 'Preview hunk')
-					map('n', '<leader>hb', function() api.blame_line {full = true} end, desc 'Blame line')
-					map('n', '<leader>tb', api.toggle_current_line_blame, desc 'Toggle blame')
-					map('n', '<leader>hd', api.diffthis, desc 'Diff')
-					map('n', '<leader>hD', function() api.diffthis('~') end, desc 'Diff')
-					map('n', '<leader>td', api.toggle_deleted, desc 'Toggle deleted')
-					map({'o','x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>', desc 'Select hunk')
+					-- next hunk
+					map('n', ']c',
+						function()
+							if vim.wo.diff then return ']c' end
+							vim.schedule(api.next_hunk)
+							return '<Ignore>'
+						end,
+						desc('Next hunk', {expr = true})
+					)
+					-- stage hunk
+					map('n', '<leader>gs', api.stage_hunk, desc 'Stage hunk')
+					map('v', '<leader>gs', function() api.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end, desc 'Stage hunk')
+					-- reset hunk
+					map('n', '<leader>gr', api.reset_hunk, desc 'Reset hunk')
+					map('v', '<leader>gr', function() api.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end, desc 'Reset hunk')
+					-- stage the whole buffer
+					map('n', '<leader>gS', api.stage_buffer, desc 'Stage buffer')
+					-- undo stage hunk
+					map('n', '<leader>gu', api.undo_stage_hunk, desc 'Undo stage hunk')
+					-- reset the whole buffer
+					map('n', '<leader>gR', api.reset_buffer, desc 'Reset buffer')
+					-- preview hunk
+					map('n', '<leader>gp', api.preview_hunk, desc 'Preview hunk')
+					-- blame line
+					map('n', '<leader>gb', function() api.blame_line {full = true} end, desc 'Blame line')
+					-- toggle blame
+					map('n', '<leader>gB', api.toggle_current_line_blame, desc 'Toggle blame')
+					-- diff
+					map('n', '<leader>gd', api.diffthis, desc 'Diff')
+					map('n', '<leader>gD', function() api.diffthis('~') end, desc 'Diff')
+					-- toggle deleted
+					map('n', '<leader>gx', api.toggle_deleted, desc 'Toggle deleted')
 				end,
 			})
 		end
