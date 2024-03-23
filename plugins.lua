@@ -1,5 +1,6 @@
 ---- PLUGINS ----
 local map = vim.keymap.set
+local autocmd = vim.api.nvim_create_autocmd
 local on_read = {'BufReadPre', 'BufNewFile'}
 
 local plugins = {
@@ -221,6 +222,18 @@ local plugins = {
 				end,
 				{desc = 'Toggle nvim-tree'}
 			)
+
+			autocmd('BufEnter', {
+				desc = 'nvim-tree: Highlight the current buffer',
+				pattern = '*',
+				callback = function(ev)
+					api.tree.find_file({
+						buf = ev.buf,
+						open = false,
+						focus = false,
+					})
+				end
+			})
 		end
 	},
 	{
