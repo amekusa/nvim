@@ -48,6 +48,9 @@ vim.opt.listchars = {
 	trail = '·',
 	nbsp  = '␣'
 }
+-- tab width
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 0
 -- break indent
 vim.opt.breakindent = true
 -- preview substitutions as you type
