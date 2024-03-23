@@ -102,9 +102,9 @@ map('i', '<C-f>', [[<Esc>:%s/\v//gc<Left><Left><Left><Left>]],  desc 'Search & r
 map('v', '<C-f>', [[:s/\v%V//gc<Left><Left><Left><Left>]],      desc 'Search & replace in the selected range')
 
 -- search & replace the current word
-map('n', '<leader>f', [[:%s/\v<C-r><C-w>//gc<Left><Left><Left>]], desc 'Search & replace the word')
+map('n', '<leader>fw', [[:%s/\v<C-r><C-w>//gc<Left><Left><Left>]], desc 'Search & replace the word')
 
 -- search & replace the selected text
-map('v', '<leader>f', [[y:%s/\v<C-r>"//gc<Left><Left><Left>]], desc 'Search & replace the selected text')
+map('v', '<leader>fv', [[y:%s/\v<C-r>"//gc<Left><Left><Left>]], desc 'Search & replace the selected text')
 --   NOTE: <C-r>" outputs the last yanked text
 

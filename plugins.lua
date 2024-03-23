@@ -256,7 +256,7 @@ local plugins = {
 			map('n', '<leader>fh', api.help_tags, desc 'Help')
 			map('n', '<leader>fm', api.man_pages, desc 'Man Pages')
 			map('n', '<leader>fq', api.quickfix, desc 'Quickfix')
-			map('n', '<leader>fv', api.vim_options, desc 'Vim Options')
+			map('n', '<leader>fo', api.vim_options, desc 'Vim Options')
 			map('n', '<leader>fr', api.registers, desc 'Registers')
 			map('n', '<leader>fk', api.keymaps, desc 'Key Maps')
 			map('n', '<leader>fs', api.treesitter, desc 'Treesitter Symbols')
