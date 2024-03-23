@@ -234,10 +234,37 @@ local plugins = {
 		end
 	},
 	{
-		-- fuzzy finder
+		-- fuzzy finder (*****)
 		'nvim-telescope/telescope.nvim', enabled = true,
 		dependencies = {'nvim-lua/plenary.nvim'},
 		event = 'VimEnter',
+		config = function()
+			local api = require('telescope')
+			api.setup({
+				-- options
+			})
+			---- KEYMAPS ----
+			api = require('telescope.builtin')
+			local function desc(msg)
+				return {desc = 'telescope: '..msg}
+			end
+			map('n', '<leader>t',  api.builtin, desc 'Telescope')
+			map('n', '<leader>ff', api.find_files, desc 'Find Files')
+			map('n', '<leader>fg', api.live_grep, desc 'Live Grep')
+			map('n', '<leader>fb', api.buffers, desc 'Buffers')
+			map('n', '<leader>f;', api.commands, desc 'Commands')
+			map('n', '<leader>fh', api.help_tags, desc 'Help')
+			map('n', '<leader>fm', api.man_pages, desc 'Man Pages')
+			map('n', '<leader>fq', api.quickfix, desc 'Quickfix')
+			map('n', '<leader>fv', api.vim_options, desc 'Vim Options')
+			map('n', '<leader>fr', api.registers, desc 'Registers')
+			map('n', '<leader>fk', api.keymaps, desc 'Key Maps')
+			map('n', '<leader>fs', api.treesitter, desc 'Treesitter Symbols')
+			map('n', '<leader>fC', api.git_commits, desc 'Commits')
+			map('n', '<leader>fc', api.git_bcommits, desc 'Commits for the buffer')
+			--map('v', '<leader>fc', api.git_bcommits_range, desc 'Commits in the range')
+			--   NOTE: this causes error bc 'git_bcommits_range' is nil. no idea how to fix it.
+		end
 	},
 	{
 		-- cheatsheet
