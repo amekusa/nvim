@@ -86,7 +86,8 @@ map('c', '<C-q>', '<C-c>',      desc 'Escape command line')
 --         which is unwanted behavior. so, use <C-c> instead.
 
 -- save
-map(nvi, '<C-s>', '<Cmd>w<CR>', desc 'Save')
+map(nv,  '<C-s>', '<Cmd>w<CR>',      desc 'Save')
+map('i', '<C-s>', '<Esc><Cmd>w<CR>', desc 'Save')
 
 -- undo
 map(nvi, '<C-z>', '<Cmd>u<CR>', desc 'Undo')
