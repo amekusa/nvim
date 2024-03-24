@@ -118,6 +118,9 @@ local plugins = {
 						'.DS_Store'
 					},
 				},
+				update_focused_file = {
+					enable = true, -- highlight the current buffer
+				},
 				diagnostics = {
 					enable = true,
 				},
@@ -222,18 +225,6 @@ local plugins = {
 				end,
 				{desc = 'Toggle nvim-tree'}
 			)
-
-			autocmd('BufEnter', {
-				desc = 'nvim-tree: Highlight the current buffer',
-				pattern = '*',
-				callback = function(ev)
-					api.tree.find_file({
-						buf = ev.buf,
-						open = false,
-						focus = false,
-					})
-				end
-			})
 		end
 	},
 	{
