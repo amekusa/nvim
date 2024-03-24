@@ -115,17 +115,18 @@ local plugins = {
 					git_ignored = false, -- do not hide ignored files
 					custom = {
 						'.git',
-						'.DS_Store'
+						'.DS_Store',
+						'Thumbs.db',
 					},
 				},
 				update_focused_file = {
 					enable = true, -- highlight the current buffer
 				},
-				diagnostics = {
-					enable = true,
-				},
 				modified = {
-					enable = true,
+					enable = true, -- highlight modified files
+				},
+				diagnostics = {
+					enable = true, -- highlight the files with issues
 				},
 				renderer = {
 					special_files = {},
@@ -134,6 +135,9 @@ local plugins = {
 					highlight_opened_files = 'none',
 					highlight_modified = 'name',
 					icons = {
+						show = {
+							git = false,
+						},
 						web_devicons = {
 							file = {
 								enable = true,
@@ -144,14 +148,11 @@ local plugins = {
 								color = false,
 							},
 						},
-						show = {
-							git = false,
-						},
 					},
 				},
 				on_attach = function(bufnr)
-					local function desc(s)
-						return {desc = 'nvim-tree: ' .. s, buffer = bufnr, noremap = true, silent = true, nowait = true}
+					local function desc(msg)
+						return {desc = 'nvim-tree: '..msg, buffer = bufnr, nowait = true}
 					end
 					-- default keymaps
 					map('n', '<C-]>', api.tree.change_root_to_node,          desc 'CD')
