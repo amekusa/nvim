@@ -213,8 +213,7 @@ local plugins = {
 			map({'n','v','i','t'}, '<C-e>',
 				function()
 					if api.tree.is_tree_buf() then -- is current pane nvim-tree?
-						local key = '<C-w>p' -- ctrl+w,p = switch to previous window
-						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, false, true), 'n', false) -- emulate keypresses
+						vim.cmd('winc p') -- previous window (<C-w>p)
 						return
 					end
 					-- switch to nvim-tree
