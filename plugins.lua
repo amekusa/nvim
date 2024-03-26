@@ -1,6 +1,6 @@
 ---- PLUGINS ----
-local map = vim.keymap.set
-local autocmd = vim.api.nvim_create_autocmd
+local my = vim.g._custom
+local map = my.fn.map
 local on_read = {'BufReadPre', 'BufNewFile'}
 
 local plugins = {
@@ -9,11 +9,11 @@ local plugins = {
 		'folke/flash.nvim', enabled = true,
 		event = 'VeryLazy',
 		config = function()
-			local api = require('flash')
-			api.setup({
+			require('flash').setup({
 				search = {
-					mode = 'search', -- exact/search/fuzzy
+					mode = 'exact', -- exact/search/fuzzy
 					incremental = true,
+					multi_window = false,
 				},
 				jump = {
 					nohlsearch = true, -- clear highlight after jump?
@@ -47,34 +47,6 @@ local plugins = {
 			require('nvim-autopairs').setup({
 				-- options
 			})
-		end
-	},
-	{
-		-- jump around with keypresses (*****)
-		'ggandor/leap.nvim', enabled = false,
-		dependencies = {'tpope/vim-repeat'},
-		event = 'VeryLazy',
-		config = function()
-			local api = require('leap')
-
-			-- options
-			local opts = api.opts
-			opts.case_sensitive = true
-			opts.max_highlighted_traversal_targets = 12
-			opts.special_keys = {
-				next_target = '<enter>',
-				prev_target = '<tab>',
-				next_group = '<space>',
-				prev_group = '<tab>',
-			}
-
-			-- keymaps
-			if true then -- use default?
-				api.create_default_mappings()
-			else -- custom keymaps
-				map({'n','x','o'}, '<leader>l', '<Plug>(leap-forward)', {desc = 'Leap forward'})
-				map({'n','x','o'}, '<leader>L', '<Plug>(leap-backward)', {desc = 'Leap backward'})
-			end
 		end
 	},
 	{
@@ -131,9 +103,9 @@ local plugins = {
 				renderer = {
 					special_files = {},
 					highlight_git = 'name', -- none/icon/name/all
-					highlight_diagnostics = 'name',
-					highlight_opened_files = 'none',
-					highlight_modified = 'name',
+					highlight_diagnostics = 'none',
+					highlight_opened_files = 'name',
+					highlight_modified = 'none',
 					icons = {
 						show = {
 							git = false,
@@ -150,81 +122,76 @@ local plugins = {
 						},
 					},
 				},
-				on_attach = function(bufnr)
-					local function desc(msg)
-						return {desc = 'nvim-tree: '..msg, buffer = bufnr, nowait = true}
-					end
+				on_attach = function(buf)
+					local opts = {buffer = buf, nowait = true}
 					-- default keymaps
-					map('n', '<C-]>', api.tree.change_root_to_node,          desc 'CD')
-					--map('n', '<C-e>', api.node.open.replace_tree_buffer,     desc 'Open: In Place')
-					map('n', '<C-k>', api.node.show_info_popup,              desc 'Info')
-					--map('n', '<C-r>', api.fs.rename_sub,                     desc 'Rename: Omit Filename')
-					map('n', '<C-t>', api.node.open.tab,                     desc 'Open: New Tab')
-					map('n', '<C-v>', api.node.open.vertical,                desc 'Open: Vertical Split')
-					map('n', '<C-x>', api.node.open.horizontal,              desc 'Open: Horizontal Split')
-					map('n', '<BS>',  api.node.navigate.parent_close,        desc 'Close Directory')
-					map('n', '<CR>',  api.node.open.edit,                    desc 'Open')
-					map('n', '<Tab>', api.node.open.preview,                 desc 'Open Preview')
-					map('n', '>',     api.node.navigate.sibling.next,        desc 'Next Sibling')
-					map('n', '<',     api.node.navigate.sibling.prev,        desc 'Previous Sibling')
-					map('n', '.',     api.node.run.cmd,                      desc 'Run Command')
-					map('n', '-',     api.tree.change_root_to_parent,        desc 'Up')
-					map('n', 'a',     api.fs.create,                         desc 'Create')
-					map('n', 'bmv',   api.marks.bulk.move,                   desc 'Move Bookmarked')
-					--map('n', 'B',     api.tree.toggle_no_buffer_filter,      desc 'Toggle No Buffer')
-					map('n', 'c',     api.fs.copy.node,                      desc 'Copy')
-					--map('n', 'C',     api.tree.toggle_git_clean_filter,      desc 'Toggle Git Clean')
-					map('n', '[c',    api.node.navigate.git.prev,            desc 'Prev Git')
-					map('n', ']c',    api.node.navigate.git.next,            desc 'Next Git')
-					map('n', 'd',     api.fs.remove,                         desc 'Delete')
-					map('n', 'D',     api.fs.trash,                          desc 'Trash')
-					map('n', 'E',     api.tree.expand_all,                   desc 'Expand All')
-					map('n', 'e',     api.fs.rename_basename,                desc 'Rename: Basename')
-					--map('n', ']e',    api.node.navigate.diagnostics.next,    desc 'Next Diagnostic')
-					--map('n', '[e',    api.node.navigate.diagnostics.prev,    desc 'Prev Diagnostic')
-					map('n', 'F',     api.live_filter.clear,                 desc 'Clean Filter')
-					map('n', 'f',     api.live_filter.start,                 desc 'Filter')
-					map('n', 'g?',    api.tree.toggle_help,                  desc 'Help')
-					map('n', 'gy',    api.fs.copy.absolute_path,             desc 'Copy Absolute Path')
-					map('n', 'H',     api.tree.toggle_hidden_filter,         desc 'Toggle Dotfiles')
-					map('n', 'I',     api.tree.toggle_gitignore_filter,      desc 'Toggle Git Ignore')
-					map('n', 'J',     api.node.navigate.sibling.last,        desc 'Last Sibling')
-					map('n', 'K',     api.node.navigate.sibling.first,       desc 'First Sibling')
-					map('n', 'm',     api.marks.toggle,                      desc 'Toggle Bookmark')
-					map('n', 'o',     api.node.open.edit,                    desc 'Open')
-					map('n', 'O',     api.node.open.no_window_picker,        desc 'Open: No Window Picker')
-					map('n', 'p',     api.fs.paste,                          desc 'Paste')
-					map('n', 'P',     api.node.navigate.parent,              desc 'Parent Directory')
-					map('n', 'q',     api.tree.close,                        desc 'Close')
-					map('n', 'r',     api.fs.rename,                         desc 'Rename')
-					map('n', 'R',     api.tree.reload,                       desc 'Refresh')
-					--map('n', 's',     api.node.run.system,                   desc 'Run System')
-					--map('n', 'S',     api.tree.search_node,                  desc 'Search')
-					map('n', 'U',     api.tree.toggle_custom_filter,         desc 'Toggle Hidden')
-					map('n', 'W',     api.tree.collapse_all,                 desc 'Collapse')
-					map('n', 'x',     api.fs.cut,                            desc 'Cut')
-					map('n', 'y',     api.fs.copy.filename,                  desc 'Copy Name')
-					map('n', 'Y',     api.fs.copy.relative_path,             desc 'Copy Relative Path')
-					map('n', '<2-LeftMouse>',  api.node.open.edit,           desc 'Open')
-					map('n', '<2-RightMouse>', api.tree.change_root_to_node, desc 'CD')
+					map('nvim-tree: CD', 'n', '<C-]>', api.tree.change_root_to_node, opts)
+					--map('nvim-tree: Open: In Place', 'n', '<C-e>', api.node.open.replace_tree_buffer, opts)
+					map('nvim-tree: Info', 'n', '<C-k>', api.node.show_info_popup, opts)
+					--map('nvim-tree: Rename: Omit Filename', 'n', '<C-r>', api.fs.rename_sub, opts)
+					map('nvim-tree: Open: New Tab', 'n', '<C-t>', api.node.open.tab, opts)
+					map('nvim-tree: Open: Vertical Split', 'n', '<C-v>', api.node.open.vertical, opts)
+					map('nvim-tree: Open: Horizontal Split', 'n', '<C-x>', api.node.open.horizontal, opts)
+					map('nvim-tree: Close Directory', 'n', '<BS>',  api.node.navigate.parent_close, opts)
+					map('nvim-tree: Open', 'n', '<CR>',  api.node.open.edit, opts)
+					map('nvim-tree: Open Preview', 'n', '<Tab>', api.node.open.preview, opts)
+					map('nvim-tree: Next Sibling', 'n', '>',     api.node.navigate.sibling.next, opts)
+					map('nvim-tree: Previous Sibling', 'n', '<',     api.node.navigate.sibling.prev, opts)
+					map('nvim-tree: Run Command', 'n', '.',     api.node.run.cmd, opts)
+					map('nvim-tree: Up', 'n', '-',     api.tree.change_root_to_parent, opts)
+					map('nvim-tree: Create', 'n', 'a',     api.fs.create, opts)
+					map('nvim-tree: Move Bookmarked', 'n', 'bmv',   api.marks.bulk.move, opts)
+					--map('nvim-tree: Toggle No Buffer', 'n', 'B',     api.tree.toggle_no_buffer_filter, opts)
+					map('nvim-tree: Copy', 'n', 'c',     api.fs.copy.node, opts)
+					--map('nvim-tree: Toggle Git Clean', 'n', 'C',     api.tree.toggle_git_clean_filter, opts)
+					map('nvim-tree: Prev Git', 'n', '[c',    api.node.navigate.git.prev, opts)
+					map('nvim-tree: Next Git', 'n', ']c',    api.node.navigate.git.next, opts)
+					map('nvim-tree: Delete', 'n', 'd',     api.fs.remove, opts)
+					map('nvim-tree: Trash', 'n', 'D',     api.fs.trash, opts)
+					map('nvim-tree: Expand All', 'n', 'E',     api.tree.expand_all, opts)
+					map('nvim-tree: Rename: Basename', 'n', 'e',     api.fs.rename_basename, opts)
+					--map('nvim-tree: Next Diagnostic', 'n', ']e',    api.node.navigate.diagnostics.next, opts)
+					--map('nvim-tree: Prev Diagnostic', 'n', '[e',    api.node.navigate.diagnostics.prev, opts)
+					map('nvim-tree: Clean Filter', 'n', 'F',     api.live_filter.clear, opts)
+					map('nvim-tree: Filter', 'n', 'f',     api.live_filter.start, opts)
+					map('nvim-tree: Help', 'n', 'g?',    api.tree.toggle_help, opts)
+					map('nvim-tree: Copy Absolute Path', 'n', 'gy',    api.fs.copy.absolute_path, opts)
+					map('nvim-tree: Toggle Dotfiles', 'n', 'H',     api.tree.toggle_hidden_filter, opts)
+					map('nvim-tree: Toggle Git Ignore', 'n', 'I',     api.tree.toggle_gitignore_filter, opts)
+					map('nvim-tree: Last Sibling', 'n', 'J',     api.node.navigate.sibling.last, opts)
+					map('nvim-tree: First Sibling', 'n', 'K',     api.node.navigate.sibling.first, opts)
+					map('nvim-tree: Toggle Bookmark', 'n', 'm',     api.marks.toggle, opts)
+					map('nvim-tree: Open', 'n', 'o',     api.node.open.edit, opts)
+					map('nvim-tree: Open: No Window Picker', 'n', 'O',     api.node.open.no_window_picker, opts)
+					map('nvim-tree: Paste', 'n', 'p',     api.fs.paste, opts)
+					map('nvim-tree: Parent Directory', 'n', 'P',     api.node.navigate.parent, opts)
+					map('nvim-tree: Close', 'n', 'q',     api.tree.close, opts)
+					map('nvim-tree: Rename', 'n', 'r',     api.fs.rename, opts)
+					map('nvim-tree: Refresh', 'n', 'R',     api.tree.reload, opts)
+					--map('nvim-tree: Run System', 'n', 's',     api.node.run.system, opts)
+					--map('nvim-tree: Search', 'n', 'S',     api.tree.search_node, opts)
+					map('nvim-tree: Toggle Hidden', 'n', 'U',     api.tree.toggle_custom_filter, opts)
+					map('nvim-tree: Collapse', 'n', 'W',     api.tree.collapse_all, opts)
+					map('nvim-tree: Cut', 'n', 'x',     api.fs.cut, opts)
+					map('nvim-tree: Copy Name', 'n', 'y',     api.fs.copy.filename, opts)
+					map('nvim-tree: Copy Relative Path', 'n', 'Y',     api.fs.copy.relative_path, opts)
+					map('nvim-tree: Open', 'n', '<2-LeftMouse>',  api.node.open.edit, opts)
+					map('nvim-tree: CD', 'n', '<2-RightMouse>', api.tree.change_root_to_node, opts)
 				end,
 			})
 			-- toggle focus nvim-tree
-			map({'n','v','i','t'}, '<C-e>',
-				function()
-					if api.tree.is_tree_buf() then -- is current pane nvim-tree?
-						vim.cmd('winc p') -- previous window (<C-w>p)
-						return
-					end
-					-- switch to nvim-tree
-					vim.cmd('stopinsert') -- force normal mode
-					api.tree.find_file({
-						open = true, current_window = false,
-						focus = true,
-					})
-				end,
-				{desc = 'Toggle nvim-tree'}
-			)
+			map('nvim-tree: Toggle focus', {'n','v','i','t'}, '<C-e>', function()
+				if api.tree.is_tree_buf() then -- is current pane nvim-tree?
+					vim.cmd.wincmd('p') -- previous window (<C-w>p)
+					return
+				end
+				-- switch to nvim-tree
+				vim.cmd.stopinsert() -- force normal mode
+				api.tree.find_file({
+					open = true, current_window = false,
+					focus = true,
+				})
+			end)
 		end
 	},
 	{
@@ -243,30 +210,27 @@ local plugins = {
 		dependencies = {'nvim-lua/plenary.nvim'},
 		event = 'VimEnter',
 		config = function()
-			local api = require('telescope')
-			api.setup({
-				-- options
+			require('telescope').setup({
+				defaults = {
+					layout_strategy = 'vertical',
+				},
 			})
-			---- KEYMAPS ----
-			api = require('telescope.builtin')
-			local function desc(msg)
-				return {desc = 'telescope: '..msg}
-			end
-			map('n', '<leader>t',  api.builtin, desc 'Telescope')
-			map('n', '<leader>ff', api.find_files, desc 'Find Files')
-			map('n', '<leader>fg', api.live_grep, desc 'Live Grep')
-			map('n', '<leader>fb', api.buffers, desc 'Buffers')
-			map('n', '<leader>f;', api.commands, desc 'Commands')
-			map('n', '<leader>fh', api.help_tags, desc 'Help')
-			map('n', '<leader>fm', api.man_pages, desc 'Man Pages')
-			map('n', '<leader>fq', api.quickfix, desc 'Quickfix')
-			map('n', '<leader>fo', api.vim_options, desc 'Vim Options')
-			map('n', '<leader>fr', api.registers, desc 'Registers')
-			map('n', '<leader>fk', api.keymaps, desc 'Key Maps')
-			map('n', '<leader>fs', api.treesitter, desc 'Treesitter Symbols')
-			map('n', '<leader>fC', api.git_commits, desc 'Commits')
-			map('n', '<leader>fc', api.git_bcommits, desc 'Commits for the buffer')
-			--map('v', '<leader>fc', api.git_bcommits_range, desc 'Commits in the range')
+			local api = require('telescope.builtin')
+			map('telescope: Builtin', 'n', '<leader>t',  api.builtin)
+			map('telescope: Find Files', 'n', '<leader>ff', api.find_files)
+			map('telescope: Live Grep', 'n', '<leader>fg', api.live_grep)
+			map('telescope: Buffers', 'n', '<leader>fb', api.buffers)
+			map('telescope: Commands', 'n', '<leader>f;', api.commands)
+			map('telescope: Help', 'n', '<leader>fh', api.help_tags)
+			map('telescope: Man Pages', 'n', '<leader>fm', api.man_pages)
+			map('telescope: Quickfix', 'n', '<leader>fq', api.quickfix)
+			map('telescope: Vim Options', 'n', '<leader>fo', api.vim_options)
+			map('telescope: Registers', 'n', '<leader>fr', api.registers)
+			map('telescope: Key Maps', 'n', '<leader>fk', api.keymaps)
+			map('telescope: Treesitter Symbols', 'n', '<leader>fs', api.treesitter)
+			map('telescope: Commits', 'n', '<leader>fC', api.git_commits)
+			map('telescope: Commits for the buffer', 'n', '<leader>fc', api.git_bcommits)
+			--map('telescope: Commits in the range', 'v', '<leader>fc', api.git_bcommits_range)
 			--   NOTE: this causes error bc 'git_bcommits_range' is nil. no idea how to fix it.
 		end
 	},
@@ -310,55 +274,34 @@ local plugins = {
 					changedelete = {text = '~'},
 					untracked    = {text = '┆'},
 				},
-				on_attach = function(bufnr)
-					local function desc(msg, opts)
-						local r = opts or {}
-						r.desc = 'gitsigns: '..msg
-						r.buffer = bufnr
-						return r
-					end
-					---- KEYMAPS ----
-					-- prev hunk
-					map('n', '[c',
-						function()
-							if vim.wo.diff then return '[c' end
-							vim.schedule(api.prev_hunk)
-							return '<Ignore>'
-						end,
-						desc('Previous hunk', {expr = true})
-					)
-					-- next hunk
-					map('n', ']c',
-						function()
-							if vim.wo.diff then return ']c' end
-							vim.schedule(api.next_hunk)
-							return '<Ignore>'
-						end,
-						desc('Next hunk', {expr = true})
-					)
-					-- stage hunk
-					map('n', '<leader>gs', api.stage_hunk, desc 'Stage hunk')
-					map('v', '<leader>gs', function() api.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end, desc 'Stage hunk')
-					-- reset hunk
-					map('n', '<leader>gr', api.reset_hunk, desc 'Reset hunk')
-					map('v', '<leader>gr', function() api.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end, desc 'Reset hunk')
-					-- stage the whole buffer
-					map('n', '<leader>gS', api.stage_buffer, desc 'Stage buffer')
-					-- undo stage hunk
-					map('n', '<leader>gu', api.undo_stage_hunk, desc 'Undo stage hunk')
-					-- reset the whole buffer
-					map('n', '<leader>gR', api.reset_buffer, desc 'Reset buffer')
-					-- preview hunk
-					map('n', '<leader>gp', api.preview_hunk, desc 'Preview hunk')
-					-- blame line
-					map('n', '<leader>gb', function() api.blame_line {full = true} end, desc 'Blame line')
-					-- toggle blame
-					map('n', '<leader>gB', api.toggle_current_line_blame, desc 'Toggle blame')
-					-- diff
-					map('n', '<leader>gd', api.diffthis, desc 'Diff')
-					map('n', '<leader>gD', function() api.diffthis('~') end, desc 'Diff')
-					-- toggle deleted
-					map('n', '<leader>gx', api.toggle_deleted, desc 'Toggle deleted')
+				on_attach = function(buf)
+					local opts = {buffer = buf}
+					map('gitsigns: Stage hunk', 'n', '<leader>gs', api.stage_hunk, opts)
+					map('gitsigns: Stage hunk', 'v', '<leader>gs', function() api.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end, opts)
+					map('gitsigns: Reset hunk', 'n', '<leader>gr', api.reset_hunk, opts)
+					map('gitsigns: Reset hunk', 'v', '<leader>gr', function() api.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end, opts)
+					map('gitsigns: Stage buffer', 'n', '<leader>gS', api.stage_buffer, opts)
+					map('gitsigns: Undo stage hunk', 'n', '<leader>gu', api.undo_stage_hunk, opts)
+					map('gitsigns: Reset buffer', 'n', '<leader>gR', api.reset_buffer, opts)
+					map('gitsigns: Preview hunk', 'n', '<leader>gp', api.preview_hunk, opts)
+					map('gitsigns: Blame line', 'n', '<leader>gb', function() api.blame_line {full = true} end, opts)
+					map('gitsigns: Toggle blame', 'n', '<leader>gB', api.toggle_current_line_blame, opts)
+					map('gitsigns: Diff', 'n', '<leader>gd', api.diffthis, opts)
+					map('gitsigns: Diff', 'n', '<leader>gD', function() api.diffthis('~') end, opts)
+					map('gitsigns: Toggle deleted', 'n', '<leader>gx', api.toggle_deleted, opts)
+
+					map('gitsigns: Prev hunk', 'n', '[c', function()
+						if vim.wo.diff then return '[c' end
+						vim.schedule(api.prev_hunk)
+						return '<ignore>'
+					end, {buffer = buf, expr = true})
+
+					map('gitsigns: Next hunk', 'n', ']c', function()
+						if vim.wo.diff then return ']c' end
+						vim.schedule(api.next_hunk)
+						return '<ignore>'
+					end, {buffer = buf, expr = true})
+
 				end,
 			})
 		end
@@ -367,12 +310,12 @@ local plugins = {
 }
 
 -- lsp, syntax-highlighter, etc.
-for _,v in ipairs(require(ns_custom..'langs')) do
+for _,v in ipairs(require(my.base..'langs')) do
 	table.insert(plugins, v)
 end
 
 -- themes
-local themes = require(ns_custom..'themes')
+local themes = require(my.base..'themes')
 for k,v in pairs(themes.list) do
 	if k == themes.select then
 		v.cond = true
@@ -409,7 +352,7 @@ require('lazy').setup(plugins, {
 		version = '*', -- try installing the latest stable versions of plugins
 	},
 	lockfile = vim.fn.stdpath('config')..'/lua/'..
-		ns_custom:gsub('%.', '/').. -- replace '.' with '/'
+		my.base:gsub('%.', '/').. -- replace '.' with '/'
 		'plugins-lock.json'
 })
 

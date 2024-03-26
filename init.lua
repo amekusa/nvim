@@ -1,9 +1,21 @@
 ---[ amekusa's NeoVim Configuration ]---
 ---- github.com/amekusa/nvim
 
-local config = {
-	trim_trailing_whitespace = true,
+---- GLOBAL ----
+local my = {
+	base = (...)..'.', -- require base
+	conf = {
+		trim_trailing_whitespace = true,
+	},
+	fn = { -- utils
+		map = function(desc, mode, from, to, opts)
+			if not opts then opts = {} end
+			opts.desc = desc
+			return vim.keymap.set(mode, from, to, opts)
+		end,
+	}
 }
+vim.g._custom = my
 
 
 ---- OS RELATED ----
@@ -70,9 +82,8 @@ vim.opt.hlsearch = true
 
 
 ---- KEYMAPS & PLUGINS ----
-ns_custom = (...)..'.'
-require(ns_custom..'keymaps')
-require(ns_custom..'plugins')
+require(my.base..'keymaps')
+require(my.base..'plugins')
 
 
 ---- AUTO COMMANDS ----
@@ -83,9 +94,9 @@ local function regex_ext(ext) -- returns a regex that matches with given file ex
 	return vim.regex([[\.\(]]..table.concat(ext, [[\|]])..[[\)$]])
 end
 
-if config.trim_trailing_whitespace then
+if my.conf.trim_trailing_whitespace then
 	autocmd('BufWritePre', {
-		desc = 'Trim trailing whitespaces on save',
+		desc = 'Trim trailing whitespace on save',
 		pattern = '*',
 		callback = function(ev)
 			local ignore = {'md'}
