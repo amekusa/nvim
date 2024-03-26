@@ -14,12 +14,14 @@ local unmap = vim.keymap.del
 --   c: command line
 
 -- mode combos
-local nv = {'n','v'}
+local nv  = {'n','v'}
 local nvo = {'n','v','o'}
 local nvi = {'n','v','i'}
 
-local function desc(s) -- keymap description
-	return {desc = 'custom: '..s}
+local function desc(msg, opts) -- keymap description
+	if not opts then opts = {} end
+	opts.desc = 'custom: '..msg
+	return opts
 end
 
 
@@ -47,10 +49,12 @@ map('n', '<C-k>', '<Cmd>m.-2<CR>==', desc 'Move line up')
 map('n', '<C-j>', '<Cmd>m.+1<CR>==', desc 'Move line down')
 map('v', '<C-k>', "<Esc><Cmd>'<,'>m'<-2<CR>gv=gv", desc 'Move lines up')
 map('v', '<C-j>', "<Esc><Cmd>'<,'>m'>+1<CR>gv=gv", desc 'Move lines down')
---   NOTE: m  = move command
---         .  = current line number
---         '< = beginning line of the selection
---         '> =       end line of the selection
+--   NOTE:  m: move to X
+--          .: the current line
+--         '<: the first line of the selection
+--         '>: the last line of the selection
+--         gv: restart visual mode with the last selection
+--          =: autoindent
 
 -- prev/next buffer
 map(nvi, '<C-h>', '<Cmd>bp<CR>', desc 'Prev buffer')
