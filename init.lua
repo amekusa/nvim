@@ -32,9 +32,13 @@ vim.opt.termguicolors = true
 vim.opt.updatetime = 1000
 -- wait-time for key-combos (ms) [default: 1000]
 vim.opt.timeoutlen = 250
-
---vim.opt.lazyredraw = true
---vim.opt.regexpengine = 1
+-- redraw the screen lazily [default: false]
+vim.opt.lazyredraw = true
+-- default regex engine [default: 0]
+vim.opt.regexpengine = 0
+--   0: auto
+--   1: old engine
+--   2: NFA engine
 
 
 ---- UI ----
@@ -62,9 +66,11 @@ vim.opt.listchars = {
 }
 -- tab width
 vim.opt.tabstop = 4
-vim.opt.shiftwidth = 0
--- break indent
+vim.opt.shiftwidth = 0  -- 0 falls back to tabstop
+-- indent wrapped lines [default: false]
 vim.opt.breakindent = true
+-- autoindent new line [default: false]
+vim.opt.smartindent = true
 -- preview substitutions as you type
 vim.opt.inccommand = 'split'
 -- highlight the current line
