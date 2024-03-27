@@ -134,7 +134,6 @@ local plugins = {
 				},
 				on_attach = function(buf)
 					local opts = {buffer = buf, nowait = true}
-					-- default keymaps
 					map('nvim-tree: CD',                      'n', '<C-]>',          api.tree.change_root_to_node,       opts)
 					--map('nvim-tree: Open: In Place',        'n', '<C-e>',          api.node.open.replace_tree_buffer,  opts)
 					map('nvim-tree: Info',                    'n', '<C-k>',          api.node.show_info_popup,           opts)
@@ -226,21 +225,21 @@ local plugins = {
 				},
 			})
 			local api = require('telescope.builtin')
-			map('telescope: Builtin',                'n', '<leader>t',  api.builtin)
-			map('telescope: Find Files',             'n', '<leader>ff', api.find_files)
-			map('telescope: Live Grep',              'n', '<leader>fg', api.live_grep)
-			map('telescope: Buffers',                'n', '<leader>fb', api.buffers)
-			map('telescope: Commands',               'n', '<leader>f;', api.commands)
-			map('telescope: Help',                   'n', '<leader>fh', api.help_tags)
-			map('telescope: Man Pages',              'n', '<leader>fm', api.man_pages)
-			map('telescope: Quickfix',               'n', '<leader>fq', api.quickfix)
-			map('telescope: Vim Options',            'n', '<leader>fo', api.vim_options)
-			map('telescope: Registers',              'n', '<leader>fr', api.registers)
-			map('telescope: Key Maps',               'n', '<leader>fk', api.keymaps)
-			map('telescope: Treesitter Symbols',     'n', '<leader>fs', api.treesitter)
-			map('telescope: Commits',                'n', '<leader>fC', api.git_commits)
-			map('telescope: Commits for the buffer', 'n', '<leader>fc', api.git_bcommits)
-			--map('telescope: Commits in the range', 'v', '<leader>fc', api.git_bcommits_range)
+			map('telescope: Builtin',                'n', '<Leader>t',  api.builtin)
+			map('telescope: Files',                  'n', '<Leader>ff', api.find_files)
+			map('telescope: Grep',                   'n', '<Leader>fg', api.live_grep)
+			map('telescope: Buffers',                'n', '<Leader>fb', api.buffers)
+			map('telescope: Commands',               'n', '<Leader>f;', api.commands)
+			map('telescope: Help',                   'n', '<Leader>fh', api.help_tags)
+			map('telescope: Man Pages',              'n', '<Leader>fm', api.man_pages)
+			map('telescope: Quickfix',               'n', '<Leader>fq', api.quickfix)
+			map('telescope: Options',                'n', '<Leader>fo', api.vim_options)
+			map('telescope: Registers',              'n', '<Leader>fr', api.registers)
+			map('telescope: Keymaps',                'n', '<Leader>fk', api.keymaps)
+			map('telescope: Treesitter Symbols',     'n', '<Leader>fs', api.treesitter)
+			map('telescope: Commits',                'n', '<Leader>fC', api.git_commits)
+			map('telescope: Commits for the Buffer', 'n', '<Leader>fc', api.git_bcommits)
+			--map('telescope: Commits in the Range', 'v', '<Leader>fc', api.git_bcommits_range)
 			--   NOTE: this causes error bc 'git_bcommits_range' is nil. no idea how to fix it.
 		end
 	},
@@ -286,27 +285,27 @@ local plugins = {
 				},
 				on_attach = function(buf)
 					local opts = {buffer = buf}
-					map('gitsigns: Stage hunk',      'n', '<leader>gs', api.stage_hunk,                               opts)
-					map('gitsigns: Stage hunk',      'v', '<leader>gs', function() api.stage_hunk({vim.fn.line('.'), vim.fn.line('v')}) end, opts)
-					map('gitsigns: Reset hunk',      'n', '<leader>gr', api.reset_hunk,                               opts)
-					map('gitsigns: Reset hunk',      'v', '<leader>gr', function() api.reset_hunk({vim.fn.line('.'), vim.fn.line('v')}) end, opts)
-					map('gitsigns: Stage buffer',    'n', '<leader>gS', api.stage_buffer,                             opts)
-					map('gitsigns: Undo stage hunk', 'n', '<leader>gu', api.undo_stage_hunk,                          opts)
-					map('gitsigns: Reset buffer',    'n', '<leader>gR', api.reset_buffer,                             opts)
-					map('gitsigns: Preview hunk',    'n', '<leader>gp', api.preview_hunk,                             opts)
-					map('gitsigns: Blame line',      'n', '<leader>gb', function() api.blame_line({full = true}) end, opts)
-					map('gitsigns: Toggle blame',    'n', '<leader>gB', api.toggle_current_line_blame,                opts)
-					map('gitsigns: Diff',            'n', '<leader>gd', api.diffthis,                                 opts)
-					map('gitsigns: Diff',            'n', '<leader>gD', function() api.diffthis('~') end,             opts)
-					map('gitsigns: Toggle deleted',  'n', '<leader>gx', api.toggle_deleted,                           opts)
+					map('gitsigns: Stage Hunk',      'n', '<Leader>gs', api.stage_hunk,                               opts)
+					map('gitsigns: Stage Hunk',      'v', '<Leader>gs', function() api.stage_hunk({vim.fn.line('.'), vim.fn.line('v')}) end, opts)
+					map('gitsigns: Reset Hunk',      'n', '<Leader>gr', api.reset_hunk,                               opts)
+					map('gitsigns: Reset Hunk',      'v', '<Leader>gr', function() api.reset_hunk({vim.fn.line('.'), vim.fn.line('v')}) end, opts)
+					map('gitsigns: Stage Buffer',    'n', '<Leader>gS', api.stage_buffer,                             opts)
+					map('gitsigns: Undo Stage Hunk', 'n', '<Leader>gu', api.undo_stage_hunk,                          opts)
+					map('gitsigns: Reset Buffer',    'n', '<Leader>gR', api.reset_buffer,                             opts)
+					map('gitsigns: Preview Hunk',    'n', '<Leader>gp', api.preview_hunk,                             opts)
+					map('gitsigns: Blame Line',      'n', '<Leader>gb', function() api.blame_line({full = true}) end, opts)
+					map('gitsigns: Toggle Blame',    'n', '<Leader>gB', api.toggle_current_line_blame,                opts)
+					map('gitsigns: Diff',            'n', '<Leader>gd', api.diffthis,                                 opts)
+					map('gitsigns: Diff',            'n', '<Leader>gD', function() api.diffthis('~') end,             opts)
+					map('gitsigns: Toggle Deleted',  'n', '<Leader>gx', api.toggle_deleted,                           opts)
 
-					map('gitsigns: Prev hunk', 'n', '[c', function()
+					map('gitsigns: Prev Hunk', 'n', '[c', function()
 						if vim.wo.diff then return '[c' end
 						vim.schedule(api.prev_hunk)
 						return '<ignore>'
 					end, {buffer = buf, expr = true})
 
-					map('gitsigns: Next hunk', 'n', ']c', function()
+					map('gitsigns: Next Hunk', 'n', ']c', function()
 						if vim.wo.diff then return ']c' end
 						vim.schedule(api.next_hunk)
 						return '<ignore>'
