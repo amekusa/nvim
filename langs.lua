@@ -3,15 +3,25 @@
 -- filetypes to support
 local filetypes = {
 	'lua',
-	'html', 'css', 'javascript',
+	'sh', 'zsh',
 	'json', 'yaml',
+
+	'html', 'xml', 'svg',
+	'css', 'less', 'scss',
+	'javascript', 'typescript',
 	'php',
 }
 
 -- languages to support
 local langs = {
-	'vim', 'vimdoc',
-	'jsdoc',
+	'lua', 'vim', 'vimdoc', 'query',
+	'bash',
+	'json', 'yaml',
+
+	'html', 'xml', 'svg',
+	'css', 'scss', -- no `less` module :(
+	'javascript', 'jsdoc', 'typescript',
+	'php', 'phpdoc',
 }
 
 local plugins = {
@@ -29,7 +39,7 @@ local plugins = {
 		build = ':TSUpdate',
 		config = function()
 			require('nvim-treesitter.configs').setup({
-				ensure_installed = vim.list_extend(langs, filetypes),
+				ensure_installed = langs,
 				sync_install = false,
 				auto_install = false,
 				indent = {enable = true},
