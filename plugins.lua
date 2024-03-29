@@ -110,6 +110,10 @@ local plugins = {
 				diagnostics = {
 					enable = true, -- highlight the files with issues
 				},
+				filesystem_watchers = {
+					enable = true,
+					ignore_dirs = {'node_modules'}, -- this fixes the slow-shutdown issue
+				},
 				renderer = {
 					special_files = {},
 					highlight_git = 'name', -- none/icon/name/all
