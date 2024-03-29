@@ -3,7 +3,7 @@
 
 ---- GLOBAL ----
 local my = {
-	base = (...)..'.', -- require base
+	ns = (...), -- namespace
 	conf = {
 		trim_trailing_whitespace = true,
 	},
@@ -15,6 +15,7 @@ local my = {
 		end,
 	}
 }
+my.path = vim.fn.stdpath('config')..'/lua/'..my.ns:gsub('%.', '/')
 vim.g._custom = my
 
 
@@ -88,8 +89,8 @@ vim.opt.hlsearch = true
 
 
 ---- KEYMAPS & PLUGINS ----
-require(my.base..'keymaps')
-require(my.base..'plugins')
+require(my.ns..'.keymaps')
+require(my.ns..'.plugins')
 
 
 ---- AUTO COMMANDS ----

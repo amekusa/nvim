@@ -319,12 +319,12 @@ local plugins = {
 }
 
 -- lsp, syntax-highlighter, etc.
-for _,v in ipairs(require(my.base..'langs')) do
+for _,v in ipairs(require(my.ns..'.langs')) do
 	table.insert(plugins, v)
 end
 
 -- themes
-local themes = require(my.base..'themes')
+local themes = require(my.ns..'.themes')
 for k,v in pairs(themes.list) do
 	if k == themes.select then
 		v.cond = true
@@ -356,12 +356,10 @@ vim.opt.rtp:prepend(lazypath)
 
 -- install plugins
 require('lazy').setup(plugins, {
+	lockfile = my.path..'/plugins-lock.json',
 	defaults = { -- default options for each plugin
 		lazy = true,
 		version = '*', -- try installing the latest stable versions of plugins
 	},
-	lockfile = vim.fn.stdpath('config')..'/lua/'..
-		my.base:gsub('%.', '/').. -- replace '.' with '/'
-		'plugins-lock.json'
 })
 
