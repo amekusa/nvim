@@ -32,7 +32,7 @@ elseif theme == 'kanagawa' then
 				wave = {
 					ui = {
 						bg_gutter = 'none',
-						bg_p2 = '#1a1a22', -- line highlight
+						bg_p2 = '#181820', -- line highlight
 						whitespace = '#363646',
 					},
 					syn = {
