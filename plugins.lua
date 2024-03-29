@@ -1,13 +1,13 @@
 ---- PLUGINS ----
 local my = vim.g._custom
 local map = my.fn.map
-local on_read = {'BufReadPre', 'BufNewFile'}
+local on_edit = {'BufReadPre', 'BufNewFile'}
 
 local plugins = {
 	{
 		-- align text interactively (****.)
 		'echasnovski/mini.align', enabled = true,
-		event = on_read,
+		event = on_edit,
 		config = function()
 			require('mini.align').setup({
 				-- options
@@ -62,7 +62,7 @@ local plugins = {
 	{
 		-- guess indent style (***..)
 		'nmac427/guess-indent.nvim', enabled = true,
-		event = on_read,
+		event = on_edit,
 		config = function()
 			require('guess-indent').setup({
 				auto_cmd = true,
@@ -271,7 +271,7 @@ local plugins = {
 	{
 		-- shows git related signs to the gutter (*****)
 		'lewis6991/gitsigns.nvim', enabled = true,
-		event = on_read,
+		event = on_edit,
 		config = function()
 			local api = require('gitsigns')
 			api.setup({

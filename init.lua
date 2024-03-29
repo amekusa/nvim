@@ -15,7 +15,11 @@ local my = {
 		end,
 	}
 }
-my.path = vim.fn.stdpath('config')..'/lua/'..my.ns:gsub('%.', '/')
+-- root path
+my.path = vim.fn.stdpath('config')..'/lua/'..
+	my.ns:gsub('%.', '/') -- replace . in namespace with /
+
+-- save to global
 vim.g._custom = my
 
 
