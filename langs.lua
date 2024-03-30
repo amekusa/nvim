@@ -12,13 +12,13 @@ local filetypes = {
 	'php',
 }
 
--- languages to support
+-- treesitter language modules
 local langs = {
 	'lua', 'vim', 'vimdoc', 'query',
 	'bash',
 	'json', 'yaml',
 
-	'html', 'xml', 'svg',
+	'html', 'xml',
 	'css', 'scss', -- no `less` module :(
 	'javascript', 'jsdoc', 'typescript',
 	'php', 'phpdoc',
