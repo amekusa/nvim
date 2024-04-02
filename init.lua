@@ -45,6 +45,11 @@ vim.opt.regexpengine = 0
 --   1: old engine
 --   2: NFA engine
 
+-- fix slow matchparen on large files
+vim.g.matchparen_timeout = 20 -- (ms)
+vim.g.matchparen_insert_timeout = 20 -- (ms)
+--   See: https://vi.stackexchange.com/questions/5128/matchpairs-makes-vim-slow/5318#5318
+
 
 ---- UI ----
 -- hide those ugly '~' (tilde) symbols
