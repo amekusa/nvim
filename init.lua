@@ -6,6 +6,8 @@ local my = {
 	ns = (...), -- namespace
 	conf = {
 		trim_trailing_whitespace = true,
+		detect_large_file = true,
+		large_file_size = 256 * 1024,
 	},
 	fn = { -- utils
 		map = function(desc, mode, from, to, opts)
@@ -122,3 +124,30 @@ if my.conf.trim_trailing_whitespace then
 	})
 end
 
+if my.conf.detect_large_file then
+	autocmd({'BufReadPost', 'FileReadPost'}, {
+		desc = 'Disable certain features on large files',
+		pattern = '*',
+		callback = function(ctx)
+			if vim.fn.getfsize(ctx.file) > my.conf.large_file_size then
+				if vim.fn.exists(':TSBufDisable') then -- disable treesitter modules
+					vim.cmd('TSBufDisable autotag')
+					vim.cmd('TSBufDisable highlight')
+					vim.cmd('TSBufDisable incremental_selection')
+					vim.cmd('TSBufDisable indent')
+					vim.cmd('TSBufDisable playground')
+					vim.cmd('TSBufDisable query_linter')
+					vim.cmd('TSBufDisable rainbow')
+					vim.cmd('TSBufDisable refactor.highlight_definitions')
+					vim.cmd('TSBufDisable refactor.navigation')
+					vim.cmd('TSBufDisable refactor.smart_rename')
+					vim.cmd('TSBufDisable refactor.highlight_current_scope')
+					vim.cmd('TSBufDisable textobjects.swap')
+					--vim.cmd('TSBufDisable textobjects.move')
+					vim.cmd('TSBufDisable textobjects.lsp_interop')
+					vim.cmd('TSBufDisable textobjects.select')
+				end
+			end
+		end
+	})
+end
