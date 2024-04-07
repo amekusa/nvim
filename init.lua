@@ -130,7 +130,7 @@ if my.conf.detect_large_file then
 		pattern = '*',
 		callback = function(ctx)
 			if vim.fn.getfsize(ctx.file) > my.conf.large_file_size then
-				if vim.fn.exists(':TSBufDisable') then -- disable treesitter modules
+				if vim.fn.exists(':TSBufDisable') ~= 0 then -- disable treesitter modules
 					vim.cmd('TSBufDisable autotag')
 					vim.cmd('TSBufDisable highlight')
 					vim.cmd('TSBufDisable incremental_selection')
