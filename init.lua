@@ -4,10 +4,21 @@
 ---- GLOBAL ----
 local my = {
 	ns = (...), -- namespace
-	conf = {
-		trim_trailing_whitespace = true,
-		detect_large_file = true,
-		large_file_size = 256 * 1024,
+	conf = { -- config of the config
+		keymaps = {
+			enable = true,
+		},
+		plugins = {
+			enable = true,
+			themes = true,
+			langs = true,
+		},
+		autocmds = {
+			enable = true,
+			trim_trailing_whitespace = true,
+			detect_large_file = true,
+			detect_large_file_size = 256 * 1024,
+		},
 	},
 	fn = { -- utils
 		map = function(desc, mode, from, to, opts)
@@ -99,55 +110,7 @@ vim.opt.smartcase = true
 vim.opt.hlsearch = true
 
 
----- KEYMAPS & PLUGINS ----
-require(my.ns..'.keymaps')
-require(my.ns..'.plugins')
+if my.conf.keymaps.enable then require(my.ns..'.keymaps') end
+if my.conf.plugins.enable then require(my.ns..'.plugins') end
+if my.conf.autocmds.enable then require(my.ns..'.autocmds') end
 
-
----- AUTO COMMANDS ----
-local autocmd = vim.api.nvim_create_autocmd
-
-local function regex_ext(ext) -- returns a regex that matches with given file extensions
-	if type(ext) ~= 'table' then ext = {ext} end
-	return vim.regex([[\.\(]]..table.concat(ext, [[\|]])..[[\)$]])
-end
-
-if my.conf.trim_trailing_whitespace then
-	autocmd('BufWritePre', {
-		desc = 'Trim trailing whitespace on save',
-		pattern = '*',
-		callback = function(ev)
-			local ignore = {'md'}
-			if regex_ext(ignore):match_str(ev.file) then return end
-			vim.cmd([[silent! %s/\s\+$//g]]) -- trim
-		end
-	})
-end
-
-if my.conf.detect_large_file then
-	autocmd({'BufReadPost', 'FileReadPost'}, {
-		desc = 'Disable certain features on large files',
-		pattern = '*',
-		callback = function(ctx)
-			if vim.fn.getfsize(ctx.file) > my.conf.large_file_size then
-				if vim.fn.exists(':TSBufDisable') ~= 0 then -- disable treesitter modules
-					vim.cmd('TSBufDisable autotag')
-					vim.cmd('TSBufDisable highlight')
-					vim.cmd('TSBufDisable incremental_selection')
-					vim.cmd('TSBufDisable indent')
-					vim.cmd('TSBufDisable playground')
-					vim.cmd('TSBufDisable query_linter')
-					vim.cmd('TSBufDisable rainbow')
-					vim.cmd('TSBufDisable refactor.highlight_definitions')
-					vim.cmd('TSBufDisable refactor.navigation')
-					vim.cmd('TSBufDisable refactor.smart_rename')
-					vim.cmd('TSBufDisable refactor.highlight_current_scope')
-					vim.cmd('TSBufDisable textobjects.swap')
-					--vim.cmd('TSBufDisable textobjects.move')
-					vim.cmd('TSBufDisable textobjects.lsp_interop')
-					vim.cmd('TSBufDisable textobjects.select')
-				end
-			end
-		end
-	})
-end

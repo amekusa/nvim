@@ -1,5 +1,6 @@
 ---- PLUGINS ----
 local my = vim.g._custom
+local conf = my.conf.plugins
 local map = my.fn.map
 local on_edit = {'BufReadPre', 'BufNewFile'}
 
@@ -323,27 +324,29 @@ local plugins = {
 }
 
 -- lsp, syntax-highlighter, etc.
-for _,v in ipairs(require(my.ns..'.langs')) do
-	table.insert(plugins, v)
+if conf.langs then
+	vim.list_extend(plugins, require(my.ns..'.langs'))
 end
 
 -- themes
-local themes = require(my.ns..'.themes')
-for k,v in pairs(themes.list) do
-	if k == themes.select then
-		v.cond = true
-		v.priority = 1000
-		local main = v.main or v.name or themes.select
-		v.config = function(_, opts)
-			require(main).setup(opts)
-			vim.cmd.colorscheme(main)
+if conf.themes then
+	local themes = require(my.ns..'.themes')
+	for k,v in pairs(themes.list) do
+		if k == themes.select then
+			v.cond = true
+			v.priority = 1000
+			local main = v.main or v.name or themes.select
+			v.config = function(_, opts)
+				require(main).setup(opts)
+				vim.cmd.colorscheme(main)
+			end
+		else
+			v.cond = false
+			v.config = true
 		end
-	else
-		v.cond = false
-		v.config = true
+		v.lazy = false
+		table.insert(plugins, v)
 	end
-	v.lazy = false
-	table.insert(plugins, v)
 end
 
 -- setup lazy.nvim (plugin manager)
