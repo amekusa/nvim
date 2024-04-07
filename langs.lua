@@ -1,4 +1,6 @@
 ---- LANGUAGES ----
+local my = vim.g._custom
+local map = my.fn.map
 
 -- filetypes to support
 local filetypes = {
@@ -25,6 +27,32 @@ local langs = {
 }
 
 local plugins = {
+	{
+		-- devdocs integration
+		'luckasRanarison/nvim-devdocs', enabled = true,
+		dependencies = {
+			'nvim-lua/plenary.nvim',
+			'nvim-telescope/telescope.nvim',
+			'nvim-treesitter/nvim-treesitter',
+		},
+		cmd = {'DevdocsOpen'},
+		init = function()
+			map('DevDocs: Open', 'n', '<Leader><Leader>d', '<Cmd>DevdocsOpen<CR>')
+		end,
+		config = function()
+			require('nvim-devdocs').setup({
+				ensure_installed = {
+					'javascript', 'node'
+				},
+				filetypes = {
+					javascript = {'javascript', 'node'},
+				},
+				after_open = function(buf)
+					map('DevDocs: Close', 'n', '<Esc>', '<Cmd>close<CR>', {buffer = buf})
+				end,
+			})
+		end
+	},
 	{
 		-- language parser & syntax highlighter
 		'nvim-treesitter/nvim-treesitter', enabled = true,
