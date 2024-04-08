@@ -6,6 +6,17 @@ local on_edit = {'BufReadPre', 'BufNewFile'}
 
 local plugins = {
 	{
+		-- 'gx' functionality without the need of netrw (****.)
+		'chrishrb/gx.nvim', enabled = true,
+		dependencies = {'nvim-lua/plenary.nvim'},
+		cmd = {'Browse'},
+		init = function()
+			vim.g.netrw_nogx = 1 -- disable netrw gx
+			map('gx: Browse', 'n', 'gx', '<Cmd>Browse<CR>')
+		end,
+		config = true,
+	},
+	{
 		-- align text interactively (****.)
 		'echasnovski/mini.align', enabled = true,
 		event = on_edit,
