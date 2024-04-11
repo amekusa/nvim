@@ -49,41 +49,46 @@ map('custom: Move Lines Down', 'v', '<C-j>', "<Esc><Cmd>'<,'>m'>+1<CR>gv")
 --         gv: restart visual mode with the last selection
 --          =: autoindent
 
--- prev/next buffer
-map('custom: Prev Buffer', nvi, '<C-h>', '<Cmd>bp<CR>')
-map('custom: Next Buffer', nvi, '<C-l>', '<Cmd>bn<CR>')
+-- shift + arrows = move with visual mode
+map('custom: Up with Visual Mode',    'i', '<S-Up>',    '<Esc>v<Up>')
+map('custom: Right with Visual Mode', 'i', '<S-Right>', '<Esc>v<Right>')
+map('custom: Down with Visual Mode',  'i', '<S-Down>',  '<Esc>v<Down>')
+map('custom: Left with Visual Mode',  'i', '<S-Left>',  '<Esc>v<Left>')
+map('custom: Up with Visual Mode',    'n', '<S-Up>',    'v<Up>')
+map('custom: Right with Visual Mode', 'n', '<S-Right>', 'v<Right>')
+map('custom: Down with Visual Mode',  'n', '<S-Down>',  'v<Down>')
+map('custom: Left with Visual Mode',  'n', '<S-Left>',  'v<Left>')
+map('custom: Up',                     'v', '<S-Up>',    '<Up>')
+map('custom: Right',                  'v', '<S-Right>', '<Right>')
+map('custom: Down',                   'v', '<S-Down>',  '<Down>')
+map('custom: Left',                   'v', '<S-Left>',  '<Left>')
 
 
 -- normal mode
 map('custom: Normal Mode', 'i', 'jk', '<Esc>')
 map('custom: Normal Mode', 'i', 'kj', '<Esc>')
 map('custom: Normal Mode', 'v', 'v',  '<Esc>')
+map('custom: Normal Mode', 'c', '<C-q>', '<C-c>')
+--   NOTE: for some reason, <Esc> as rhs for command line, works like <Esc><CR> actually,
+--         which is unwanted behavior. so, use <C-c> instead.
 
 -- insert mode
 map('custom: Insert Mode', 'v', 'i', '<Esc>i')
 
--- command line mode
+-- command-line mode
 map('custom: Command Line Mode', nv, ';', ':')
 
--- visual mode
-map('custom: Up with Visual Mode',    'i', '<S-Up>',    '<Esc>v<Up>')    -- switch to visual mode and move
-map('custom: Right with Visual Mode', 'i', '<S-Right>', '<Esc>v<Right>')
-map('custom: Down with Visual Mode',  'i', '<S-Down>',  '<Esc>v<Down>')
-map('custom: Left with Visual Mode',  'i', '<S-Left>',  '<Esc>v<Left>')
-map('custom: Up with Visual Mode',    'n', '<S-Up>',    'v<Up>')    -- switch to visual mode and move
-map('custom: Right with Visual Mode', 'n', '<S-Right>', 'v<Right>')
-map('custom: Down with Visual Mode',  'n', '<S-Down>',  'v<Down>')
-map('custom: Left with Visual Mode',  'n', '<S-Left>',  'v<Left>')
-map('custom: Up',                     'v', '<S-Up>',    '<Up>')                     -- keep moving in visual mode
-map('custom: Right',                  'v', '<S-Right>', '<Right>')
-map('custom: Down',                   'v', '<S-Down>',  '<Down>')
-map('custom: Left',                   'v', '<S-Left>',  '<Left>')
 
--- quit
-map('custom: Quit', nvi, '<C-q>', '<Cmd>q<CR>')
-map('custom: Escape Command Line', 'c', '<C-q>', '<C-c>')
---   NOTE: for some reason, <Esc> as rhs for command line, works like <Esc><CR> actually,
---         which is unwanted behavior. so, use <C-c> instead.
+-- prev/next buffer
+map('custom: Prev Buffer', nvi, '<C-h>', '<Cmd>bp<CR>')
+map('custom: Next Buffer', nvi, '<C-l>', '<Cmd>bn<CR>')
+
+-- reopen buffer (discard unsaved changes)
+map('custom: Reopen', nv, '<Leader>z', '<Cmd>conf e<CR>')
+
+-- close buffer
+map('custom: Close Buffer', nv, '<Leader>x', '<Cmd>conf bd<CR>')
+
 
 -- save
 map('custom: Save', nv,  '<C-s>', '<Cmd>w<CR>')
@@ -92,11 +97,8 @@ map('custom: Save', 'i', '<C-s>', '<Esc><Cmd>w<CR>')
 -- undo
 map('custom: Undo', nvi, '<C-z>', '<Cmd>u<CR>')
 
--- reopen (discard unsaved changes)
-map('custom: Reopen', nv, '<Leader>z', '<Cmd>conf e<CR>')
-
--- close buffer
-map('custom: Close', nv, '<Leader>x', '<Cmd>bd<CR>')
+-- quit
+map('custom: Quit', nvi, '<C-q>', '<Cmd>conf q<CR>')
 
 
 -- clear search highlight
