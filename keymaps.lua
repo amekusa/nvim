@@ -59,6 +59,9 @@ map('custom: Normal Mode', 'i', 'jk', '<Esc>')
 map('custom: Normal Mode', 'i', 'kj', '<Esc>')
 map('custom: Normal Mode', 'v', 'v',  '<Esc>')
 
+-- insert mode
+map('custom: Insert Mode', 'v', 'i', '<Esc>i')
+
 -- command line mode
 map('custom: Command Line Mode', nv, ';', ':')
 
