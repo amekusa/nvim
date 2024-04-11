@@ -83,41 +83,31 @@ map('custom: Command Line Mode', nv, ';', ':')
 map('custom: Prev Buffer', nvi, '<C-h>', '<Cmd>bp<CR>')
 map('custom: Next Buffer', nvi, '<C-l>', '<Cmd>bn<CR>')
 
--- reopen buffer (discard unsaved changes)
-map('custom: Reopen', nv, '<Leader>z', '<Cmd>conf e<CR>')
-
--- close buffer
-map('custom: Close Buffer', nv, '<Leader>x', '<Cmd>conf bd<CR>')
+-- close/reopen buffer
+map('custom: Close Buffer',  nv, '<Leader>x', '<Cmd>conf bd<CR>')
+map('custom: Reopen Buffer', nv, '<Leader>z', '<Cmd>conf e<CR>')
 
 
--- save
+-- save/undo/quit
 map('custom: Save', nv,  '<C-s>', '<Cmd>w<CR>')
 map('custom: Save', 'i', '<C-s>', '<Esc><Cmd>w<CR>')
-
--- undo
 map('custom: Undo', nvi, '<C-z>', '<Cmd>u<CR>')
-
--- quit
 map('custom: Quit', nvi, '<C-q>', '<Cmd>conf q<CR>')
 
 
 -- clear search highlight
 map('custom: Clear Search Highlight', 'n', '<Esc>', '<Cmd>nohls<CR><Cmd>redr!<CR>')
 
--- search with "magic (\v)"
---map('custom: Forward search (with "magic")', nv,  '/', [[/\v]])
---map('custom: Backward Search (with "magic")', nv,  '?', [[?\v]])
+-- find & replace with "magic (\v)"
+map('custom: Find & Replace',              'n', '<Leader>/', [[:%s/\v//gc<Left><Left><Left><Left>]])
+map('custom: Find & Replace in the Range', 'v', '<Leader>/', [[:s/\v%V//gc<Left><Left><Left><Left>]])
 --   NOTE: "magic" allows you to use regex-special chars without escaping.
 
--- search & replace with "magic (\v)"
-map('custom: Search & Replace', 'n', '<C-f>', [[:%s/\v//gc<Left><Left><Left><Left>]])
-map('custom: Search & Replace', 'i', '<C-f>', [[<Esc>:%s/\v//gc<Left><Left><Left><Left>]])
-map('custom: Search & Replace in the Range', 'v', '<C-f>', [[:s/\v%V//gc<Left><Left><Left><Left>]])
+-- find & replace the current word
+map('custom: Find & Replace the Word', 'n', '<C-f>', [[:%s/<C-r><C-w>//gc<Left><Left><Left>]])
+map('custom: Find & Replace the Word', 'i', '<C-f>', [[<Esc>:%s/<C-r><C-w>//gc<Left><Left><Left>]])
 
--- search & replace the current word
-map('custom: Search & Replace the Word', 'n', '<Leader>fw', [[:%s/\v<C-r><C-w>//gc<Left><Left><Left>]])
-
--- search & replace the selected text
-map('custom: Search & Replace the Selected', 'v', '<Leader>fv', [[y:%s/\v<C-r>"//gc<Left><Left><Left>]])
+-- find & replace the selected text
+map('custom: Find & Replace the Selected', 'v', '<C-f>', [[y:%s/<C-r>"//gc<Left><Left><Left>]])
 --   NOTE: <C-r>" outputs the last yanked text
 
