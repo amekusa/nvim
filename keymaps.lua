@@ -95,10 +95,8 @@ map('custom: Undo', nvi, '<C-z>', '<Cmd>u<CR>')
 -- reopen (discard unsaved changes)
 map('custom: Reopen', nv, '<Leader>z', '<Cmd>conf e<CR>')
 
--- paste & select
-map('custom: Paste & Select', nv, 'p', function()
-	return "p'["..vim.fn.getregtype().."']"
-end, {expr = true})
+-- close buffer
+map('custom: Close', nv, '<Leader>x', '<Cmd>bd<CR>')
 
 
 -- clear search highlight
