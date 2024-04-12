@@ -26,12 +26,15 @@ local my = {
 			opts.desc = desc
 			return vim.keymap.set(mode, from, to, opts)
 		end,
-		close = function(buf)
+		close = function(buf, force)
 			if buf == nil then
 				buf = vim.api.nvim_get_current_buf()
 			end
 			vim.cmd.bprevious()  -- manually switch to the prev buffer
-			vim.cmd('bd! '..buf) -- delete the doc buffer in background
+			if force -- delete the given (or current) buffer in background
+				then vim.cmd('bd! '..buf)
+				else vim.cmd('bd '..buf)
+			end
 			-- NOTE:
 			--   Due to ':bd (nil)' not respecting 'buflisted',
 			--   it can cause undesired side-effects.
