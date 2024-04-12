@@ -205,7 +205,7 @@ local plugins = {
 				end,
 			})
 			-- toggle focus nvim-tree
-			map('nvim-tree: Toggle focus', {'n','v','i','t'}, '<C-e>', function()
+			map('nvim-tree: Toggle focus', {'n','x','i','t'}, '<C-e>', function()
 				if api.tree.is_tree_buf() then -- is current pane nvim-tree?
 					vim.cmd.wincmd('p') -- previous window (<C-w>p)
 					return
@@ -302,9 +302,9 @@ local plugins = {
 				on_attach = function(buf)
 					local opts = {buffer = buf}
 					map('gitsigns: Stage Hunk',      'n', '<Leader>gs', api.stage_hunk,                               opts)
-					map('gitsigns: Stage Hunk',      'v', '<Leader>gs', function() api.stage_hunk({vim.fn.line('.'), vim.fn.line('v')}) end, opts)
+					map('gitsigns: Stage Hunk',      'x', '<Leader>gs', function() api.stage_hunk({vim.fn.line('.'), vim.fn.line('v')}) end, opts)
 					map('gitsigns: Reset Hunk',      'n', '<Leader>gr', api.reset_hunk,                               opts)
-					map('gitsigns: Reset Hunk',      'v', '<Leader>gr', function() api.reset_hunk({vim.fn.line('.'), vim.fn.line('v')}) end, opts)
+					map('gitsigns: Reset Hunk',      'x', '<Leader>gr', function() api.reset_hunk({vim.fn.line('.'), vim.fn.line('v')}) end, opts)
 					map('gitsigns: Stage Buffer',    'n', '<Leader>gS', api.stage_buffer,                             opts)
 					map('gitsigns: Undo Stage Hunk', 'n', '<Leader>gu', api.undo_stage_hunk,                          opts)
 					map('gitsigns: Reset Buffer',    'n', '<Leader>gR', api.reset_buffer,                             opts)
