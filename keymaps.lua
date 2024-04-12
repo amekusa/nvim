@@ -16,9 +16,9 @@ local map = my.fn.map
 --     l |  -   | yes | yes |  -  |  -  |  -  |  -   | yes  |
 
 -- mode combos
-local nv  = {'n','v'}
-local nvo = {'n','v','o'}
-local nvi = {'n','v','i'}
+local nx  = {'n','x'}
+local nxo = {'n','x','o'}
+local nxi = {'n','x','i'}
 
 
 -- <Leader> key
@@ -27,24 +27,24 @@ vim.g.maplocalleader = ' '
 
 
 -- move to the prev/next word
-map('custom: Prev Word', nvo, '<M-Left>',  'b')
+map('custom: Prev Word', nxo, '<M-Left>',  'b')
 map('custom: Prev Word', 'i', '<M-Left>',  '<C-o>b')
 map('custom: Prev Word', 't', '<M-Left>',  '<Esc>b')
-map('custom: Next Word', nvo, '<M-Right>', 'w')
+map('custom: Next Word', nxo, '<M-Right>', 'w')
 map('custom: Next Word', 'i', '<M-Right>', '<C-o>w')
 map('custom: Next Word', 't', '<M-Right>', '<Esc>w')
 
 -- better page-up/down
-map('custom: Page Up',   nvo, '<PageUp>',   'Hzz')
+map('custom: Page Up',   nxo, '<PageUp>',   'Hzz')
 map('custom: Page Up',   'i', '<PageUp>',   '<Esc>Hzzi')
-map('custom: Page Down', nvo, '<PageDown>', 'Lzz')
+map('custom: Page Down', nxo, '<PageDown>', 'Lzz')
 map('custom: Page Down', 'i', '<PageDown>', '<Esc>Lzzi')
 
 -- move line(s) up/down
 map('custom: Move Line Up',    'n', '<C-k>', '<Cmd>m.-2<CR>==')
 map('custom: Move Line Down',  'n', '<C-j>', '<Cmd>m.+1<CR>==')
-map('custom: Move Lines Up',   'v', '<C-k>', "<Esc><Cmd>'<,'>m'<-2<CR>gv")
-map('custom: Move Lines Down', 'v', '<C-j>', "<Esc><Cmd>'<,'>m'>+1<CR>gv")
+map('custom: Move Lines Up',   'x', '<C-k>', "<Esc><Cmd>'<,'>m'<-2<CR>gv")
+map('custom: Move Lines Down', 'x', '<C-j>', "<Esc><Cmd>'<,'>m'>+1<CR>gv")
 --   NOTE:  m: move to X
 --          .: the current line
 --         '<: the first line of the selection
@@ -61,41 +61,41 @@ map('custom: Up with Visual Mode',    'n', '<S-Up>',    'v<Up>')
 map('custom: Right with Visual Mode', 'n', '<S-Right>', 'v<Right>')
 map('custom: Down with Visual Mode',  'n', '<S-Down>',  'v<Down>')
 map('custom: Left with Visual Mode',  'n', '<S-Left>',  'v<Left>')
-map('custom: Up',                     'v', '<S-Up>',    '<Up>')
-map('custom: Right',                  'v', '<S-Right>', '<Right>')
-map('custom: Down',                   'v', '<S-Down>',  '<Down>')
-map('custom: Left',                   'v', '<S-Left>',  '<Left>')
+map('custom: Up',                     'x', '<S-Up>',    '<Up>')
+map('custom: Right',                  'x', '<S-Right>', '<Right>')
+map('custom: Down',                   'x', '<S-Down>',  '<Down>')
+map('custom: Left',                   'x', '<S-Left>',  '<Left>')
 
 
 -- normal mode
 map('custom: Normal Mode', 'i', 'jk', '<Esc>')
 map('custom: Normal Mode', 'i', 'kj', '<Esc>')
-map('custom: Normal Mode', 'v', 'v',  '<Esc>')
+map('custom: Normal Mode', 'x', 'v',  '<Esc>')
 map('custom: Normal Mode', 'c', '<C-q>', '<C-c>')
 --   NOTE: for some reason, <Esc> as rhs for command line, works like <Esc><CR> actually,
 --         which is unwanted behavior. so, use <C-c> instead.
 
 -- insert mode
-map('custom: Insert Mode', 'v', 'i', '<Esc>i')
+map('custom: Insert Mode', 'x', 'i', '<Esc>i')
 
 -- command-line mode
-map('custom: Command Line Mode', nv, ';', ':')
+map('custom: Command Line Mode', nx, ';', ':')
 
 
 -- prev/next buffer
-map('custom: Prev Buffer', nvi, '<C-h>', '<Cmd>bp<CR>')
-map('custom: Next Buffer', nvi, '<C-l>', '<Cmd>bn<CR>')
+map('custom: Prev Buffer', nxi, '<C-h>', '<Cmd>bp<CR>')
+map('custom: Next Buffer', nxi, '<C-l>', '<Cmd>bn<CR>')
 
 -- close/reopen buffer
-map('custom: Close Buffer',  nv, '<Leader>x', '<Cmd>conf bd<CR>')
-map('custom: Reopen Buffer', nv, '<Leader>z', '<Cmd>conf e<CR>')
+map('custom: Close Buffer',  nx, '<Leader>x', '<Cmd>conf bd<CR>')
+map('custom: Reopen Buffer', nx, '<Leader>z', '<Cmd>conf e<CR>')
 
 
 -- save/undo/quit
-map('custom: Save', nv,  '<C-s>', '<Cmd>w<CR>')
+map('custom: Save', nx,  '<C-s>', '<Cmd>w<CR>')
 map('custom: Save', 'i', '<C-s>', '<Esc><Cmd>w<CR>')
-map('custom: Undo', nvi, '<C-z>', '<Cmd>u<CR>')
-map('custom: Quit', nvi, '<C-q>', '<Cmd>conf q<CR>')
+map('custom: Undo', nxi, '<C-z>', '<Cmd>u<CR>')
+map('custom: Quit', nxi, '<C-q>', '<Cmd>conf q<CR>')
 
 
 -- clear search highlight
@@ -103,7 +103,7 @@ map('custom: Clear Search Highlight', 'n', '<Esc>', '<Cmd>nohls<CR><Cmd>redr!<CR
 
 -- find & replace with "magic (\v)"
 map('custom: Find & Replace',              'n', '<Leader>/', [[:%s/\v//gc<Left><Left><Left><Left>]])
-map('custom: Find & Replace in the Range', 'v', '<Leader>/', [[:s/\v%V//gc<Left><Left><Left><Left>]])
+map('custom: Find & Replace in the Range', 'x', '<Leader>/', [[:s/\v%V//gc<Left><Left><Left><Left>]])
 --   NOTE: "magic" allows you to use regex-special chars without escaping.
 
 -- find & replace the current word
@@ -111,6 +111,6 @@ map('custom: Find & Replace the Word', 'n', '<C-f>', [[:%s/<C-r><C-w>//gc<Left><
 map('custom: Find & Replace the Word', 'i', '<C-f>', [[<Esc>:%s/<C-r><C-w>//gc<Left><Left><Left>]])
 
 -- find & replace the selected text
-map('custom: Find & Replace the Selected', 'v', '<C-f>', [[y:%s/<C-r>"//gc<Left><Left><Left>]])
+map('custom: Find & Replace the Selected', 'x', '<C-f>', [[y:%s/<C-r>"//gc<Left><Left><Left>]])
 --   NOTE: <C-r>" outputs the last yanked text
 
