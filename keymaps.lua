@@ -2,15 +2,18 @@
 local my = vim.g._custom
 local map = my.fn.map
 
--- modes:
---   n: normal
---   v: visual
---   s: select
---   x: visual & select
---   o: operator pending
---   i: insert
---   t: terminal
---   c: command line
+--  Mode | Norm | Ins | Cmd | Vis | Sel | Opr | Term | Lang |
+-- ------+------+-----+-----+-----+-----+-----+------+------+
+--     n | yes  |  -  |  -  |  -  |  -  |  -  |  -   |  -   |
+--     ! |  -   | yes | yes |  -  |  -  |  -  |  -   |  -   |
+--     i |  -   | yes |  -  |  -  |  -  |  -  |  -   |  -   |
+--     c |  -   |  -  | yes |  -  |  -  |  -  |  -   |  -   |
+--     v |  -   |  -  |  -  | yes | yes |  -  |  -   |  -   |
+--     x |  -   |  -  |  -  | yes |  -  |  -  |  -   |  -   |
+--     s |  -   |  -  |  -  |  -  | yes |  -  |  -   |  -   |
+--     o |  -   |  -  |  -  |  -  |  -  | yes |  -   |  -   |
+--     t |  -   |  -  |  -  |  -  |  -  |  -  | yes  |  -   |
+--     l |  -   | yes | yes |  -  |  -  |  -  |  -   | yes  |
 
 -- mode combos
 local nv  = {'n','v'}
