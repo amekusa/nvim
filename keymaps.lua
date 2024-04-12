@@ -35,10 +35,10 @@ map('custom: Next Word', 'i', '<M-Right>', '<C-o>w')
 map('custom: Next Word', 't', '<M-Right>', '<Esc>w')
 
 -- better page-up/down
-map('custom: Page Up',   nxo, '<PageUp>',   'Hzz')
-map('custom: Page Up',   'i', '<PageUp>',   '<Esc>Hzzi')
-map('custom: Page Down', nxo, '<PageDown>', 'Lzz')
-map('custom: Page Down', 'i', '<PageDown>', '<Esc>Lzzi')
+map('custom: Page Up',   nxo, '<PageUp>',   '10kzz')
+map('custom: Page Up',   'i', '<PageUp>',   '<Esc>10kzzi')
+map('custom: Page Down', nxo, '<PageDown>', '10jzz')
+map('custom: Page Down', 'i', '<PageDown>', '<Esc>10jzzi')
 
 -- move line(s) up/down
 map('custom: Move Line Up',    'n', '<C-k>', '<Cmd>m.-2<CR>==')
