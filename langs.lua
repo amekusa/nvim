@@ -49,10 +49,7 @@ local plugins = {
 				},
 				after_open = function(buf)
 					vim.bo[buf].buflisted = true -- enable going back to opened docs
-					map('DevDocs: Close', 'n', '<Esc>', function()
-						vim.cmd.bprevious() -- switch to prev buffer
-						vim.cmd('bd! '..buf) -- delete the doc buffer in background
-					end, {buffer = buf})
+					map('DevDocs: Close', 'n', '<Esc>', function() my.fn.close(buf) end, {buffer = buf})
 				end,
 				-- use external markdown viewer
 				previewer_cmd   = 'glow',

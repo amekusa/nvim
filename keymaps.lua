@@ -87,7 +87,7 @@ map('custom: Prev Buffer', nxi, '<C-h>', '<Cmd>bp<CR>')
 map('custom: Next Buffer', nxi, '<C-l>', '<Cmd>bn<CR>')
 
 -- close/reopen buffer
-map('custom: Close Buffer',  nx, '<Leader>x', '<Cmd>conf bd<CR>')
+map('custom: Close Buffer',  nx, '<Leader>x', function() my.fn.close() end)
 map('custom: Reopen Buffer', nx, '<Leader>z', '<Cmd>conf e<CR>')
 
 
