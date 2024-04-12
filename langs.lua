@@ -28,7 +28,7 @@ local langs = {
 
 local plugins = {
 	{
-		-- devdocs integration
+		-- devdocs viewer
 		'luckasRanarison/nvim-devdocs', enabled = true,
 		dependencies = {
 			'nvim-lua/plenary.nvim',
@@ -37,7 +37,7 @@ local plugins = {
 		},
 		cmd = {'DevdocsOpen'},
 		init = function()
-			map('DevDocs: Open', 'n', '<Leader><Leader>d', '<Cmd>DevdocsOpen<CR>')
+			map('DevDocs: Open', 'n', '<Leader>d', '<Cmd>DevdocsOpen<CR>')
 		end,
 		config = function()
 			require('nvim-devdocs').setup({
@@ -48,8 +48,17 @@ local plugins = {
 					javascript = {'javascript', 'node'},
 				},
 				after_open = function(buf)
-					map('DevDocs: Close', 'n', '<Esc>', '<Cmd>close<CR>', {buffer = buf})
+					vim.bo[buf].buflisted = true -- enable going back to opened docs
+					map('DevDocs: Close', 'n', '<Esc>', function()
+						vim.cmd.bprevious() -- switch to prev buffer
+						vim.cmd('bd! '..buf) -- delete the doc buffer in background
+					end, {buffer = buf})
 				end,
+				-- use external markdown viewer
+				previewer_cmd   = 'glow',
+				cmd_args        = {'-s', 'dark', '-w', '128'},
+				picker_cmd      = 'glow',
+				picker_cmd_args = {'-s', 'dark', '-w', '80'},
 			})
 		end
 	},
