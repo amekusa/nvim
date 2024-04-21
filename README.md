@@ -27,5 +27,10 @@ Pressing `q` again finishes the recording and registers it to the char you press
 `Q` plays the last recording.  
 `@` + char plays the recording registered to the char.
 
-Macros works with any actions even for the ones you can't replay with `. (period)`.
+Macros work with any actions even for the ones you can't replay with `.`.
+
+### Marks
+`m` + any-char registers the current line to the jumplist of the current buffer.  
+`'` + char makes the cursor jump to the mark.  
+`'"` jumps to the last mark.  
 
