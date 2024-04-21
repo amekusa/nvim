@@ -21,10 +21,10 @@ require('custom')
 ## Appendix: Vim Notes
 
 ### Macros
-`q` + any-char starts recording.
+`q` + any-char starts recording.  
 Pressing `q` again finishes the recording and registers it to the char you pressed after `q`.
 
-`Q` plays the last recording.
+`Q` plays the last recording.  
 `@` + char plays the recording registered to the char.
 
 Macros works with any actions even for the ones you can't replay with `. (period)`.
