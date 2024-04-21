@@ -33,8 +33,8 @@ local my = {
 			end
 			vim.cmd.bprevious()  -- manually switch to the prev buffer
 			if force -- delete the given (or current) buffer in background
-				then vim.cmd('bd! '..buf)
-				else vim.cmd('bd '..buf)
+				then vim.cmd('bw! '..buf)
+				else vim.cmd('bw '..buf)
 			end
 			-- NOTE:
 			--   Due to ':bd (nil)' not respecting 'buflisted',
