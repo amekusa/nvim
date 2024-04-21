@@ -47,3 +47,12 @@ if conf.detect_large_file then
 	})
 end
 
+if conf.clear_jumplist then
+	autocmd('VimEnter', {
+		desc = 'Clear jumplist on start',
+		callback = function()
+			vim.cmd.clearjumps()
+		end
+	})
+end
+

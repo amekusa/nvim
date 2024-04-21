@@ -18,6 +18,7 @@ local my = {
 			trim_trailing_whitespace = true,
 			detect_large_file = true,
 			detect_large_file_size = 256 * 1024,
+			clear_jumplist = true,
 		},
 	},
 	fn = { -- utils
