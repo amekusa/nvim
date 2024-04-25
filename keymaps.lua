@@ -46,6 +46,12 @@ map('custom: Home', nxo, '<Home>', '^')
 map('custom: Home', 'i', '<Home>', '<C-o>^')
 
 
+-- indent/outdent
+map('custom: Indent',  ni,  '<Tab>',   '<Cmd>><CR>');
+map('custom: Indent',  'x', '<Tab>',   ':><CR>gv');
+map('custom: Outdent', ni,  '<S-Tab>', '<Cmd><<CR>');
+map('custom: Outdent', 'x', '<S-Tab>', ':<<CR>gv');
+
 -- move line(s) up/down
 map('custom: Move Line Up',    'n', '<C-k>', '<Cmd>m.-2<CR>==')
 map('custom: Move Line Down',  'n', '<C-j>', '<Cmd>m.+1<CR>==')
