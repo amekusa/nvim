@@ -55,8 +55,8 @@ map('custom: Outdent', 'x', '<S-Tab>', ':<<CR>gv');
 -- move line(s) up/down
 map('custom: Move Line Up',    'n', '<C-k>', '<Cmd>m.-2<CR>==')
 map('custom: Move Line Down',  'n', '<C-j>', '<Cmd>m.+1<CR>==')
-map('custom: Move Lines Up',   'x', '<C-k>', "<Esc><Cmd>'<,'>m'<-2<CR>gv")
-map('custom: Move Lines Down', 'x', '<C-j>', "<Esc><Cmd>'<,'>m'>+1<CR>gv")
+map('custom: Move Lines Up',   'x', '<C-k>', ":'<,'>m'<-2<CR>gv")
+map('custom: Move Lines Down', 'x', '<C-j>', ":'<,'>m'>+1<CR>gv")
 --   NOTE:  m: move to X
 --          .: the current line
 --         '<: the first line of the selection
