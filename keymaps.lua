@@ -16,6 +16,7 @@ local map = my.fn.map
 --     l |  -   | yes | yes |  -  |  -  |  -  |  -   | yes  |
 
 -- mode combos
+local ni  = {'n','i'}
 local nx  = {'n','x'}
 local nxo = {'n','x','o'}
 local nxi = {'n','x','i'}
@@ -39,6 +40,11 @@ map('custom: Page Up',   nxo, '<PageUp>',   '10kzz')
 map('custom: Page Up',   'i', '<PageUp>',   '<Esc>10kzzi')
 map('custom: Page Down', nxo, '<PageDown>', '10jzz')
 map('custom: Page Down', 'i', '<PageDown>', '<Esc>10jzzi')
+
+-- better home key
+map('custom: Home', nxo, '<Home>', '^')
+map('custom: Home', 'i', '<Home>', '<C-o>^')
+
 
 -- move line(s) up/down
 map('custom: Move Line Up',    'n', '<C-k>', '<Cmd>m.-2<CR>==')
