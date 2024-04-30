@@ -19,10 +19,17 @@ local plugins = {
 	{
 		-- align text interactively (****.)
 		'echasnovski/mini.align', enabled = true,
+		-- usage:
+		--   1. select the lines to align
+		--   2. type 'ga'
+		--   3. type 's' to specify the splitter
 		event = on_edit,
 		config = function()
 			require('mini.align').setup({
-				-- options
+				mappings = {
+					start = '',
+					start_with_preview = 'ga'
+				},
 			})
 		end
 	},
