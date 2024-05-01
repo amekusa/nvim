@@ -7,7 +7,7 @@ fn.map = function(desc, mode, from, to, opts)
 	return vim.keymap.set(mode, from, to, opts)
 end
 
-fn.close = function(buf, force)
+fn.close_buf = function(buf, force)
 	if buf == nil then
 		buf = vim.api.nvim_get_current_buf()
 	end
