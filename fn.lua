@@ -1,6 +1,12 @@
 ---- FUNCTIONS ----
 local fn = {}
 
+-- Returns if the given value is empty, which includes: nil, false, '', 0
+fn.e = function(x)
+	if not x then return true end
+	return x == '' or x == 0
+end
+
 fn.map = function(desc, mode, from, to, opts)
 	if not opts then opts = {} end
 	opts.desc = desc
