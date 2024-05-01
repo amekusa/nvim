@@ -11,7 +11,10 @@ fn.close = function(buf, force)
 	if buf == nil then
 		buf = vim.api.nvim_get_current_buf()
 	end
-	vim.cmd.bprevious()  -- manually switch to the prev buffer
+	if fn.is_last_buf(buf, true)
+		then vim.cmd.bprevious()
+		else vim.cmd.bnext()
+	end
 	if force -- delete the given (or current) buffer in background
 		then vim.cmd('bw! '..buf)
 		else vim.cmd('bw '..buf)
@@ -20,6 +23,18 @@ fn.close = function(buf, force)
 	--   Due to ':bd (nil)' not respecting 'buflisted',
 	--   it can cause undesired side-effects.
 	--   This function does the better job.
+end
+
+fn.is_last_buf = function(buf, listed)
+	if buf == 0 then buf = vim.api.nvim_get_current_buf() end
+	local bufs = vim.api.nvim_list_bufs()
+	if not listed then return buf == bufs[#bufs] end
+	for i = #bufs, 1, -1 do
+		if vim.fn.getbufinfo(bufs[i])[1].listed == 1 then
+			return buf == bufs[i]
+		end
+	end
+	return false
 end
 
 return fn
