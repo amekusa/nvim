@@ -7,14 +7,16 @@ fn.e = function(x)
 	return x == '' or x == 0
 end
 
+-- Alias of `vim.keymap.set` but the description comes first
 fn.map = function(desc, mode, from, to, opts)
 	if not opts then opts = {} end
 	opts.desc = desc
 	return vim.keymap.set(mode, from, to, opts)
 end
 
+-- Closes the given buffer
 fn.close_buf = function(buf, force)
-	if buf == nil then
+	if fn.e(buf) then
 		buf = vim.api.nvim_get_current_buf()
 	end
 	if fn.is_last_buf(buf, true)
@@ -31,8 +33,9 @@ fn.close_buf = function(buf, force)
 	--   This function does the better job.
 end
 
+-- Returns if the given buffer is the last entry
 fn.is_last_buf = function(buf, listed)
-	if buf == 0 then buf = vim.api.nvim_get_current_buf() end
+	if fn.e(buf) then buf = vim.api.nvim_get_current_buf() end
 	local bufs = vim.api.nvim_list_bufs()
 	if not listed then return buf == bufs[#bufs] end
 	for i = #bufs, 1, -1 do
