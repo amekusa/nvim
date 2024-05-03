@@ -65,6 +65,33 @@ local plugins = {
 		end
 	},
 	{
+		-- smart comment-out
+		'numToStr/Comment.nvim', enabled = true,
+		dependencies = {'nvim-treesitter/nvim-treesitter'},
+		ft = filetypes,
+		config = function()
+			require('Comment').setup({
+				mappings = {
+					basic = true,
+					extra = true,
+				},
+				toggler = {
+					line  = 'gcc',
+					block = 'gbc',
+				},
+				opleader = { -- operator-pending mappings in NORMAL and VISUAL mode
+					line  = 'gc',
+					block = 'gb',
+				},
+				extra = {
+					above = 'gcO', -- add comment on the line above
+					below = 'gco', -- add comment on the line below
+					eol   = 'gcA', -- add comment at the end of line
+				},
+			})
+		end
+	},
+	{
 		-- language parser & syntax highlighter
 		'nvim-treesitter/nvim-treesitter', enabled = true,
 		dependencies = {
