@@ -103,14 +103,6 @@ local plugins = {
 		end
 	},
 	{
-		-- lsp configurator
-		'neovim/nvim-lspconfig',
-	},
-	{
-		-- lsp package manager
-		'williamboman/mason.nvim',
-	},
-	{
 		-- total lsp management
 		'williamboman/mason-lspconfig.nvim', enabled = true,
 		dependencies = {
@@ -124,21 +116,53 @@ local plugins = {
 		ft = filetypes,
 		cmd = {'Mason', 'LspInfo', 'LspInstall', 'LspUninstall'},
 		config = function()
-			require('mason').setup()
-			require('cmp').setup()
-			local api = require('mason-lspconfig')
+			-- auto-completion settings
+			local cmp = require('cmp')
+			cmp.setup({
+				completion = {
+					autocomplete = false,
+				},
+				snippet = { -- snippet engine
+					expand = function(args)
+						vim.snippet.expand(args.body) -- native neovim snippets
+					end
+				},
+				mapping = cmp.mapping.preset.insert({
+					['<C-Space>'] = cmp.mapping.complete(),
+					['<Tab>'] = cmp.mapping.confirm({select = true}),
+				}),
+				sources = cmp.config.sources({
+					{name = 'buffer'},
+					{name = 'path'},
+					{name = 'nvim_lsp'},
+				}),
+			})
+			cmp.setup.cmdline(':', {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = cmp.config.sources({
+					{name = 'path'},
+					{name = 'cmdline'},
+				}),
+				matching = {disallow_symbol_nonprefix_matching = false}
+			})
+
+			-- lsp settings
+			local caps = require('cmp_nvim_lsp').default_capabilities()
 			local lsp = require('lspconfig')
-			api.setup({
+			require('mason').setup()
+			require('mason-lspconfig').setup({
 				ensure_installed = {
 					-- language servers to install
 					'lua_ls',
 					'eslint',
-					--'tsserver',
+					'tsserver',
+					'cssls',
 				},
 				handlers = {
 					-- setup language servers
 					['lua_ls'] = function()
 						lsp.lua_ls.setup({
+							capabilities = caps,
 							settings = {
 								Lua = {
 									runtime = {
@@ -152,11 +176,15 @@ local plugins = {
 						})
 					end,
 					['eslint'] = function()
-						lsp.eslint.setup {
+						lsp.eslint.setup({
+							capabilities = caps,
+							root_dir = function()
+								return vim.loop.cwd()
+							end,
 							settings = {
 								packageManager = 'npm', -- this enables the lsp to find the global eslint
 							}
-						}
+						})
 					end,
 					['tsserver'] = function()
 						lsp.tsserver.setup({
@@ -169,7 +197,9 @@ local plugins = {
 						})
 					end,
 					function(server_name) -- default handler
-						lsp[server_name].setup({})
+						lsp[server_name].setup({
+							capabilities = caps,
+						})
 					end,
 				}
 			})
