@@ -42,10 +42,15 @@ local plugins = {
 		config = function()
 			require('nvim-devdocs').setup({
 				ensure_installed = {
-					'javascript', 'node'
+					'javascript', 'node',
+					'html', 'css',
+					'php',
 				},
 				filetypes = {
 					javascript = {'javascript', 'node'},
+					html = {'html', 'css', 'javascript'},
+					css = {'css'},
+					php = {'php', 'html', 'css', 'javascript'},
 				},
 				after_open = function(buf)
 					vim.bo[buf].buflisted = true -- enable going back to opened docs
