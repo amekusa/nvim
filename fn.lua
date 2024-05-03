@@ -1,6 +1,16 @@
 ---- FUNCTIONS ----
 local fn = {}
 
+-- Converts the given special keycode (like <CR>, <Tab>, or <Esc>, etc.)
+-- into the format that is applicable to `feedkeys()`
+local keys = {}
+fn.key = function(code)
+	if not keys[code] then
+		keys[code] = vim.api.nvim_replace_termcodes('<'..code..'>', true, false, true)
+	end
+	return keys[code]
+end
+
 -- Returns whether the given value is empty, which includes: nil, false, '', 0
 fn.e = function(x)
 	if not x then return true end
@@ -44,6 +54,18 @@ fn.is_last_buf = function(buf, listed)
 		end
 	end
 	return false
+end
+
+-- Indents the current line
+fn.indent = function()
+	local line = vim.api.nvim_get_current_line()
+	if line == '' then
+		vim.cmd.stopinsert()
+		vim.api.nvim_feedkeys('cc', 'n', false)
+	else
+		vim.cmd.stopinsert()
+		vim.api.nvim_feedkeys('^i'..fn.key('tab'), 'n', false)
+	end
 end
 
 return fn
