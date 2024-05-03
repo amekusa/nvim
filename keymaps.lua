@@ -47,9 +47,9 @@ map('custom: Home', 'i', '<Home>', '<C-o>^')
 
 
 -- indent/outdent
-map('custom: Indent',  ni,  '<Tab>',   '<Cmd>><CR>');
+map('custom: Indent',  'i', '<Tab>',   function() my.fn.indent() end);
 map('custom: Indent',  'x', '<Tab>',   ':><CR>gv');
-map('custom: Outdent', ni,  '<S-Tab>', '<Cmd><<CR>');
+map('custom: Outdent', 'i', '<S-Tab>', '<Cmd><<CR>');
 map('custom: Outdent', 'x', '<S-Tab>', ':<<CR>gv');
 
 -- move line(s) up/down
