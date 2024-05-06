@@ -368,23 +368,29 @@ if conf.themes then
 end
 
 -- setup lazy.nvim (plugin manager)
-local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
+local lazy = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+if not vim.loop.fs_stat(lazy) then
 	vim.fn.system({
 		'git', 'clone', '--filter=blob:none',
 		'https://github.com/folke/lazy.nvim.git',
 		'--branch=stable', -- latest stable release
-		lazypath,
+		lazy,
 	})
 end
-vim.opt.rtp:prepend(lazypath)
+vim.opt.rtp:prepend(lazy)
 
 -- install plugins
-require('lazy').setup(plugins, {
+lazy = require('lazy')
+lazy.setup(plugins, {
 	lockfile = my.path..'/plugins-lock.json',
 	defaults = { -- default options for each plugin
 		lazy = true,
 		version = '*', -- try installing the latest stable versions of plugins
 	},
 })
+
+-- set custom autoloader
+my.fn.set_autoloader(function(plugin)
+	lazy.load({plugins = plugin})
+end)
 

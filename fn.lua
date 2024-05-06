@@ -1,6 +1,36 @@
 ---- FUNCTIONS ----
 local fn = {}
 
+-- Sets the autoloader callback
+local autoloader = nil
+fn.set_autoloader = function(loader)
+	autoloader = loader
+end
+
+-- Adds an entry to pass to the autoloader.
+-- Each entry gets loaded when user entered a command that starts with respective prefix
+local autoloads = nil
+fn.autoload = function(arg, prefix)
+	if autoloads then
+		table.insert(autoloads, {arg, prefix})
+	else
+		autoloads = {{arg, prefix}}
+		vim.api.nvim_create_autocmd('CmdUndefined', {
+			callback = function(ctx)
+				vim.print(ctx)
+				if not autoloader then return end
+				local cmd = ctx.match
+				for _,v in ipairs(autoloads) do
+					if fn.starts(cmd, v[2]) then
+						autoloader(v[1])
+						vim.cmd(cmd)
+					end
+				end
+			end
+		})
+	end
+end
+
 -- Converts the given special keycode (like <CR>, <Tab>, or <Esc>, etc.)
 -- into the format that is applicable to `feedkeys()`
 local keys = {}
@@ -15,6 +45,11 @@ end
 fn.e = function(x)
 	if not x then return true end
 	return x == '' or x == 0
+end
+
+-- Returns whether `str` starts with `with`
+fn.starts = function(str, with)
+   return string.sub(str, 1, string.len(with)) == with
 end
 
 -- Alias of `vim.keymap.set` but the description comes first
@@ -69,3 +104,4 @@ fn.indent = function()
 end
 
 return fn
+
