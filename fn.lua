@@ -17,7 +17,6 @@ fn.autoload = function(arg, prefix)
 		autoloads = {{arg, prefix}}
 		vim.api.nvim_create_autocmd('CmdUndefined', {
 			callback = function(ctx)
-				vim.print(ctx)
 				if not autoloader then return end
 				local cmd = ctx.match
 				for _,v in ipairs(autoloads) do
