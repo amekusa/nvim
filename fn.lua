@@ -22,7 +22,10 @@ fn.autoload = function(arg, prefix)
 				for _,v in ipairs(autoloads) do
 					if fn.starts(cmd, v[2]) then
 						autoloader(v[1])
-						vim.cmd(cmd)
+						if fn.e(vim.fn.exists(':'..cmd)) then
+							vim.cmd(cmd)
+						end
+						return
 					end
 				end
 			end
