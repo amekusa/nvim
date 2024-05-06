@@ -1,6 +1,7 @@
 ---- LANGUAGES ----
 local my = vim.g._custom
 local map = my.fn.map
+local autoload = my.fn.autoload
 
 -- filetypes to support
 local filetypes = {
@@ -35,8 +36,8 @@ local plugins = {
 			'nvim-telescope/telescope.nvim',
 			'nvim-treesitter/nvim-treesitter',
 		},
-		cmd = {'DevdocsOpen'},
-		init = function()
+		init = function(this)
+			autoload(this.name, 'Devdocs')
 			map('DevDocs: Open', 'n', '<Leader>d', '<Cmd>DevdocsOpen<CR>')
 		end,
 		config = function()
@@ -100,6 +101,9 @@ local plugins = {
 			--'nvim-treesitter/nvim-treesitter-textobjects',
 			--'nvim-treesitter/nvim-treesitter-context',
 		},
+		init = function(this)
+			autoload(this.name, 'TS')
+		end,
 		ft = filetypes,
 		cmd = {'TSInstallInfo', 'TSInstall', 'TSUninstall', 'TSUpdate'},
 		build = ':TSUpdate',
