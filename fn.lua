@@ -34,7 +34,7 @@ fn.autoload = function(arg, prefix, stub)
 					-- v2: prefix
 					-- v3: stub
 					if fn.starts(cmd, v[2]) then
-						if v[3] then -- has a stub?
+						if v[3] and vim.fn.exists(':'..v[3]) then -- has a stub?
 							vim.api.nvim_del_user_command(v[3]) -- delete the stub
 						end
 						autoloader(v[1])
