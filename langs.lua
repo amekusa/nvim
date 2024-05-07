@@ -37,7 +37,7 @@ local plugins = {
 			'nvim-treesitter/nvim-treesitter',
 		},
 		init = function(this)
-			autoload(this.name, 'Devdocs')
+			autoload(this.name, 'Devdocs', 'DevdocsOpen')
 			map('DevDocs: Open', 'n', '<Leader>d', '<Cmd>DevdocsOpen<CR>')
 		end,
 		config = function()
