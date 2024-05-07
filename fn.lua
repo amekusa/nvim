@@ -18,13 +18,14 @@ fn.autoload = function(arg, prefix, stub)
 			vim.api.nvim_del_user_command(stub) -- delete itself
 			autoloader(arg)
 			vim.cmd(stub)
-		end, {desc = '- Stub -'})
+		end, {desc = 'custom: Stub'})
 	end
 	if autoloads then
 		table.insert(autoloads, {arg, prefix, stub})
 	else
 		autoloads = {{arg, prefix, stub}}
 		vim.api.nvim_create_autocmd('CmdUndefined', {
+			desc = 'custom: Dynamic Autoloader',
 			callback = function(ctx)
 				if not autoloader then return end
 				local cmd = ctx.match
