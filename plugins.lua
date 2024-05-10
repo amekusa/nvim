@@ -391,6 +391,7 @@ lazy.setup(plugins, {
 
 -- set custom autoloader
 my.fn.set_autoloader(function(plugin)
+	if plugin._.loaded then return end
 	lazy.load({plugins = plugin})
 end)
 
