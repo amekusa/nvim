@@ -10,33 +10,23 @@ end
 -- Adds an entry to pass to the autoloader.
 -- Each entry gets loaded when user entered a command that starts with respective prefix
 local autoloads = nil
-fn.autoload = function(arg, prefix, stub)
-	if stub then -- create a stub command
-		if type(stub) == 'boolean' then stub = prefix end
-		vim.api.nvim_create_user_command(stub, function()
-			if not autoloader then return end
-			vim.api.nvim_del_user_command(stub) -- delete itself
-			autoloader(arg)
-			vim.cmd(stub)
-		end, {desc = 'custom: Stub'})
-	end
+fn.autoload = function(arg, prefix)
 	if autoloads then
-		table.insert(autoloads, {arg, prefix, stub})
+		table.insert(autoloads, {arg, prefix})
 	else
-		autoloads = {{arg, prefix, stub}}
+		autoloads = {{arg, prefix}}
 		vim.api.nvim_create_autocmd('CmdUndefined', {
 			desc = 'custom: Dynamic Autoloader',
 			callback = function(ctx)
 				if not autoloader then return end
 				local cmd = ctx.match
-				for _,v in ipairs(autoloads) do
+				for i = 1, #autoloads, 1 do
+					local v = autoloads[i]
 					-- v1: arg
 					-- v2: prefix
 					-- v3: stub
 					if fn.starts(cmd, v[2]) then
-						if v[3] and vim.fn.exists(':'..v[3]) ~= 0 then -- has a stub?
-							vim.api.nvim_del_user_command(v[3]) -- delete the stub
-						end
+						table.remove(autoloads, i)
 						autoloader(v[1])
 						return
 					end

@@ -37,9 +37,14 @@ local plugins = {
 			'nvim-treesitter/nvim-treesitter',
 		},
 		init = function(this)
-			autoload(this.name, 'Devdocs', 'DevdocsOpen')
+			autoload(this, 'Devdocs')
 			map('DevDocs: Open', 'n', '<Leader>d', '<Cmd>DevdocsOpen<CR>')
 		end,
+		cmd = {
+			'DevdocsOpen',
+			'DevdocsInstall',
+			'DevdocsUpdateAll',
+		},
 		config = function()
 			require('nvim-devdocs').setup({
 				ensure_installed = {
@@ -102,8 +107,15 @@ local plugins = {
 			--'nvim-treesitter/nvim-treesitter-context',
 		},
 		init = function(this)
-			autoload(this.name, 'TS')
+			autoload(this, 'TS')
 		end,
+		cmd = {
+			'TSInstallInfo',
+			'TSConfigInfo',
+			'TSInstall',
+			'TSUninstall',
+			'TSUpdate',
+		},
 		ft = filetypes,
 		cmd = {'TSInstallInfo', 'TSInstall', 'TSUninstall', 'TSUpdate'},
 		build = ':TSUpdate',
