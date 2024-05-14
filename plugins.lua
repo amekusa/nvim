@@ -6,35 +6,34 @@ local on_edit = {'BufReadPre', 'BufNewFile'}
 
 local plugins = {
 	{
-		-- 'gx' functionality without the need of netrw (****.)
-		'chrishrb/gx.nvim', enabled = true,
-		dependencies = {'nvim-lua/plenary.nvim'},
-		cmd = {'Browse'},
+		-- cheatsheet (***..)
+		'sudormrfbin/cheatsheet.nvim', enabled = true,
+		dependencies = {'nvim-telescope/telescope.nvim'},
 		init = function()
-			vim.g.netrw_nogx = 1 -- disable netrw gx
-			map('gx: Browse', 'n', 'gx', '<Cmd>Browse<CR>')
+			map('cheatsheet: Open', 'n', '<Leader>?', '<Cmd>Cheatsheet<CR>')
 		end,
-		config = true,
-	},
-	{
-		-- align text interactively (****.)
-		'echasnovski/mini.align', enabled = true,
-		-- usage:
-		--   1. select the lines to align
-		--   2. type 'ga'
-		--   3. type 's' to specify the splitter
-		event = on_edit,
+		cmd = {
+			'Cheatsheet',
+			'CheatsheetEdit',
+		},
 		config = function()
-			require('mini.align').setup({
-				mappings = {
-					start = '',
-					start_with_preview = 'ga'
+			require('cheatsheet').setup({
+				bundled_cheatsheets = {
+					enabled = {'default', 'unicode'}
+				},
+				bundled_plugin_cheatsheets = {
+					enabled = {'telescope.nvim'}
 				},
 			})
 		end
 	},
 	{
-		-- jump around with keypresses (*****)
+		-- code runner
+		'CRAG666/code_runner.nvim', enabled = true,
+		config = true,
+	},
+	{
+		-- jump with keypresses (*****)
 		'folke/flash.nvim', enabled = true,
 		event = 'VeryLazy',
 		config = function()
@@ -49,7 +48,8 @@ local plugins = {
 					autojump = true, -- automatically jump when there is only one match?
 				},
 				label = {
-					uppercase = false, -- allow uppercase labels?
+					uppercase = true, -- allow uppercase labels?
+					current = false, -- add a label for the first match?
 				},
 				modes = {
 					search = { -- '/' mode options
@@ -57,11 +57,11 @@ local plugins = {
 					},
 					char = { -- 'f' mode options
 						enabled = true,
+						keys = {'f','F','t','T'},
 						jump_labels = true, -- show jump labels?
 						multi_line = true, -- multi-line or current-line-only
-						keys = {'f','F','t','T'},
 						label = {
-							exclude = 'fthjkliardc', -- exclude these letters from jump labels
+							exclude = '', -- exclude these letters from jump labels
 						},
 					},
 				},
@@ -69,12 +69,48 @@ local plugins = {
 		end
 	},
 	{
-		-- automatically close brackets (****.)
-		'windwp/nvim-autopairs', enabled = true,
-		event = 'VeryLazy',
+		-- shows git related signs to the gutter (*****)
+		'lewis6991/gitsigns.nvim', enabled = true,
+		event = on_edit,
 		config = function()
-			require('nvim-autopairs').setup({
-				-- options
+			local api = require('gitsigns')
+			api.setup({
+				signs = {
+					add          = {text = '+'}, -- {text = '│'},
+					change       = {text = '*'}, -- {text = '│'},
+					delete       = {text = '_'},
+					topdelete    = {text = '‾'},
+					changedelete = {text = '~'},
+					untracked    = {text = '?'},
+				},
+				on_attach = function(buf)
+					local opts = {buffer = buf}
+					map('gitsigns: Stage Hunk',      'n', '<Leader>gs', api.stage_hunk,                               opts)
+					map('gitsigns: Stage Hunk',      'x', '<Leader>gs', function() api.stage_hunk({vim.fn.line('.'), vim.fn.line('v')}) end, opts)
+					map('gitsigns: Reset Hunk',      'n', '<Leader>gr', api.reset_hunk,                               opts)
+					map('gitsigns: Reset Hunk',      'x', '<Leader>gr', function() api.reset_hunk({vim.fn.line('.'), vim.fn.line('v')}) end, opts)
+					map('gitsigns: Stage Buffer',    'n', '<Leader>gS', api.stage_buffer,                             opts)
+					map('gitsigns: Undo Stage Hunk', 'n', '<Leader>gu', api.undo_stage_hunk,                          opts)
+					map('gitsigns: Reset Buffer',    'n', '<Leader>gR', api.reset_buffer,                             opts)
+					map('gitsigns: Preview Hunk',    'n', '<Leader>gp', api.preview_hunk,                             opts)
+					map('gitsigns: Blame Line',      'n', '<Leader>gb', function() api.blame_line({full = true}) end, opts)
+					map('gitsigns: Toggle Blame',    'n', '<Leader>gB', api.toggle_current_line_blame,                opts)
+					map('gitsigns: Diff',            'n', '<Leader>gd', api.diffthis,                                 opts)
+					map('gitsigns: Diff',            'n', '<Leader>gD', function() api.diffthis('~') end,             opts)
+					map('gitsigns: Toggle Deleted',  'n', '<Leader>gx', api.toggle_deleted,                           opts)
+
+					map('gitsigns: Prev Hunk', 'n', '[c', function()
+						if vim.wo.diff then return '[c' end
+						vim.schedule(api.prev_hunk)
+						return '<ignore>'
+					end, {buffer = buf, expr = true})
+
+					map('gitsigns: Next Hunk', 'n', ']c', function()
+						if vim.wo.diff then return ']c' end
+						vim.schedule(api.next_hunk)
+						return '<ignore>'
+					end, {buffer = buf, expr = true})
+				end,
 			})
 		end
 	},
@@ -100,20 +136,69 @@ local plugins = {
 		end
 	},
 	{
+		-- 'gx' functionajity without the need of netrw (****.)
+		'chrishrb/gx.nvim', enabled = true,
+		dependencies = {'nvim-lua/plenary.nvim'},
+		init = function()
+			vim.g.netrw_nogx = 1 -- disable netrw gx
+			map('gx: Browse', 'n', 'gx', '<Cmd>Browse<CR>')
+		end,
+		cmd = 'Browse',
+		config = true,
+	},
+	{
+		-- align text interactively (****.)
+		'echasnovski/mini.align', enabled = true,
+		-- usage:
+		--   1. select the lines to align
+		--   2. type 'ga'
+		--   3. type 's' to specify the splitter
+		event = on_edit,
+		config = function()
+			require('mini.align').setup({
+				mappings = {
+					start = '',
+					start_with_preview = 'ga'
+				},
+			})
+		end
+	},
+	{
+		-- automatically close brackets (****.)
+		'windwp/nvim-autopairs', enabled = true,
+		event = on_edit,
+		config = function()
+			require('nvim-autopairs').setup({
+				-- options
+			})
+		end
+	},
+	{
+		-- smartly edit surrounding chars like {}, [], "", etc.
+		'kylechui/nvim-surround', enabled = true,
+		event = on_edit,
+		config = function()
+			require('nvim-surround').setup({
+				-- options
+			})
+		end
+	},
+	{
 		-- file-tree widget (***..)
 		'nvim-tree/nvim-tree.lua', enabled = true,
 		dependencies = {'nvim-tree/nvim-web-devicons'},
-		lazy = false,
 		init = function()
 			-- disable netrw
 			vim.g.loaded_netrw = 1
 			vim.g.loaded_netrwPlugin = 1
 		end,
+		lazy = false,
 		config = function()
 			local api = require('nvim-tree.api')
 			require('nvim-tree').setup({
+				disable_netrw = true,
 				filters = {
-					git_ignored = false, -- do not hide ignored files
+					git_ignored = true, -- hide ignored files?
 					custom = {
 						'.git',
 						'.DS_Store',
@@ -200,7 +285,7 @@ local plugins = {
 					map('nvim-tree: Close',                   'n', 'q',              api.tree.close,                     opts)
 					map('nvim-tree: Rename',                  'n', 'r',              api.fs.rename,                      opts)
 					map('nvim-tree: Refresh',                 'n', 'R',              api.tree.reload,                    opts)
-					--map('nvim-tree: Run System',            'n', 's',              api.node.run.system,                opts)
+					map('nvim-tree: Run System',              'n', 's',              api.node.run.system,                opts)
 					--map('nvim-tree: Search',                'n', 'S',              api.tree.search_node,               opts)
 					map('nvim-tree: Toggle Hidden',           'n', 'U',              api.tree.toggle_custom_filter,      opts)
 					map('nvim-tree: Collapse',                'n', 'W',              api.tree.collapse_all,              opts)
@@ -227,12 +312,20 @@ local plugins = {
 		end
 	},
 	{
-		-- smartly edit surrounding chars like {}, [], "", etc.
-		'kylechui/nvim-surround', enabled = true,
-		event = 'VeryLazy',
+		-- code runner (***..)
+		'michaelb/sniprun', enabled = false,
+		build = 'sh install.sh',
+		cmd = {'SnipInfo', 'SnipRun', 'SnipLive'},
 		config = function()
-			require('nvim-surround').setup({
+			require('sniprun').setup({
 				-- options
+				selected_interpreters = {'JS_TS_deno'},
+				repl_enabje = {'JS_TS_deno'},
+				interpreter_options = {
+					JS_TS_deno = {
+						use_on_filetypes = {'javascript', 'typescript'}
+					},
+				},
 			})
 		end
 	},
@@ -248,38 +341,22 @@ local plugins = {
 				},
 			})
 			local api = require('telescope.builtin')
-			map('telescope: Builtin',                'n', '<Leader>t',  api.builtin)
-			map('telescope: Files',                  'n', '<Leader>ff', api.find_files)
-			map('telescope: Grep',                   'n', '<Leader>fg', api.live_grep)
-			map('telescope: Buffers',                'n', '<Leader>fb', api.buffers)
-			map('telescope: Commands',               'n', '<Leader>f;', api.commands)
-			map('telescope: Help',                   'n', '<Leader>fh', api.help_tags)
-			map('telescope: Man Pages',              'n', '<Leader>fm', api.man_pages)
-			map('telescope: Quickfix',               'n', '<Leader>fq', api.quickfix)
-			map('telescope: Options',                'n', '<Leader>fo', api.vim_options)
-			map('telescope: Registers',              'n', '<Leader>fr', api.registers)
-			map('telescope: Keymaps',                'n', '<Leader>fk', api.keymaps)
-			map('telescope: Treesitter Symbols',     'n', '<Leader>fs', api.treesitter)
-			map('telescope: Commits',                'n', '<Leader>fC', api.git_commits)
-			map('telescope: Commits for the Buffer', 'n', '<Leader>fc', api.git_bcommits)
-			--map('telescope: Commits in the Range', 'v', '<Leader>fc', api.git_bcommits_range)
+			map('telescope: Builtin',                'n', '<Leader>t', api.builtin)
+			map('telescope: Files',                  'n', '<Leader>f', api.find_files)
+			map('telescope: Grep',                   'n', '<Leader><Leader>f', api.live_grep)
+			map('telescope: Buffers',                'n', '<Leader>b', api.buffers)
+			map('telescope: Commands',               'n', '<Leader>;', api.commands)
+			map('telescope: Help',                   'n', '<Leader>h', api.help_tags)
+			map('telescope: Man Pages',              'n', '<Leader><Leader>m', api.man_pages)
+			map('telescope: Quickfix',               'n', '<Leader><Leader>q', api.quickfix)
+			map('telescope: Options',                'n', '<Leader><Leader>o', api.vim_options)
+			map('telescope: Registers',              'n', '<Leader><Leader>r', api.registers)
+			map('telescope: Keymaps',                'n', '<Leader>k', api.keymaps)
+			map('telescope: Treesitter Symbols',     'n', '<Leader>s', api.treesitter)
+			map('telescope: Commits',                'n', '<Leader><Leader>C', api.git_commits)
+			map('telescope: Commits for the Buffer', 'n', '<Leader><Leader>c', api.git_bcommits)
+			--map('telescope: Commits in the Range', 'x', '<Leader><Leader>c', api.git_bcommits_range)
 			--   NOTE: this causes error bc 'git_bcommits_range' is nil. no idea how to fix it.
-		end
-	},
-	{
-		-- cheatsheet
-		'sudormrfbin/cheatsheet.nvim', enabled = true,
-		dependencies = {'nvim-telescope/telescope.nvim'},
-		event = 'VeryLazy',
-		config = function()
-			require('cheatsheet').setup({
-				bundled_cheatsheets = {
-					enabled = {'default'}
-				},
-				bundled_plugin_cheatsheets = {
-					enabled = {'telescope.nvim'}
-				},
-			})
 		end
 	},
 	{
@@ -290,53 +367,6 @@ local plugins = {
 			local api = require('which-key')
 			api.setup()
 		end,
-	},
-	{
-		-- shows git related signs to the gutter (*****)
-		'lewis6991/gitsigns.nvim', enabled = true,
-		event = on_edit,
-		config = function()
-			local api = require('gitsigns')
-			api.setup({
-				signs = {
-					add          = {text = '+'}, -- {text = '│'},
-					change       = {text = '*'}, -- {text = '│'},
-					delete       = {text = '_'},
-					topdelete    = {text = '‾'},
-					changedelete = {text = '~'},
-					untracked    = {text = '┆'},
-				},
-				on_attach = function(buf)
-					local opts = {buffer = buf}
-					map('gitsigns: Stage Hunk',      'n', '<Leader>gs', api.stage_hunk,                               opts)
-					map('gitsigns: Stage Hunk',      'x', '<Leader>gs', function() api.stage_hunk({vim.fn.line('.'), vim.fn.line('v')}) end, opts)
-					map('gitsigns: Reset Hunk',      'n', '<Leader>gr', api.reset_hunk,                               opts)
-					map('gitsigns: Reset Hunk',      'x', '<Leader>gr', function() api.reset_hunk({vim.fn.line('.'), vim.fn.line('v')}) end, opts)
-					map('gitsigns: Stage Buffer',    'n', '<Leader>gS', api.stage_buffer,                             opts)
-					map('gitsigns: Undo Stage Hunk', 'n', '<Leader>gu', api.undo_stage_hunk,                          opts)
-					map('gitsigns: Reset Buffer',    'n', '<Leader>gR', api.reset_buffer,                             opts)
-					map('gitsigns: Preview Hunk',    'n', '<Leader>gp', api.preview_hunk,                             opts)
-					map('gitsigns: Blame Line',      'n', '<Leader>gb', function() api.blame_line({full = true}) end, opts)
-					map('gitsigns: Toggle Blame',    'n', '<Leader>gB', api.toggle_current_line_blame,                opts)
-					map('gitsigns: Diff',            'n', '<Leader>gd', api.diffthis,                                 opts)
-					map('gitsigns: Diff',            'n', '<Leader>gD', function() api.diffthis('~') end,             opts)
-					map('gitsigns: Toggle Deleted',  'n', '<Leader>gx', api.toggle_deleted,                           opts)
-
-					map('gitsigns: Prev Hunk', 'n', '[c', function()
-						if vim.wo.diff then return '[c' end
-						vim.schedule(api.prev_hunk)
-						return '<ignore>'
-					end, {buffer = buf, expr = true})
-
-					map('gitsigns: Next Hunk', 'n', ']c', function()
-						if vim.wo.diff then return ']c' end
-						vim.schedule(api.next_hunk)
-						return '<ignore>'
-					end, {buffer = buf, expr = true})
-
-				end,
-			})
-		end
 	},
 
 }
