@@ -106,11 +106,8 @@ fn.indent = function()
 end
 
 -- set the current window to "typewriter" mode
-local scrolloff = nil
+local scrolloff = vim.o.scrolloff
 fn.typewriter_mode = function(set)
-	if not scrolloff then
-		scrolloff = vim.o.scrolloff
-	end
 	if set == nil then -- toggle
 		set = vim.wo.scrolloff <= scrolloff
 	end
