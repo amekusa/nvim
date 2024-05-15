@@ -2,9 +2,43 @@
 local my = vim.g._custom
 local conf = my.conf.plugins
 local map = my.fn.map
-local on_edit = {'BufReadPre', 'BufNewFile'}
+local autoload = my.fn.autoload
 
-local plugins = {
+-- editor events
+local on_edit = {
+	'BufReadPre',
+	'BufNewFile'
+}
+
+-- filetypes to load treesitter
+local ts_filetypes = {
+	'vim',
+	'lua',
+	'sh', 'bash', 'zsh',
+	'json', 'yaml',
+	'markdown',
+
+	'html', 'xml', 'svg',
+	'css', 'less', 'scss',
+	'javascript', 'typescript',
+	'php',
+}
+
+-- treesitter language modules
+local ts_langs = {
+	'vim', 'vimdoc', 'query',
+	'lua',
+	'bash',
+	'json', 'yaml',
+	'markdown',
+
+	'html', 'xml',
+	'css', 'scss', -- no `less` module :(
+	'javascript', 'jsdoc', 'typescript',
+	'php', 'phpdoc',
+}
+
+local plugins = { -- in alphabetical order
 	{
 		-- cheatsheet (***..)
 		'sudormrfbin/cheatsheet.nvim', enabled = true,
@@ -31,6 +65,33 @@ local plugins = {
 		-- code runner
 		'CRAG666/code_runner.nvim', enabled = true,
 		config = true,
+	},
+	{
+		-- smart comment-out
+		'numToStr/Comment.nvim', enabled = true,
+		dependencies = {'nvim-treesitter/nvim-treesitter'},
+		ft = ts_filetypes,
+		config = function()
+			require('Comment').setup({
+				mappings = {
+					basic = true,
+					extra = true,
+				},
+				toggler = {
+					line  = 'gcc',
+					block = 'gbc',
+				},
+				opleader = { -- operator-pending mappings in NORMAL and VISUAL mode
+					line  = 'gc',
+					block = 'gb',
+				},
+				extra = {
+					above = 'gcO', -- add comment on the line above
+					below = 'gco', -- add comment on the line below
+					eol   = 'gcA', -- add comment at the end of line
+				},
+			})
+		end
 	},
 	{
 		-- jump with keypresses (*****)
@@ -123,12 +184,16 @@ local plugins = {
 				auto_cmd = true,
 				override_editorconfig = false,
 				filetype_exclude = {
-					'netrw',
 					'tutor',
+					'help',
+					'man',
+					'qf',
 				},
 				buftype_exclude = {
 					'help',
 					'nofile',
+					'nowrite',
+					'quickfix',
 					'terminal',
 					'prompt',
 				},
@@ -145,6 +210,134 @@ local plugins = {
 		end,
 		cmd = 'Browse',
 		config = true,
+	},
+	{
+		-- lsp package manager
+		'williamboman/mason.nvim', enabled = true,
+		init = function(this)
+			autoload(this, 'Mason')
+		end,
+		cmd = {
+			'Mason',
+			'MasonInstall',
+			'MasonUninstall',
+			'MasonUpdate',
+		},
+		config = function()
+			require('mason').setup()
+		end
+	},
+	{
+		-- total lsp management
+		'williamboman/mason-lspconfig.nvim', enabled = true,
+		dependencies = {
+			'williamboman/mason.nvim', -- lsp package manager
+			'neovim/nvim-lspconfig', -- lsp configurator
+			'hrsh7th/nvim-cmp', -- auto-completion
+
+			-- auto completion sources
+			'hrsh7th/cmp-nvim-lsp',
+		},
+		ft = ts_filetypes,
+		cmd = {
+			'LspInfo',
+			'LspInstall',
+			'LspUninstall'
+		},
+		config = function()
+			-- auto-completion settings
+			local cmp = require('cmp')
+			cmp.setup({
+				completion = {
+					autocomplete = true,
+				},
+				snippet = { -- snippet engine
+					expand = function(args)
+						--vim.snippet.expand(args.body) -- native neovim snippets
+					end
+				},
+				mapping = cmp.mapping.preset.insert({
+					['<C-Space>'] = cmp.mapping.complete(),
+					['<Tab>'] = cmp.mapping.confirm({select = true}),
+				}),
+				sources = cmp.config.sources({
+					{name = 'buffer'},
+					{name = 'path'},
+					{name = 'nvim_lsp'},
+				}),
+			})
+			cmp.setup.cmdline(':', {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = cmp.config.sources({
+					{name = 'path'},
+					{name = 'cmdline'},
+				}),
+				matching = {disallow_symbol_nonprefix_matching = false}
+			})
+
+			-- lsp settings
+			local caps = require('cmp_nvim_lsp').default_capabilities()
+			local lsp = require('lspconfig')
+			require('mason-lspconfig').setup({
+				ensure_installed = {
+					-- language servers to install
+					'lua_ls',
+					'eslint',
+					'tsserver',
+					'cssls',
+				},
+				handlers = {
+					-- setup language servers
+					['lua_ls'] = function()
+						lsp.lua_ls.setup({
+							capabilities = caps,
+							root_dir = function()
+								return vim.loop.cwd()
+							end,
+							settings = {
+								Lua = {
+									runtime = {
+										version = 'LuaJIT',
+									},
+									diagnostics = {
+										disable = {
+											'lowercase-global',
+											'undefined-global',
+										},
+									}
+								}
+							}
+						})
+					end,
+					['eslint'] = function()
+						lsp.eslint.setup({
+							capabilities = caps,
+							root_dir = function()
+								return vim.loop.cwd()
+							end,
+							settings = {
+								packageManager = 'npm', -- this enables the lsp to find the global eslint
+							}
+						})
+					end,
+					['tsserver'] = function()
+						lsp.tsserver.setup({
+							filetypes = {
+								'javascript'
+							},
+							root_dir = function()
+								return vim.loop.cwd()
+							end
+						})
+					end,
+					function(server_name) -- default handler
+						lsp[server_name].setup({
+							capabilities = caps,
+						})
+					end,
+				}
+			})
+		end
 	},
 	{
 		-- align text interactively (****.)
@@ -172,6 +365,68 @@ local plugins = {
 				-- options
 			})
 		end
+	},
+	{
+		-- devdocs viewer (****.)
+		'luckasRanarison/nvim-devdocs', enabled = true,
+		branch = 'master', -- latest commit on master
+		dependencies = {
+			'nvim-lua/plenary.nvim',
+			'nvim-treesitter/nvim-treesitter',
+			'nvim-telescope/telescope.nvim',
+		},
+		init = function(this)
+			autoload(this, 'Devdocs')
+			map('devdocs: Open',         'n', '<Leader>D', '<Cmd>DevdocsOpen<CR>')
+			map('devdocs: Open Current', 'n', '<Leader>d', '<Cmd>DevdocsOpenCurrent<CR>')
+		end,
+		cmd = {
+			'DevdocsOpen',
+			'DevdocsOpenCurrent',
+			'DevdocsInstall',
+			'DevdocsUpdateAll',
+		},
+		config = function()
+			require('nvim-devdocs').setup({
+				ensure_installed = {
+					'lua-5.1', 'lua-5.2',
+					'javascript', 'node',
+					'html', 'css',
+					'php',
+				},
+				filetypes = {
+					lua = {'lua-5.1', 'lua-5.2'},
+					javascript = {'javascript', 'node'},
+					html = {'html', 'css', 'javascript'},
+					css = {'css'},
+					php = {'php', 'html', 'css', 'javascript'},
+				},
+				after_open = function(buf)
+					vim.bo[buf].buflisted = true -- enable going back to opened docs
+					map('devdocs: Close', 'n', '<Esc>', function() my.fn.close_buf(buf, true) end, {buffer = buf})
+				end,
+				-- use external markdown viewer
+				previewer_cmd   = 'glow',
+				cmd_args        = {'-s', 'dark', '-w', '128'},
+				picker_cmd      = 'glow',
+				picker_cmd_args = {'-s', 'dark', '-w', '80'},
+			})
+		end
+	},
+	{
+		-- snippets manager
+		'chrisgrieser/nvim-scissors', enabled = true,
+		dependencies = {'nvim-telescope/telescope.nvim'}, -- optional
+		ft = ts_filetypes,
+		config = function()
+			require('scissors').setup({
+				snippetDir = my.path..'/snippets',
+			})
+		end
+	},
+	{
+		-- snippets manager
+		'garymjr/nvim-snippets', enabled = false,
 	},
 	{
 		-- smartly edit surrounding chars like {}, [], "", etc.
@@ -312,20 +567,52 @@ local plugins = {
 		end
 	},
 	{
-		-- code runner (***..)
-		'michaelb/sniprun', enabled = false,
-		build = 'sh install.sh',
-		cmd = {'SnipInfo', 'SnipRun', 'SnipLive'},
+		-- language parser & syntax highlighter
+		'nvim-treesitter/nvim-treesitter', enabled = true,
+		dependencies = {
+			-- optional modules
+			'nvim-treesitter/nvim-treesitter-refactor',
+			--'nvim-treesitter/nvim-treesitter-textobjects',
+			--'nvim-treesitter/nvim-treesitter-context',
+		},
+		init = function(this)
+			autoload(this, 'TS')
+		end,
+		cmd = {
+			'TSInstallInfo',
+			'TSConfigInfo',
+			'TSInstall',
+			'TSUninstall',
+			'TSUpdate',
+		},
+		ft = ts_filetypes,
+		build = ':TSUpdate',
 		config = function()
-			require('sniprun').setup({
-				-- options
-				selected_interpreters = {'JS_TS_deno'},
-				repl_enabje = {'JS_TS_deno'},
-				interpreter_options = {
-					JS_TS_deno = {
-						use_on_filetypes = {'javascript', 'typescript'}
-					},
+			require('nvim-treesitter.configs').setup({
+				ensure_installed = ts_langs,
+				sync_install = false,
+				auto_install = false,
+				highlight = {
+					enable = true,
 				},
+				indent = {
+					enable = true,
+				},
+				refactor = {
+					highlight_definitions = {
+						enable = true,
+						clear_on_cursor_move = false,
+					},
+					highlight_current_scope = {
+						enable = false,
+					},
+					smart_rename = {
+						enable = true,
+						keymaps = {
+							smart_rename = '<Leader>r',
+						}
+					}
+				}
 			})
 		end
 	},
@@ -364,17 +651,13 @@ local plugins = {
 		'folke/which-key.nvim', enabled = true,
 		event = 'VeryLazy',
 		config = function()
-			local api = require('which-key')
-			api.setup()
+			require('which-key').setup({
+				-- options
+			})
 		end,
 	},
 
 }
-
--- lsp, syntax-highlighter, etc.
-if conf.langs then
-	vim.list_extend(plugins, require(my.ns..'.langs'))
-end
 
 -- themes
 if conf.themes then
