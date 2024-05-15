@@ -11,7 +11,6 @@ local my = {
 		plugins = {
 			enable = true,
 			themes = true,
-			langs = true,
 		},
 		autocmds = {
 			enable = true,
