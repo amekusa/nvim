@@ -19,7 +19,7 @@ local plugins = {
 		config = function()
 			require('cheatsheet').setup({
 				bundled_cheatsheets = {
-					enabled = {'default', 'unicode'}
+					enabled = {'default'}
 				},
 				bundled_plugin_cheatsheets = {
 					enabled = {'telescope.nvim'}
