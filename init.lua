@@ -18,6 +18,8 @@ local my = {
 			detect_large_file = true,
 			detect_large_file_size = 256 * 1024,
 			clear_jumplist = true,
+			close_with_esc = true,
+			close_with_esc_ft = {'help', 'man', 'qf', 'lazy'},
 		},
 	},
 }

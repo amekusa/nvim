@@ -1,6 +1,7 @@
 ---- AUTO COMMANDS ----
 local my = vim.g._custom
 local conf = my.conf.autocmds
+local map = my.fn.map
 local autocmd = vim.api.nvim_create_autocmd
 
 local function regex_ext(ext) -- returns a regex that matches with given file extensions
@@ -52,6 +53,15 @@ if conf.clear_jumplist then
 		desc = 'Clear jumplist on start',
 		callback = function()
 			vim.cmd.clearjumps()
+		end
+	})
+end
+
+if conf.close_with_esc then
+	autocmd('FileType', {
+		pattern = conf.close_with_esc_ft,
+		callback = function(ctx)
+			map('custom: Close', 'n', '<Esc>', '<Cmd>bw!<CR>', {buffer = ctx.buf})
 		end
 	})
 end
