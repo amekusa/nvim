@@ -22,9 +22,6 @@ fn.autoload = function(arg, prefix)
 				local cmd = ctx.match
 				for i = 1, #autoloads, 1 do
 					local v = autoloads[i]
-					-- v1: arg
-					-- v2: prefix
-					-- v3: stub
 					if fn.starts(cmd, v[2]) then
 						table.remove(autoloads, i)
 						autoloader(v[1])
@@ -105,6 +102,23 @@ fn.indent = function()
 	else
 		vim.cmd.stopinsert()
 		vim.api.nvim_feedkeys('^i'..fn.key('tab'), 'n', false)
+	end
+end
+
+-- set the current window to "typewriter" mode
+local scrolloff = nil
+fn.typewriter_mode = function(set)
+	if not scrolloff then
+		scrolloff = vim.o.scrolloff
+	end
+	if set == nil then -- toggle
+		set = vim.wo.scrolloff <= scrolloff
+	end
+	if set then
+		vim.wo.scrolloff = 100
+		vim.api.nvim_feedkeys('zz', 'n', false)
+	else
+		vim.wo.scrolloff = scrolloff
 	end
 end
 

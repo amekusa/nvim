@@ -126,3 +126,7 @@ map('custom: Find & Replace the Word', 'i', '<C-f>', [[<Esc>:%s/<C-r><C-w>//gc<L
 map('custom: Find & Replace the Selected', 'x', '<C-f>', [[y:%s/<C-r>"//gc<Left><Left><Left>]])
 --   NOTE: <C-r>" outputs the last yanked text
 
+
+-- toggle typewriter mode
+map('custom: Typewriter Mode', nx, '<S-z>', function() my.fn.typewriter_mode() end)
+
