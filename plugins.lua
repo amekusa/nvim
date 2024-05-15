@@ -297,7 +297,11 @@ local plugins = { -- in alphabetical order
 							settings = {
 								Lua = {
 									runtime = {
-										version = 'LuaJIT',
+										version = 'Lua 5.2',
+										nonstandardSymbol = {
+											-- pico-8's assignment operators
+											'+=', '-=', '*=', '/=', [[\=]], '%=', '^=', '..=', '|=', '&=',
+										}
 									},
 									diagnostics = {
 										disable = {
