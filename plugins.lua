@@ -62,9 +62,33 @@ local plugins = { -- in alphabetical order
 		end
 	},
 	{
-		-- code runner
+		-- code runner (****.)
 		'CRAG666/code_runner.nvim', enabled = true,
-		config = true,
+		init = function()
+			map('coderunner: Run Code', 'n', '<Leader><CR><CR>', '<Cmd>RunCode<CR>')
+			map('coderunner: Run File', 'n', '<Leader><CR>f',    '<Cmd>RunFile<CR>')
+			map('coderunner: Close',    'n', '<Leader><CR>x',    '<Cmd>RunClose<CR>')
+		end,
+		cmd = {
+			'RunCode',
+			'RunFile',
+			'RunProject',
+			'RunClose',
+		},
+		config = function()
+			require('code_runner').setup({
+				mode = 'term',
+				focus = false,
+				hot_reload = true,
+				term = {
+					size = 8,
+				},
+				filetype = {
+					lua = 'lua',
+					javascript = 'node',
+				}
+			})
+		end
 	},
 	{
 		-- smart comment-out
