@@ -20,6 +20,8 @@ local my = {
 			clear_jumplist = true,
 			close_with_esc = true,
 			close_with_esc_ft = {'help', 'man', 'qf', 'lazy'},
+			typewriter_mode = true,
+			typewriter_mode_ft = {'help', 'man'},
 		},
 	},
 }

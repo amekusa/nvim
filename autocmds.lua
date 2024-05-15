@@ -66,3 +66,12 @@ if conf.close_with_esc then
 	})
 end
 
+if conf.typewriter_mode then
+	autocmd('FileType', {
+		pattern = conf.typewriter_mode_ft,
+		callback = function(ctx)
+			my.fn.typewriter_mode(true)
+		end
+	})
+end
+
