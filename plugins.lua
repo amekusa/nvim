@@ -477,10 +477,14 @@ local plugins = { -- in alphabetical order
 		-- snippets manager (****.)
 		'chrisgrieser/nvim-scissors', enabled = true,
 		dependencies = {'nvim-telescope/telescope.nvim'}, -- optional
-		ft = ts_filetypes,
+		cmd = {
+			'ScissorsEditSnippet',
+			'ScissorsAddNewSnippet',
+		},
 		config = function()
 			require('scissors').setup({
 				snippetDir = my.path..'/snippets',
+				jsonFormatter = 'jq',
 			})
 		end
 	},
