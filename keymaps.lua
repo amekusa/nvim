@@ -90,9 +90,6 @@ map('custom: Normal Mode', 'c', '<C-q>', '<C-c>')
 -- insert mode
 map('custom: Insert Mode', 'x', 'i', '<Esc>i')
 
--- command-line mode
-map('custom: Command Line Mode', nx, ';', ':')
-
 
 -- prev/next buffer
 map('custom: Prev Buffer', nxi, '<C-h>', '<Cmd>bp<CR>')
