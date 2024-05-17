@@ -256,8 +256,8 @@ local plugins = { -- in alphabetical order
 					lualine_a = {'mode'},
 					lualine_b = {'branch', diff, 'diagnostics'},
 					lualine_c = {'filename'},
-					lualine_x = {'encoding', 'filetype'},
-					lualine_y = {'progress'},
+					lualine_x = {'filetype', 'filesize'},
+					lualine_y = {'searchcount', 'progress'},
 					lualine_z = {'location'}
 				},
 				inactive_sections = {
