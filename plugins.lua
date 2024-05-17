@@ -230,6 +230,47 @@ local plugins = { -- in alphabetical order
 		config = true,
 	},
 	{
+		-- status bar
+		'nvim-lualine/lualine.nvim', enable = true,
+    	dependencies = {'nvim-tree/nvim-web-devicons'},
+		lazy = false,
+		config = function()
+			vim.o.cmdheight = 0 -- hide commandline when not in use
+			local refresh = 250
+			require('lualine').setup({
+				options = {
+					icons_enabled = true,
+					theme = 'auto',
+					component_separators = {left = '', right = ''},
+					section_separators   = {left = '', right = ''},
+					always_divide_middle = true,
+					globalstatus = true,
+					refresh = {
+						statusline = refresh,
+						tabline    = refresh,
+						winbar     = refresh,
+					}
+				},
+				sections = {
+					lualine_a = {'mode'},
+					lualine_b = {'branch', 'diff', 'diagnostics'},
+					lualine_c = {'filename'},
+					lualine_x = {'encoding', 'filetype'},
+					lualine_y = {'progress'},
+					lualine_z = {'location'}
+				},
+				inactive_sections = {
+					lualine_a = {},
+					lualine_b = {},
+					lualine_c = {'filename'},
+					lualine_x = {'location'},
+					lualine_y = {},
+					lualine_z = {}
+				},
+			})
+		end
+	},
+	{
 		-- snippet engine (***..)
 		'L3MON4D3/LuaSnip', enabled = true,
 		build = 'make install_jsregexp',
