@@ -160,7 +160,7 @@ local plugins = { -- in alphabetical order
 					delete       = {text = '_'},
 					topdelete    = {text = '‾'},
 					changedelete = {text = '~'},
-					untracked    = {text = '?'},
+					untracked    = {text = '+'},
 				},
 				on_attach = function(buf)
 					local opts = {buffer = buf}
@@ -236,7 +236,8 @@ local plugins = { -- in alphabetical order
 		lazy = false,
 		config = function()
 			vim.o.cmdheight = 0 -- hide commandline when not in use
-			local refresh = 250
+			local refresh = 1000
+			local diff = {'diff', symbols = {modified = '*'}}
 			require('lualine').setup({
 				options = {
 					icons_enabled = true,
@@ -253,7 +254,7 @@ local plugins = { -- in alphabetical order
 				},
 				sections = {
 					lualine_a = {'mode'},
-					lualine_b = {'branch', 'diff', 'diagnostics'},
+					lualine_b = {'branch', diff, 'diagnostics'},
 					lualine_c = {'filename'},
 					lualine_x = {'encoding', 'filetype'},
 					lualine_y = {'progress'},
