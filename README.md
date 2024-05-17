@@ -11,8 +11,8 @@ git clone git@github.com:amekusa/nvim.git custom
 nvim ~/.config/nvim/init.lua
 ```
 
-`~/.config/nvim/init.lua`:
 ```lua
+-- ~/.config/nvim/init.lua:
 require('custom')
 ```
 
@@ -24,10 +24,10 @@ require('custom')
 
 ### Macros
 `q` + `any-char` starts recording.  
-Pressing `q` again finishes the recording and registers it to the char you pressed after `q`.
+Pressing `q` again finishes the recording and registers it to the `char`.
 
 `Q` plays the last recording.  
-`@` + `char` plays the recording registered to the char.
+`@` + `char` plays the recording registered to the `char`.
 
 Macros work with any actions even for the ones you can't replay with `.`.
 
@@ -37,8 +37,8 @@ Macros work with any actions even for the ones you can't replay with `.`.
 `'"` jumps to the last mark.  
 
 ### Motions
-`f` + `any-char` jumps to the first matched char in the current line.  
-`;` jumps to the next matched char.  
+`f` + `any-char` jumps to the first matched `char` in the current line.  
+`;` jumps to the next matched `char`.  
 `,` jumps back to the previous one.
 
 ### Advanced Editing
