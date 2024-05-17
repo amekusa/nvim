@@ -236,6 +236,16 @@ local plugins = { -- in alphabetical order
 		config = true,
 	},
 	{
+		-- snippet engine (***..)
+		'L3MON4D3/LuaSnip', enabled = true,
+		build = 'make install_jsregexp',
+		config = function()
+			require('luasnip.loaders.from_vscode').lazy_load({
+				paths = {my.path..'/snippets'}
+			})
+		end
+	},
+	{
 		-- LSP package manager (***..)
 		'williamboman/mason.nvim', enabled = true,
 		init = function(this)
