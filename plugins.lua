@@ -255,12 +255,12 @@ local plugins = { -- in alphabetical order
 		-- total lsp management
 		'williamboman/mason-lspconfig.nvim', enabled = true,
 		dependencies = {
-			'williamboman/mason.nvim', -- lsp package manager
-			'neovim/nvim-lspconfig', -- lsp configurator
+			'williamboman/mason.nvim', -- LSP package manager
+			'neovim/nvim-lspconfig', -- LSP configurator
 			'hrsh7th/nvim-cmp', -- auto-completion
-
-			-- auto completion sources
-			'hrsh7th/cmp-nvim-lsp',
+			'hrsh7th/cmp-nvim-lsp', -- completion source: nvim_lsp
+			'L3MON4D3/LuaSnip', -- snippet engine
+			'saadparwaiz1/cmp_luasnip', -- required for nvim-cmp to work with LuaSnip
 		},
 		ft = ts_filetypes,
 		cmd = {
@@ -269,36 +269,58 @@ local plugins = { -- in alphabetical order
 			'LspUninstall'
 		},
 		config = function()
-			-- auto-completion settings
+			-- setup auto-completion
+			local luasnip = require('luasnip')
 			local cmp = require('cmp')
 			cmp.setup({
-				completion = {
-					autocomplete = true,
-				},
 				snippet = { -- snippet engine
 					expand = function(args)
-						--vim.snippet.expand(args.body) -- native neovim snippets
+						luasnip.lsp_expand(args.body)
 					end
 				},
-				mapping = cmp.mapping.preset.insert({
+				confirmation = {
+					default_behavior = cmp.ConfirmBehavior.Replace
+				},
+				mapping = {
 					['<C-Space>'] = cmp.mapping.complete(),
-					['<Tab>'] = cmp.mapping.confirm({select = true}),
-				}),
-				sources = cmp.config.sources({
-					{name = 'buffer'},
-					{name = 'path'},
-					{name = 'nvim_lsp'},
-				}),
-			})
-			cmp.setup.cmdline(':', {
-				mapping = cmp.mapping.preset.cmdline(),
-				sources = cmp.config.sources({
-					{name = 'path'},
-					{name = 'cmdline'},
-				}),
-				matching = {disallow_symbol_nonprefix_matching = false}
-			})
 
+					['<CR>'] = cmp.mapping(function(fallback)
+						if cmp.visible() and cmp.get_selected_entry() then
+							if luasnip.expandable()
+								then luasnip.expand()
+								else cmp.confirm({select = false})
+							end
+						else
+							fallback()
+						end
+					end),
+
+					['<Tab>'] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.select_next_item()
+						elseif luasnip.locally_jumpable(1) then
+							luasnip.jump(1)
+						else
+							fallback()
+						end
+					end, {'i','s'}),
+
+					['<S-Tab>'] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.select_prev_item()
+						elseif luasnip.locally_jumpable(-1) then
+							luasnip.jump(-1)
+						else
+							fallback()
+						end
+					end, {'i','s'}),
+				},
+				sources = cmp.config.sources({ -- completion sources
+					{name = 'luasnip'},
+					{name = 'nvim_lsp'},
+					{name = 'path'},
+				}),
+			})
 			-- lsp settings
 			local caps = require('cmp_nvim_lsp').default_capabilities()
 			local lsp = require('lspconfig')
