@@ -130,24 +130,18 @@ local plugins = { -- in alphabetical order
 				},
 				jump = {
 					nohlsearch = true, -- clear highlight after jump?
-					autojump = true, -- automatically jump when there is only one match?
+					autojump = false, -- automatically jump when there is only one match?
 				},
 				label = {
 					uppercase = true, -- allow uppercase labels?
-					current = false, -- add a label for the first match?
+					current = true, -- add a label for the first match?
 				},
 				modes = {
 					search = { -- '/' mode options
 						enabled = true,
 					},
 					char = { -- 'f' mode options
-						enabled = true,
-						keys = {'f','F'},
-						jump_labels = true, -- show jump labels?
-						multi_line = true, -- multi-line or current-line-only
-						label = {
-							exclude = '', -- exclude these letters from jump labels
-						},
+						enabled = false,
 					},
 				},
 			})
