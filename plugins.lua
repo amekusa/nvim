@@ -236,7 +236,7 @@ local plugins = { -- in alphabetical order
 		config = true,
 	},
 	{
-		-- lsp package manager
+		-- LSP package manager (***..)
 		'williamboman/mason.nvim', enabled = true,
 		init = function(this)
 			autoload(this, 'Mason')
