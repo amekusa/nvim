@@ -489,10 +489,6 @@ local plugins = { -- in alphabetical order
 		end
 	},
 	{
-		-- snippets manager
-		'garymjr/nvim-snippets', enabled = false,
-	},
-	{
 		-- smartly edit surrounding chars like {}, [], "", etc.
 		'kylechui/nvim-surround', enabled = true,
 		event = on_edit,
