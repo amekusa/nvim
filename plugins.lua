@@ -252,7 +252,7 @@ local plugins = { -- in alphabetical order
 		end
 	},
 	{
-		-- total lsp management
+		-- total LSP management
 		'williamboman/mason-lspconfig.nvim', enabled = true,
 		dependencies = {
 			'williamboman/mason.nvim', -- LSP package manager
@@ -321,7 +321,7 @@ local plugins = { -- in alphabetical order
 					{name = 'path'},
 				}),
 			})
-			-- lsp settings
+			-- setup LSPs
 			local caps = require('cmp_nvim_lsp').default_capabilities()
 			local lsp = require('lspconfig')
 			require('mason-lspconfig').setup({
@@ -464,7 +464,7 @@ local plugins = { -- in alphabetical order
 		end
 	},
 	{
-		-- snippets manager
+		-- snippets manager (****.)
 		'chrisgrieser/nvim-scissors', enabled = true,
 		dependencies = {'nvim-telescope/telescope.nvim'}, -- optional
 		ft = ts_filetypes,
