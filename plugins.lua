@@ -142,7 +142,7 @@ local plugins = { -- in alphabetical order
 					},
 					char = { -- 'f' mode options
 						enabled = true,
-						keys = {'f','F','t','T'},
+						keys = {'f','F'},
 						jump_labels = true, -- show jump labels?
 						multi_line = true, -- multi-line or current-line-only
 						label = {
