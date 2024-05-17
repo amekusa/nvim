@@ -292,8 +292,9 @@ local plugins = { -- in alphabetical order
 					default_behavior = cmp.ConfirmBehavior.Replace
 				},
 				mapping = {
+					-- activate manually
 					['<C-Space>'] = cmp.mapping.complete(),
-
+					-- confirm selected suggestion
 					['<CR>'] = cmp.mapping(function(fallback)
 						if cmp.visible() and cmp.get_selected_entry() then
 							if luasnip.expandable()
@@ -304,24 +305,32 @@ local plugins = { -- in alphabetical order
 							fallback()
 						end
 					end),
-
+					-- next suggestion
 					['<Tab>'] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							cmp.select_next_item()
-						elseif luasnip.locally_jumpable(1) then
-							luasnip.jump(1)
-						else
-							fallback()
+						if cmp.visible()
+							then cmp.select_next_item()
+							else fallback()
+						end
+					end),
+					-- prev suggestion
+					['<S-Tab>'] = cmp.mapping(function(fallback)
+						if cmp.visible()
+							then cmp.select_prev_item()
+							else fallback()
+						end
+					end),
+					-- next placeholder in a snippet
+					['<C-n>'] = cmp.mapping(function(fallback)
+						if luasnip.locally_jumpable(1)
+							then luasnip.jump(1)
+							else fallback()
 						end
 					end, {'i','s'}),
-
-					['<S-Tab>'] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							cmp.select_prev_item()
-						elseif luasnip.locally_jumpable(-1) then
-							luasnip.jump(-1)
-						else
-							fallback()
+					-- prev placeholder in a snippet
+					['<C-p>'] = cmp.mapping(function(fallback)
+						if luasnip.locally_jumpable(-1)
+							then luasnip.jump(-1)
+							else fallback()
 						end
 					end, {'i','s'}),
 				},
