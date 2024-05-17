@@ -11,10 +11,12 @@ git clone git@github.com:amekusa/nvim.git custom
 nvim ~/.config/nvim/init.lua
 ```
 
-`init.lua`:
+`~/.config/nvim/init.lua`:
 ```lua
 require('custom')
 ```
+
+> NOTE: The folder name isn't required to be `custom`, since it's not hardcoded.
 
 ----
 
