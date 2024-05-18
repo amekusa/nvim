@@ -231,7 +231,7 @@ local plugins = { -- in alphabetical order
 	},
 	{
 		-- status bar
-		'nvim-lualine/lualine.nvim', enable = true,
+		'nvim-lualine/lualine.nvim', enabled = true,
     	dependencies = {'nvim-tree/nvim-web-devicons'},
 		lazy = false,
 		config = function()
