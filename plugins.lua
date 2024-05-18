@@ -331,7 +331,12 @@ local plugins = { -- in alphabetical order
 				},
 				mapping = {
 					-- activate manually
-					['<C-Space>'] = cmp.mapping.complete(),
+					['<C-Space>'] = cmp.mapping(function(_)
+						if cmp.visible()
+							then cmp.close()
+							else cmp.complete()
+						end
+					end),
 					-- confirm selected suggestion
 					['<CR>'] = cmp.mapping(function(fallback)
 						if cmp.visible() and cmp.get_selected_entry() then
