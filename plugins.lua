@@ -203,7 +203,7 @@ local plugins = { -- in alphabetical order
 		config = function()
 			require('guess-indent').setup({
 				auto_cmd = true,
-				override_editorconfig = false,
+				override_editorconfig = true,
 				filetype_exclude = {
 					'tutor',
 					'help',
