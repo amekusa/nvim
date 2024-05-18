@@ -343,6 +343,17 @@ local plugins = { -- in alphabetical order
 							fallback()
 						end
 					end),
+					-- confirm the first suggestion
+					['<C-j>'] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							if luasnip.expandable()
+								then luasnip.expand()
+								else cmp.confirm({select = true})
+							end
+						else
+							fallback()
+						end
+					end),
 					-- next suggestion
 					['<Tab>'] = cmp.mapping(function(fallback)
 						if cmp.visible()
