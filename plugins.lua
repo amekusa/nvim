@@ -196,6 +196,9 @@ local plugins = { -- in alphabetical order
 	{
 		-- guess indent style (***..)
 		'nmac427/guess-indent.nvim', enabled = true,
+		init = function()
+			map('guess-indent: Guess Indent', 'n', 'gi', '<Cmd>GuessIndent<CR>')
+		end,
 		event = on_edit,
 		config = function()
 			require('guess-indent').setup({
