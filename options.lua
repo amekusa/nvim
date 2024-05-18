@@ -51,13 +51,13 @@ vim.opt.listchars = {
 	trail = '·',
 	nbsp  = '␣'
 }
--- tab width
-vim.o.tabstop = 4
-vim.o.shiftwidth = 0  -- 0 falls back to tabstop
--- indent wrapped lines
-vim.o.breakindent = true
--- autoindent new line [default: false]
-vim.o.smartindent = true
+-- indent style
+vim.o.expandtab = false -- use soft-tab?
+vim.o.tabstop = 4       -- tab width
+vim.o.shiftwidth = 0    -- 0: fallback to tabstop
+vim.o.breakindent = true -- indent wrapped lines
+vim.o.smartindent = true -- autoindent new line [default: false]
+
 -- preview substitutions as you type
 vim.o.inccommand = 'split'
 -- highlight the current line
