@@ -235,7 +235,9 @@ local plugins = { -- in alphabetical order
     	dependencies = {'nvim-tree/nvim-web-devicons'},
 		lazy = false,
 		config = function()
-			vim.o.cmdheight = 0 -- hide commandline when not in use
+			-- vim.o.cmdheight = 0 -- hide commandline when not in use
+			--   NOTE: This somehow breaks my keymaps in visual mode (NVIM v0.9.4)
+
 			local refresh = 1000
 			local diff = {'diff', symbols = {modified = '*'}}
 			require('lualine').setup({
