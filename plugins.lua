@@ -560,9 +560,7 @@ local plugins = { -- in alphabetical order
 				filters = {
 					git_ignored = true, -- hide ignored files?
 					custom = {
-						'.git',
-						'.DS_Store',
-						'Thumbs.db',
+						[[^\(\.git\|\.DS_Store\|Thumbs\.db\)$]],
 					},
 				},
 				update_focused_file = {
