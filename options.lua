@@ -44,19 +44,19 @@ vim.o.splitbelow = true
 
 
 -- EDITOR --
--- show whitespace chars
-vim.o.list = true
+-- whitespace chars --
+vim.o.list = true -- show them?
 vim.opt.listchars = {
 	tab   = '» ',
 	trail = '·',
 	nbsp  = '␣'
 }
--- indent style
-vim.o.expandtab = false -- use soft-tab?
+-- indent style --
+vim.o.expandtab = false -- use soft-tabs?
 vim.o.tabstop = 4       -- tab width
 vim.o.shiftwidth = 0    -- 0: fallback to tabstop
-vim.o.breakindent = true -- indent wrapped lines
-vim.o.smartindent = true -- autoindent new line [default: false]
+vim.o.breakindent = true -- indent wrapped lines?
+vim.o.smartindent = true -- autoindent new line?
 
 -- preview substitutions as you type
 vim.o.inccommand = 'split'
