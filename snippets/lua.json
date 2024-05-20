@@ -1,0 +1,30 @@
+{
+  "for i": {
+    "body": [
+      "for i = ${1:1}, ${2:#arr}, ${3:1} do",
+      "\t$0",
+      "end"
+    ],
+    "prefix": "for i"
+  },
+  "for k,v": {
+    "body": [
+      "for k,v in pairs(${1:table}) do",
+      "\t$0",
+      "end"
+    ],
+    "prefix": "for k,v"
+  },
+  "function": {
+    "body": [
+      "function$1($2)",
+      "\t$0",
+      "end"
+    ],
+    "prefix": "function"
+  },
+  "local": {
+    "body": "local ${1:name} = ${2:nil}$0",
+    "prefix": "local"
+  }
+}

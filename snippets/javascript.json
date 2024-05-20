@@ -1,0 +1,14 @@
+{
+  "/**": {
+    "body": [
+      "/**",
+      " * $0",
+      " */"
+    ],
+    "prefix": "/**"
+  },
+  "for": {
+    "body": "for (let i = 0; i = ${1:arr}.length; i++) $0",
+    "prefix": "for"
+  }
+}
