@@ -39,6 +39,7 @@ local ts_langs = {
 }
 
 local plugins = { -- in alphabetical order
+	---- #C ----
 	{
 		-- cheatsheet (***..)
 		'sudormrfbin/cheatsheet.nvim', enabled = true,
@@ -117,6 +118,7 @@ local plugins = { -- in alphabetical order
 			})
 		end
 	},
+	---- #F ----
 	{
 		-- jump with keypresses (*****)
 		'folke/flash.nvim', enabled = true,
@@ -147,6 +149,7 @@ local plugins = { -- in alphabetical order
 			})
 		end
 	},
+	---- #G ----
 	{
 		-- shows git related signs to the gutter (*****)
 		'lewis6991/gitsigns.nvim', enabled = true,
@@ -232,6 +235,7 @@ local plugins = { -- in alphabetical order
 		cmd = 'Browse',
 		config = true,
 	},
+	---- #L ----
 	{
 		-- status bar
 		'nvim-lualine/lualine.nvim', enabled = true,
@@ -286,6 +290,7 @@ local plugins = { -- in alphabetical order
 			})
 		end
 	},
+	---- #M ----
 	{
 		-- LSP package manager (***..)
 		'williamboman/mason.nvim', enabled = true,
@@ -482,6 +487,7 @@ local plugins = { -- in alphabetical order
 			})
 		end
 	},
+	---- #N ----
 	{
 		-- automatically close brackets (****.)
 		'windwp/nvim-autopairs', enabled = true,
@@ -740,6 +746,7 @@ local plugins = { -- in alphabetical order
 			})
 		end
 	},
+	---- #T ----
 	{
 		-- fuzzy finder (*****)
 		'nvim-telescope/telescope.nvim', enabled = true,
@@ -770,6 +777,7 @@ local plugins = { -- in alphabetical order
 			--   NOTE: this causes error bc 'git_bcommits_range' is nil. no idea how to fix it.
 		end
 	},
+	---- #W ----
 	{
 		-- shows pending keybinds
 		'folke/which-key.nvim', enabled = true,
