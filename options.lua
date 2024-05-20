@@ -10,18 +10,18 @@ vim.o.termguicolors = true
 
 
 -- MINOR TWEAKS --
--- wait-time for idle state (ms) [default: 4000]
-vim.o.updatetime = 1000
--- wait-time for key-combos (ms) [default: 1000]
-vim.o.timeoutlen = 250
+-- wait-time for idle state
+vim.o.updatetime = 1000 -- (ms) [default: 4000]
+-- wait-time for key-combos
+vim.o.timeoutlen = 250 -- (ms) [default: 1000]
 -- timeout for redraw
 vim.g.redrawtime = 500 -- (ms) [default: 2000]
 -- max column for syntax highlighting
 vim.o.synmaxcol = 400 -- [default: 3000]
--- redraw the screen lazily [default: false]
-vim.o.lazyredraw = true
--- default regex engine [default: 0]
-vim.o.regexpengine = 0
+-- redraw the screen lazily
+vim.o.lazyredraw = true -- [default: false]
+-- default regex engine
+vim.o.regexpengine = 0 -- [default: 0]
 --   0: auto
 --   1: old engine
 --   2: NFA engine
