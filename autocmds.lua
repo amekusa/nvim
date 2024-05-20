@@ -29,7 +29,8 @@ if conf.detect_large_file then
 	autocmd('BufEnter', {
 		desc = 'Disable certain features on large files',
 		callback = function(ctx)
-			if vim.fn.getfsize(ctx.file) > conf.detect_large_file_size then
+			local size = vim.fn.getfsize(ctx.file)
+			if size > conf.detect_large_file_size then
 				if vim.fn.exists(':TSBufDisable') ~= 0 then -- disable treesitter modules
 					vim.cmd('TSBufDisable autotag')
 					vim.cmd('TSBufDisable highlight')
@@ -47,8 +48,11 @@ if conf.detect_large_file then
 					vim.cmd('TSBufDisable textobjects.lsp_interop')
 					vim.cmd('TSBufDisable textobjects.select')
 				end
-				vim.bo.syntax = 'OFF'
-				vim.wo.wrap = false
+				if size > conf.detect_large_file_size_bigger then
+					vim.bo.syntax = 'OFF'
+				end
+				vim.bo.synmaxcol = 200
+				vim.wo.wrap = false -- this is the most effective hack
 				vim.wo.cursorline = false
 				my.fn.log("large file detected: disabled some features", 'WARN')
 			else
