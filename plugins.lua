@@ -204,7 +204,7 @@ local plugins = { -- in alphabetical order
 		-- guess indent style (***..)
 		'nmac427/guess-indent.nvim', enabled = true,
 		init = function()
-			map('guess-indent: Guess Indent', 'n', 'gi', '<Cmd>GuessIndent<CR>')
+			map('guess-indent: Guess Indent', 'n', 'gI', '<Cmd>GuessIndent<CR>')
 		end,
 		event = on_edit,
 		config = function()
@@ -274,7 +274,7 @@ local plugins = { -- in alphabetical order
 					lualine_b = {'branch', diff, 'diagnostics'},
 					lualine_c = {'filename'},
 					lualine_x = {'filetype', 'filesize'},
-					lualine_y = {'searchcount', 'progress'},
+					lualine_y = {'progress'},
 					lualine_z = {'location'}
 				},
 				inactive_sections = {
@@ -565,6 +565,9 @@ local plugins = { -- in alphabetical order
 			require('scissors').setup({
 				snippetDir = my.path..'/snippets',
 				jsonFormatter = 'jq',
+				editSnippetPopup = {
+					border = 'single',
+				}
 			})
 		end
 	},
