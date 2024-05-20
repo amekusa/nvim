@@ -22,6 +22,10 @@ if conf.trim_trailing_whitespace then
 end
 
 if conf.detect_large_file then
+	-- backup the original config values
+	local wrap = vim.o.wrap
+	local cursorline = vim.o.cursorline
+
 	autocmd('BufEnter', {
 		desc = 'Disable certain features on large files',
 		callback = function(ctx)
@@ -34,15 +38,23 @@ if conf.detect_large_file then
 					vim.cmd('TSBufDisable playground')
 					vim.cmd('TSBufDisable query_linter')
 					vim.cmd('TSBufDisable rainbow')
+					vim.cmd('TSBufDisable refactor.highlight_current_scope')
 					vim.cmd('TSBufDisable refactor.highlight_definitions')
 					vim.cmd('TSBufDisable refactor.navigation')
 					vim.cmd('TSBufDisable refactor.smart_rename')
-					vim.cmd('TSBufDisable refactor.highlight_current_scope')
 					vim.cmd('TSBufDisable textobjects.swap')
 					--vim.cmd('TSBufDisable textobjects.move')
 					vim.cmd('TSBufDisable textobjects.lsp_interop')
 					vim.cmd('TSBufDisable textobjects.select')
 				end
+				vim.bo.syntax = 'OFF'
+				vim.wo.wrap = false
+				vim.wo.cursorline = false
+				my.fn.log("large file detected: disabled some features", 'WARN')
+			else
+				-- restore the original config values
+				vim.wo.wrap = wrap
+				vim.wo.cursorline = cursorline
 			end
 		end
 	})
