@@ -39,6 +39,8 @@ local ts_langs = {
 }
 
 local plugins = { -- in alphabetical order
+	---- #A ----
+	---- #B ----
 	---- #C ----
 	{
 		-- cheatsheet (***..)
@@ -118,6 +120,8 @@ local plugins = { -- in alphabetical order
 			})
 		end
 	},
+	---- #D ----
+	---- #E ----
 	---- #F ----
 	{
 		-- jump with keypresses (*****)
@@ -235,6 +239,10 @@ local plugins = { -- in alphabetical order
 		cmd = 'Browse',
 		config = true,
 	},
+	---- #H ----
+	---- #I ----
+	---- #J ----
+	---- #K ----
 	---- #L ----
 	{
 		-- status bar
@@ -746,6 +754,11 @@ local plugins = { -- in alphabetical order
 			})
 		end
 	},
+	---- #O ----
+	---- #P ----
+	---- #Q ----
+	---- #R ----
+	---- #S ----
 	---- #T ----
 	{
 		-- fuzzy finder (*****)
@@ -777,6 +790,8 @@ local plugins = { -- in alphabetical order
 			--   NOTE: this causes error bc 'git_bcommits_range' is nil. no idea how to fix it.
 		end
 	},
+	---- #U ----
+	---- #V ----
 	---- #W ----
 	{
 		-- shows pending keybinds
@@ -788,7 +803,9 @@ local plugins = { -- in alphabetical order
 			})
 		end,
 	},
-
+	---- #X ----
+	---- #Y ----
+	---- #Z ----
 }
 
 -- themes
