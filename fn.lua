@@ -33,16 +33,6 @@ fn.autoload = function(arg, prefix)
 	end
 end
 
--- Converts the given special keycode (like <CR>, <Tab>, or <Esc>, etc.)
--- into the format that is applicable to `feedkeys()`
-local keys = {}
-fn.key = function(code)
-	if not keys[code] then
-		keys[code] = vim.api.nvim_replace_termcodes('<'..code..'>', true, false, true)
-	end
-	return keys[code]
-end
-
 -- Returns whether the given value is empty, which includes: nil, false, '', 0
 fn.e = function(x)
 	if not x then return true end
@@ -79,6 +69,16 @@ fn.map = function(desc, mode, from, to, opts)
 	if not opts then opts = {} end
 	opts.desc = desc
 	return vim.keymap.set(mode, from, to, opts)
+end
+
+-- Converts the given special keycode (like <CR>, <Tab>, or <Esc>, etc.)
+-- into the format that is applicable to `feedkeys()`
+local keys = {}
+fn.key = function(code)
+	if not keys[code] then
+		keys[code] = vim.api.nvim_replace_termcodes('<'..code..'>', true, false, true)
+	end
+	return keys[code]
 end
 
 -- Closes the given buffer
