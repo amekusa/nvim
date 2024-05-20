@@ -49,6 +49,26 @@ fn.e = function(x)
 	return x == '' or x == 0
 end
 
+-- Returns an array of keys in the given table
+fn.table_keys = function(t)
+	local r,i = {},1
+	for k,_ in pairs(t) do
+		r[i] = k
+		i = i + 1
+	end
+	return r
+end
+
+-- Returns an array of values in the given table
+fn.table_values = function(t)
+	local r,i = {},1
+	for _,v in pairs(t) do
+		r[i] = v
+		i = i + 1
+	end
+	return r
+end
+
 -- Returns whether `str` starts with `with`
 fn.starts = function(str, with)
    return string.sub(str, 1, string.len(with)) == with
