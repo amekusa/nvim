@@ -33,6 +33,18 @@ fn.autoload = function(arg, prefix)
 	end
 end
 
+-- Notifies the user with the given message.
+-- levels:
+--   - DEBUG
+--   - ERROR
+--   - INFO
+--   - TRACE
+--   - WARN
+--   - OFF
+fn.log = function(msg, level)
+	vim.api.nvim_notify(msg, vim.log.levels[level or 'INFO'], {})
+end
+
 -- Returns whether the given value is empty, which includes: nil, false, '', 0
 fn.e = function(x)
 	if not x then return true end
