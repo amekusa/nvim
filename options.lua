@@ -14,6 +14,10 @@ vim.o.termguicolors = true
 vim.o.updatetime = 1000
 -- wait-time for key-combos (ms) [default: 1000]
 vim.o.timeoutlen = 250
+-- timeout for redraw
+vim.g.redrawtime = 500 -- (ms) [default: 2000]
+-- max column for syntax highlighting
+vim.o.synmaxcol = 400 -- [default: 3000]
 -- redraw the screen lazily [default: false]
 vim.o.lazyredraw = true
 -- default regex engine [default: 0]
