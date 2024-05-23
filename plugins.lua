@@ -349,7 +349,7 @@ local plugins = { -- in alphabetical order
 					-- activate manually
 					['<C-Space>'] = cmp.mapping(function(_)
 						if cmp.visible()
-							then cmp.close()
+							then cmp.abort()
 							else cmp.complete()
 						end
 					end),
