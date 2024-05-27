@@ -405,8 +405,8 @@ local plugins = { -- in alphabetical order
 					end, {'i','s'}),
 				},
 				sources = cmp.config.sources({ -- completion sources
-					{name = 'luasnip'},
-					{name = 'nvim_lsp'},
+					{name = 'luasnip', priority = 10},
+					{name = 'nvim_lsp', priority = 5, max_item_count = 12},
 					{name = 'path'},
 				}),
 			})
