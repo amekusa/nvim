@@ -250,6 +250,7 @@ local plugins = { -- in alphabetical order
     	dependencies = {'nvim-tree/nvim-web-devicons'},
 		lazy = false,
 		config = function()
+			vim.o.showmode = false -- hide mode indicator which is redundant
 			-- vim.o.cmdheight = 0 -- hide commandline when not in use
 			--   NOTE: This somehow breaks my keymaps in visual mode (NVIM v0.9.4)
 
