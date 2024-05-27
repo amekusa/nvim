@@ -15,7 +15,7 @@ vim.o.updatetime = 1000 -- (ms) [default: 4000]
 -- wait-time for key-combos
 vim.o.timeoutlen = 250 -- (ms) [default: 1000]
 -- timeout for redraw
-vim.g.redrawtime = 500 -- (ms) [default: 2000]
+vim.o.redrawtime = 500 -- (ms) [default: 2000]
 -- max column for syntax highlighting
 vim.o.synmaxcol = 400 -- [default: 3000]
 -- redraw the screen lazily
