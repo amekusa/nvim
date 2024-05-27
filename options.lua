@@ -45,6 +45,8 @@ vim.o.signcolumn = 'yes'
 -- how new splits should be opened
 vim.o.splitright = true
 vim.o.splitbelow = true
+-- item limit of the popup menu
+vim.o.pumheight = 5 -- [default: 0 (unlimited)]
 
 
 -- EDITOR --
