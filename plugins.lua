@@ -617,8 +617,12 @@ local plugins = { -- in alphabetical order
 					enable = true,
 					ignore_dirs = {'node_modules'}, -- this fixes the slow-shutdown issue
 				},
+				view = {
+					side = 'left',
+				},
 				renderer = {
 					special_files = {},
+					root_folder_label = ':t',
 					highlight_git = 'name', -- none/icon/name/all
 					highlight_diagnostics = 'none',
 					highlight_opened_files = 'name',
