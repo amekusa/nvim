@@ -486,7 +486,9 @@ local plugins = { -- in alphabetical order
 		--   1. select the lines to align
 		--   2. type 'ga'
 		--   3. type 's' to specify the splitter
-		event = on_edit,
+		keys = {
+			{'ga', mode = {'n','x'}, desc = "Align with preview"},
+		},
 		config = function()
 			require('mini.align').setup({
 				mappings = {
