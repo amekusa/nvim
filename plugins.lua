@@ -367,6 +367,9 @@ local plugins = { -- in alphabetical order
 				confirmation = {
 					default_behavior = cmp.ConfirmBehavior.Replace
 				},
+				experimental = {
+					ghost_text = true,
+				},
 				mapping = {
 					-- activate manually
 					['<C-Space>'] = cmp.mapping(function(_)
@@ -400,14 +403,14 @@ local plugins = { -- in alphabetical order
 					-- next suggestion
 					['<Tab>'] = cmp.mapping(function(fallback)
 						if cmp.visible()
-							then cmp.select_next_item()
+							then cmp.select_next_item({behavior = cmp.SelectBehavior.Select})
 							else fallback()
 						end
 					end),
 					-- prev suggestion
 					['<S-Tab>'] = cmp.mapping(function(fallback)
 						if cmp.visible()
-							then cmp.select_prev_item()
+							then cmp.select_prev_item({behavior = cmp.SelectBehavior.Select})
 							else fallback()
 						end
 					end),
