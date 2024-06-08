@@ -16,9 +16,10 @@ if theme == 'tokyonight' then
 
 elseif theme == 'kanagawa' then
 	t.opts = {
+		compile = true,
 		colors = {
 			palette = {
-				---- default palette ----
+				---- default ----
 				-- sumiInk0 = '#16161d', -- border
 				-- sumiInk1 = '#181820',
 				-- sumiInk2 = '#1a1a22',
@@ -31,8 +32,9 @@ elseif theme == 'kanagawa' then
 			theme = {
 				wave = {
 					ui = {
-						bg_gutter = 'none',
-						bg_p2 = '#2a2a37', -- line highlight
+						bg_gutter  = 'none',
+						bg_m3      = '#2a2a37', -- border
+						bg_p2      = '#2a2a37', -- line highlight
 						whitespace = '#363646',
 					},
 					syn = {
