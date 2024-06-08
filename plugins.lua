@@ -256,6 +256,23 @@ local plugins = { -- in alphabetical order
 
 			local refresh = 1000
 			local diff = {'diff', symbols = {modified = '*'}}
+
+			-- custom component: buffer line
+			local buffers = function()
+				local r = ''
+				local cur = vim.api.nvim_get_current_buf()
+				local bufs = vim.fn.getbufinfo({buflisted = 1, bufloaded = 1})
+				local n = #bufs
+				for i = 1, n, 1 do
+					local buf = bufs[i]
+					local label = vim.fs.basename(buf.name)
+					if label ~= '' then
+						r = r..(buf.bufnr == cur and '▶ ' or '  ')..label..(buf.changed == 1 and ' *' or ' ')..(i < n and '  ' or '')
+					end
+				end
+				return r
+			end
+
 			require('lualine').setup({
 				options = {
 					icons_enabled = true,
