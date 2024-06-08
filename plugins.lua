@@ -255,7 +255,11 @@ local plugins = { -- in alphabetical order
 			--   NOTE: This somehow breaks my keymaps in visual mode (NVIM v0.9.4)
 
 			local refresh = 1000
-			local diff = {'diff', symbols = {modified = '*'}}
+
+			-- components
+			local branch   = {'branch', icons_enabled = false}
+			local filetype = {'filetype', icon_only = true}
+			local diff     = {'diff', symbols = {modified = '*'}}
 
 			-- custom component: buffer line
 			local buffers = function()
@@ -289,9 +293,9 @@ local plugins = { -- in alphabetical order
 				},
 				sections = {
 					lualine_a = {'mode'},
-					lualine_b = {'branch', diff, 'diagnostics'},
-					lualine_c = {'filename'},
-					lualine_x = {'filetype', 'filesize'},
+					lualine_b = {branch},
+					lualine_c = {filetype, buffers},
+					lualine_x = {diff, 'diagnostics', 'filesize'},
 					lualine_y = {'progress'},
 					lualine_z = {'location'}
 				},
