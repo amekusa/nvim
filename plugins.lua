@@ -432,7 +432,6 @@ local plugins = { -- in alphabetical order
 				sources = cmp.config.sources({ -- completion sources
 					{name = 'luasnip', priority = 10},
 					{name = 'nvim_lsp', priority = 5, max_item_count = 12},
-					{name = 'path'},
 				}),
 			})
 			-- setup LSPs
