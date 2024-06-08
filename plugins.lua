@@ -271,7 +271,7 @@ local plugins = { -- in alphabetical order
 					local buf = bufs[i]
 					local label = vim.fs.basename(buf.name)
 					if label ~= '' then
-						r = r..(buf.bufnr == cur and '▶ ' or '  ')..label..(buf.changed == 1 and ' *' or ' ')..(i < n and '  ' or '')
+						r = r..(buf.bufnr == cur and '▷ ' or '  ')..label..(buf.changed == 1 and ' *' or ' ')..(i < n and '  ' or '')
 					end
 				end
 				return r
