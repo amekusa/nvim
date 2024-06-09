@@ -36,6 +36,14 @@ Pressing `q` again finishes the recording and registers it to the `char`.
 
 Macros work with any actions even for the ones you can't replay with `.`.
 
+### Repeat for each line
+1. Select the lines you want to modify with visual mode.
+2. Enter command mode with `:`.
+3. Execute `:'<,'>norm ` + `any-command`.
+
+Example: Play macro `a` for each line:
+`:'<,'>norm @a`
+
 ### Marks
 `m` + `any-char` registers the current line to the jumplist of the current buffer.  
 `'` + `char` makes the cursor jump to the mark.  
