@@ -12,6 +12,17 @@ echo "require('custom')" >> ~/.config/nvim/init.lua
 
 > NOTE: The folder name isn't required to be `custom`, since it's not hardcoded.
 
+## Customize
+```sh
+cd ~/.config/nvim/lua/custom
+
+# Copy config-default.lua as config.lua
+cp config-default.lua config.lua
+
+# Edit it howerver you want
+nvim config.lua
+```
+
 ----
 
 ## Appendix: Vim Notes
