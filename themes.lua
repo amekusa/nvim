@@ -16,7 +16,6 @@ if theme == 'tokyonight' then
 
 elseif theme == 'kanagawa' then
 	t.opts = {
-		compile = true,
 		colors = {
 			palette = {
 				---- default ----
