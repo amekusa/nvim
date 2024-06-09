@@ -126,7 +126,7 @@ local plugins = { -- in alphabetical order
 	{
 		-- jump with keypresses (*****)
 		'folke/flash.nvim', enabled = true,
-		event = 'VeryLazy',
+		lazy = false,
 		config = function()
 			require('flash').setup({
 				search = {
@@ -157,7 +157,7 @@ local plugins = { -- in alphabetical order
 	{
 		-- shows git related signs to the gutter (*****)
 		'lewis6991/gitsigns.nvim', enabled = true,
-		event = on_edit,
+		lazy = false,
 		config = function()
 			local api = require('gitsigns')
 			api.setup({
@@ -203,11 +203,9 @@ local plugins = { -- in alphabetical order
 	{
 		-- guess indent style (***..)
 		'nmac427/guess-indent.nvim', enabled = true,
-		init = function()
-			map('guess-indent: Guess Indent', 'n', 'gI', '<Cmd>GuessIndent<CR>')
-		end,
-		event = on_edit,
+		lazy = false,
 		config = function()
+			map('guess-indent: Guess Indent', 'n', 'gI', '<Cmd>GuessIndent<CR>')
 			require('guess-indent').setup({
 				auto_cmd = true,
 				override_editorconfig = true,
@@ -525,7 +523,7 @@ local plugins = { -- in alphabetical order
 	{
 		-- automatically close brackets (****.)
 		'windwp/nvim-autopairs', enabled = true,
-		event = on_edit,
+		lazy = false,
 		config = function()
 			require('nvim-autopairs').setup({
 				-- options
@@ -600,7 +598,7 @@ local plugins = { -- in alphabetical order
 	{
 		-- smartly edit surrounding chars like {}, [], "", etc.
 		'kylechui/nvim-surround', enabled = true,
-		event = on_edit,
+		lazy = false,
 		config = function()
 			require('nvim-surround').setup({
 				-- options
@@ -611,13 +609,12 @@ local plugins = { -- in alphabetical order
 		-- file-tree widget (***..)
 		'nvim-tree/nvim-tree.lua', enabled = true,
 		dependencies = {'nvim-tree/nvim-web-devicons'},
-		init = function()
+		lazy = false,
+		config = function()
 			-- disable netrw
 			vim.g.loaded_netrw = 1
 			vim.g.loaded_netrwPlugin = 1
-		end,
-		lazy = false,
-		config = function()
+
 			local api = require('nvim-tree.api')
 			require('nvim-tree').setup({
 				disable_netrw = true,
@@ -797,7 +794,7 @@ local plugins = { -- in alphabetical order
 		-- fuzzy finder (*****)
 		'nvim-telescope/telescope.nvim', enabled = true,
 		dependencies = {'nvim-lua/plenary.nvim'},
-		event = 'VimEnter',
+		lazy = false,
 		config = function()
 			require('telescope').setup({
 				defaults = {
@@ -829,7 +826,7 @@ local plugins = { -- in alphabetical order
 	{
 		-- shows pending keybinds
 		'folke/which-key.nvim', enabled = true,
-		event = 'VeryLazy',
+		lazy = false,
 		config = function()
 			require('which-key').setup({
 				-- options
