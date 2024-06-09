@@ -14,7 +14,7 @@ my.fn = require(my.ns..'.fn')
 my.conf = require(my.ns..'.config-default')
 
 -- user config (if it exists)
-if my.fn.yes(vim.fn.filereadable(my.path..'/config.lua')) then
+if vim.fn.filereadable(my.path..'/config.lua') ~= 0 then
 	my.conf = vim.tbl_deep_extend('force', my.conf, require(my.ns..'.config'))
 end
 
