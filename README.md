@@ -1,19 +1,13 @@
-# My NeoVim configuration
+# Amekusa's Neovim Configuration
 
 ## Install
 ```sh
 # Clone this repository
 mkdir -p ~/.config/nvim/lua
-cd ~/.config/nvim/lua
-git clone git@github.com:amekusa/nvim.git custom
+git clone git@github.com:amekusa/nvim.git ~/.config/nvim/lua/custom
 
-# Edit init.lua
-nvim ~/.config/nvim/init.lua
-```
-
-```lua
--- ~/.config/nvim/init.lua:
-require('custom')
+# Require the repo from init.lua
+echo "require('custom')" >> ~/.config/nvim/init.lua
 ```
 
 > NOTE: The folder name isn't required to be `custom`, since it's not hardcoded.
