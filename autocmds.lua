@@ -73,6 +73,15 @@ if conf.clear_jumplist then
 	})
 end
 
+if conf.auto_stopinsert then
+	autocmd({'FocusLost', 'WinLeave'}, {
+		desc = 'Automatically escape insert mode',
+		callback = function()
+			vim.cmd.stopinsert()
+		end
+	})
+end
+
 if conf.close_with_esc then
 	autocmd('FileType', {
 		pattern = conf.close_with_esc_ft,

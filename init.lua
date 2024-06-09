@@ -22,6 +22,7 @@ local my = {
 			detect_large_file_size        =  200 * 1024,
 			detect_large_file_size_bigger = 1000 * 1024,
 			clear_jumplist = true,
+			auto_stopinsert = true,
 			close_with_esc = true,
 			close_with_esc_ft = {'help', 'man', 'qf', 'lazy'},
 			typewriter_mode = true,
