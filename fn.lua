@@ -45,7 +45,13 @@ fn.log = function(msg, level)
 	vim.api.nvim_notify(msg, vim.log.levels[level or 'INFO'], {})
 end
 
--- Returns whether the given value is empty, which includes: nil, false, '', 0
+-- Returns whether the given value is truthy
+fn.yes = function(x)
+	if not x then return false end
+	return x ~= '' and x ~= 0
+end
+
+-- Returns whether the given value is falsey
 fn.no = function(x)
 	if not x then return true end
 	return x == '' or x == 0
