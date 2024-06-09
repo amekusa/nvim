@@ -12,6 +12,23 @@ return {
 	plugins = {
 		enable = true,
 		themes = true,
+		disable_builtins = {
+			-- 'editorconfig',
+			'gzip',
+			-- 'health',
+			-- 'man',
+			-- 'matchit',
+			-- 'matchparen',
+			'netrwPlugin',
+			-- 'nvim',
+			'rplugin',
+			'shada',
+			'spellfile',
+			'tarPlugin',
+			'tohtml',
+			-- 'tutor',
+			'zipPlugin',
+		},
 	},
 	autocmds = {
 		enable = true,

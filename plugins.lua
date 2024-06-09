@@ -882,6 +882,11 @@ lazy.setup(plugins, {
 		lazy = true,
 		version = '*', -- try installing the latest stable versions of plugins
 	},
+	performance = {
+		rtp = {
+			disabled_plugins = conf.disable_builtins,
+		}
+	},
 })
 
 -- set custom autoloader
