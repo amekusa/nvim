@@ -100,11 +100,11 @@ fn.key = function(code)
 end
 
 -- Closes the given buffer
-fn.close_buf = function(buf, force)
+fn.buf_close = function(buf, force)
 	if fn.no(buf) then
 		buf = vim.api.nvim_get_current_buf()
 	end
-	if fn.is_last_buf(buf, true)
+	if fn.buf_is_last(buf, true)
 		then vim.cmd.bprevious()
 		else vim.cmd.bnext()
 	end
@@ -119,7 +119,7 @@ fn.close_buf = function(buf, force)
 end
 
 -- Returns whether the given buffer is the last entry
-fn.is_last_buf = function(buf, listed)
+fn.buf_is_last = function(buf, listed)
 	if fn.no(buf) then buf = vim.api.nvim_get_current_buf() end
 	local bufs = vim.api.nvim_list_bufs()
 	if not listed then return buf == bufs[#bufs] end
