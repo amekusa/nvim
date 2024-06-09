@@ -27,5 +27,3 @@ if my.conf.keymaps.enable then require(my.ns..'.keymaps') end
 if my.conf.plugins.enable then require(my.ns..'.plugins') end
 if my.conf.autocmds.enable then require(my.ns..'.autocmds') end
 
--- require(my.ns..'.experiments') end
-
