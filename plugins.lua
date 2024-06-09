@@ -581,6 +581,7 @@ local plugins = { -- in alphabetical order
 		-- snippets manager (****.)
 		'chrisgrieser/nvim-scissors', enabled = true,
 		dependencies = {'nvim-telescope/telescope.nvim'}, -- optional
+		pin = true,
 		cmd = {
 			'ScissorsEditSnippet',
 			'ScissorsAddNewSnippet',
