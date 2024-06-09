@@ -1,0 +1,10 @@
+{
+  "heredoc": {
+    "body": [
+      "cat <<- EOF",
+      "$0",
+      "EOF"
+    ],
+    "prefix": "heredoc"
+  }
+}

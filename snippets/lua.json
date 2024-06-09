@@ -1,7 +1,7 @@
 {
   "for i": {
     "body": [
-      "for i = ${1:1}, ${2:#arr}, ${3:1} do",
+      "for i = ${1:1}, #${2:arr}${3:, 1} do",
       "\t$0",
       "end"
     ],
@@ -23,8 +23,21 @@
     ],
     "prefix": "function"
   },
+  "if then else": {
+    "body": [
+      "if $1",
+      "\tthen $2",
+      "\telse $3",
+      "end"
+    ],
+    "prefix": "if then else"
+  },
   "local": {
-    "body": "local ${1:name} = ${2:nil}$0",
+    "body": "local ${1:name} = ${2:nil}",
     "prefix": "local"
+  },
+  "self.": {
+    "body": "self.",
+    "prefix": "self."
   }
 }

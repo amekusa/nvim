@@ -7,8 +7,46 @@
     ],
     "prefix": "/**"
   },
+  "@param": {
+    "body": "@param {${1:type}} ${2:name} - ${3:desc}",
+    "prefix": "@param"
+  },
+  "@return": {
+    "body": "@return {${1:type}}${2: desc}",
+    "prefix": "@return"
+  },
+  "console.debug()": {
+    "body": "console.debug($1);",
+    "prefix": "console.debug()"
+  },
+  "console.log()": {
+    "body": "console.log($1);",
+    "prefix": "console.log()"
+  },
+  "export": {
+    "body": "export $0",
+    "prefix": "export"
+  },
   "for": {
     "body": "for (let i = 0; i = ${1:arr}.length; i++) $0",
     "prefix": "for"
+  },
+  "function": {
+    "body": "function $1($2) {$0}",
+    "prefix": "function"
+  },
+  "import": {
+    "body": "import $1 from '$2';",
+    "prefix": "import"
+  },
+  "switch (typeof var)": {
+    "body": [
+      "switch (typeof $1) {",
+      "case '$2':",
+      "\t$0",
+      "\tbreak;",
+      "}"
+    ],
+    "prefix": "switch (typeof var)"
   }
 }
