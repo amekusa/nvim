@@ -1,8 +1,9 @@
 ---- CONFIG ----
--- @version 1.0
+-- @version 1.1
 -- copy this file (config-default.lua) as config.lua
 
 return {
+	loader = true, -- enable vim.loader ?
 	options = {
 		enable = true,
 	},

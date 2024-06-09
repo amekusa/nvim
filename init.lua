@@ -7,9 +7,6 @@ local my = {ns = (...)} -- namespace
 -- root path
 my.path = vim.fn.stdpath('config')..'/lua/'..my.ns:gsub('%.', '/') -- replace '.' in namespace with '/'
 
--- functions
-my.fn = require(my.ns..'.fn')
-
 -- default config
 my.conf = require(my.ns..'.config-default')
 
@@ -17,6 +14,16 @@ my.conf = require(my.ns..'.config-default')
 if vim.fn.filereadable(my.path..'/config.lua') ~= 0 then
 	my.conf = vim.tbl_deep_extend('force', my.conf, require(my.ns..'.config'))
 end
+
+-- enable vim.loader
+-- NOTE: Cached lua files are in ~/.cache/nvim/luac
+if my.conf.loader then
+	require('vim.fs')
+	vim.loader.enable()
+end
+
+-- functions
+my.fn = require(my.ns..'.fn')
 
 -- save to global
 vim.g._custom = my
