@@ -4,12 +4,6 @@ local conf = my.conf.plugins
 local map = my.fn.map
 local autoload = my.fn.autoload
 
--- editor events
-local on_edit = {
-	'BufReadPre',
-	'BufNewFile'
-}
-
 -- filetypes to load treesitter
 local ts_filetypes = {
 	'vim',
