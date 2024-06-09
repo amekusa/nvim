@@ -13,21 +13,21 @@ return {
 		enable = true,
 		themes = true,
 		disable_builtins = {
-			-- 'editorconfig',
-			'gzip',
-			-- 'health',
-			-- 'man',
-			-- 'matchit',
-			-- 'matchparen',
-			'netrwPlugin',
-			-- 'nvim',
-			'rplugin',
-			'shada',
-			'spellfile',
-			'tarPlugin',
-			'tohtml',
-			-- 'tutor',
-			'zipPlugin',
+			-- 'editorconfig', -- editorconfig integration
+			'gzip',         -- editing *.gzip directly
+			-- 'health',       -- :checkhealth command
+			-- 'man',          -- :Man command
+			-- 'matchit',      -- matching brackets with `%`
+			-- 'matchparen',   -- matching parens
+			'netrwPlugin',  -- netrw plugins
+			-- 'nvim',         -- :Inspect, :InspectTree commands
+			'rplugin',      -- remote plugins
+			'shada',        -- persistent data between sessions
+			'spellfile',    -- spell checking(?)
+			'tarPlugin',    -- editing *.tar directly
+			'tohtml',       -- 2html integration(?)
+			-- 'tutor',        -- vimtutor
+			'zipPlugin',    -- editing *.zip directly
 		},
 	},
 	autocmds = {
