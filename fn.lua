@@ -46,7 +46,7 @@ fn.log = function(msg, level)
 end
 
 -- Returns whether the given value is empty, which includes: nil, false, '', 0
-fn.e = function(x)
+fn.no = function(x)
 	if not x then return true end
 	return x == '' or x == 0
 end
@@ -95,7 +95,7 @@ end
 
 -- Closes the given buffer
 fn.close_buf = function(buf, force)
-	if fn.e(buf) then
+	if fn.no(buf) then
 		buf = vim.api.nvim_get_current_buf()
 	end
 	if fn.is_last_buf(buf, true)
@@ -114,7 +114,7 @@ end
 
 -- Returns whether the given buffer is the last entry
 fn.is_last_buf = function(buf, listed)
-	if fn.e(buf) then buf = vim.api.nvim_get_current_buf() end
+	if fn.no(buf) then buf = vim.api.nvim_get_current_buf() end
 	local bufs = vim.api.nvim_list_bufs()
 	if not listed then return buf == bufs[#bufs] end
 	for i = #bufs, 1, -1 do
