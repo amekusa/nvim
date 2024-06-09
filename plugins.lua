@@ -262,6 +262,10 @@ local plugins = { -- in alphabetical order
 			-- custom component: buffer line
 			local buffers = function()
 				local r = ''
+				local icon = '' -- Nerdfont eb2c
+				-- local icon = '󰐊' -- Nerdfont f040a
+				-- local icon = '▷' -- U+25B7 White right-pointing triangle
+				-- local icon = '▶' -- U+25B6 Black right-pointing triangle
 				local cur = vim.api.nvim_get_current_buf()
 				local bufs = vim.fn.getbufinfo({buflisted = 1, bufloaded = 1})
 				local n = #bufs
@@ -269,7 +273,7 @@ local plugins = { -- in alphabetical order
 					local buf = bufs[i]
 					local label = vim.fs.basename(buf.name)
 					if label ~= '' then
-						r = r..(buf.bufnr == cur and '▷ ' or '  ')..label..(buf.changed == 1 and ' *' or ' ')..(i < n and '  ' or '')
+						r = r..(buf.bufnr == cur and icon..' ' or '  ')..label..(buf.changed == 1 and ' *' or ' ')..(i < n and '  ' or '')
 					end
 				end
 				return r
