@@ -100,13 +100,15 @@ fn.key = function(code)
 end
 
 -- Closes the given buffer
-fn.buf_close = function(buf, force)
+fn.buf_close = function(buf, force, bufs)
 	local curr = vim.api.nvim_get_current_buf()
-	if not buf then buf = curr end
+	buf = buf or curr
+	bufs = bufs or vim.fn.getbufinfo({buflisted = 1})
+
 	-- if the buffer is current, move to the prev/next buffer first
-	if buf == curr and fn.buf_is_last(buf, true)
-		then fn.buf_rotate(-1)
-		else fn.buf_rotate(1)
+	if buf == curr and fn.buf_is_last(buf, bufs)
+		then fn.buf_rotate(-1, bufs)
+		else fn.buf_rotate(1, bufs)
 	end
 	if force -- delete the given (or current) buffer in background
 		then vim.cmd('bw! '..buf)
@@ -119,16 +121,10 @@ fn.buf_close = function(buf, force)
 end
 
 -- Returns whether the given buffer is the last entry
-fn.buf_is_last = function(buf, listed)
-	if fn.no(buf) then buf = vim.api.nvim_get_current_buf() end
-	local bufs = vim.api.nvim_list_bufs()
-	if not listed then return buf == bufs[#bufs] end
-	for i = #bufs, 1, -1 do
-		if vim.fn.getbufinfo(bufs[i])[1].listed == 1 then
-			return buf == bufs[i]
-		end
-	end
-	return false
+fn.buf_is_last = function(buf, bufs)
+	buf = buf or vim.api.nvim_get_current_buf()
+	bufs = bufs or vim.fn.getbufinfo({buflisted = 1})
+	return bufs[#bufs] and (bufs[#bufs].bufnr == buf)
 end
 
 -- Shows the given buffer
@@ -147,9 +143,9 @@ fn.buf_show = function(buf)
 end
 
 -- Rotates buffers
-fn.buf_rotate = function(to)
+fn.buf_rotate = function(to, bufs)
 	local curr = vim.api.nvim_get_current_buf()
-	local bufs = vim.fn.getbufinfo({buflisted = 1, bufloaded = 1})
+	bufs = bufs or vim.fn.getbufinfo({buflisted = 1})
 	local n = #bufs
 	for i = 1, n do
 		if bufs[i].bufnr == curr then
