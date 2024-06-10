@@ -131,6 +131,51 @@ fn.buf_is_last = function(buf, listed)
 	return false
 end
 
+-- Shows the given buffer
+fn.buf_show = function(buf)
+	buf = type(buf) == 'table' and buf or vim.fn.getbufinfo(buf)[1]
+	if not buf then return fn.log("buf_switch(): invalid buffer", 'ERROR') end
+	vim.fn.bufload(buf.bufnr)
+
+	local wins = buf.windows
+	if wins and #wins > 0 then
+		local tab = vim.api.nvim_get_current_tabpage()
+		local win
+		for i = #wins, 1, -1 do
+			win = vim.fn.getwininfo(wins[i])[1]
+			if win.tabnr == tab then -- this window is in the current tab
+				vim.api.nvim_set_current_win(win.winid) -- switch to the window
+				return
+			end
+		end
+		vim.api.nvim_set_current_tabpage(win.tabnr)
+		vim.api.nvim_set_current_win(win.winid)
+		return
+	end
+	-- show in the current window
+	vim.api.nvim_win_set_buf(vim.api.nvim_get_current_win(), buf.bufnr)
+end
+
+-- Rotates buffers
+fn.buf_rotate = function(to)
+	local curr = vim.api.nvim_get_current_buf()
+	local bufs = vim.fn.getbufinfo({buflisted = 1, bufloaded = 1})
+	local n = #bufs
+	for i = 1, n do
+		if bufs[i].bufnr == curr then
+			i = i + to
+			if i <= 0 then
+				fn.buf_show(bufs[n])
+			elseif i > n then
+				fn.buf_show(bufs[1])
+			else
+				fn.buf_show(bufs[i])
+			end
+			return
+		end
+	end
+end
+
 -- Indents the current line
 fn.indent = function()
 	local line = vim.api.nvim_get_current_line()
