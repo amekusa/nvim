@@ -134,7 +134,7 @@ end
 -- Shows the given buffer
 fn.buf_show = function(buf)
 	buf = type(buf) == 'table' and buf or vim.fn.getbufinfo(buf)[1]
-	if not buf then return fn.log("buf_switch(): invalid buffer", 'ERROR') end
+	if not buf then return fn.log("buf_show(): invalid buffer", 'ERROR') end
 	vim.fn.bufload(buf.bufnr)
 
 	local win = buf.variables.scope
