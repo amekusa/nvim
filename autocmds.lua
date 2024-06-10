@@ -101,7 +101,7 @@ if conf.typewriter_mode then
 end
 
 if conf.scoped_buffers then
-	autocmd('BufWinLeave', {
+	autocmd('BufWinEnter', {
 		callback = function(ctx)
 			local buf = vim.fn.getbufinfo(ctx.buf)[1]
 			local win = buf.windows and buf.windows[1]
