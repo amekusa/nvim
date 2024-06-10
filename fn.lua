@@ -137,23 +137,13 @@ fn.buf_show = function(buf)
 	if not buf then return fn.log("buf_switch(): invalid buffer", 'ERROR') end
 	vim.fn.bufload(buf.bufnr)
 
-	local wins = buf.windows
-	if wins and #wins > 0 then
-		local tab = vim.api.nvim_get_current_tabpage()
-		local win
-		for i = #wins, 1, -1 do
-			win = vim.fn.getwininfo(wins[i])[1]
-			if win.tabnr == tab then -- this window is in the current tab
-				vim.api.nvim_set_current_win(win.winid) -- switch to the window
-				return
-			end
-		end
-		vim.api.nvim_set_current_tabpage(win.tabnr)
-		vim.api.nvim_set_current_win(win.winid)
-		return
-	end
-	-- show in the current window
-	vim.api.nvim_win_set_buf(vim.api.nvim_get_current_win(), buf.bufnr)
+	local win = buf.variables.scope
+	if win then win = vim.fn.getwininfo(win)[1] end
+	if not win then win = vim.fn.getwininfo(buf.windows[1] or vim.api.nvim_get_current_win())[1] end
+
+	vim.api.nvim_set_current_tabpage(win.tabnr)
+	vim.api.nvim_set_current_win(win.winid)
+	vim.api.nvim_win_set_buf(win.winid, buf.bufnr)
 end
 
 -- Rotates buffers
