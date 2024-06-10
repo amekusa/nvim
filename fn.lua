@@ -101,12 +101,12 @@ end
 
 -- Closes the given buffer
 fn.buf_close = function(buf, force)
-	if fn.no(buf) then
-		buf = vim.api.nvim_get_current_buf()
-	end
-	if fn.buf_is_last(buf, true)
-		then vim.cmd.bprevious()
-		else vim.cmd.bnext()
+	local curr = vim.api.nvim_get_current_buf()
+	if not buf then buf = curr end
+	-- if the buffer is current, move to the prev/next buffer first
+	if buf == curr and fn.buf_is_last(buf, true)
+		then fn.buf_rotate(-1)
+		else fn.buf_rotate(1)
 	end
 	if force -- delete the given (or current) buffer in background
 		then vim.cmd('bw! '..buf)
