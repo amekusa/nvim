@@ -100,3 +100,15 @@ if conf.typewriter_mode then
 	})
 end
 
+if conf.scoped_buffers then
+	autocmd('BufWinLeave', {
+		callback = function(ctx)
+			local buf = vim.fn.getbufinfo(ctx.buf)[1]
+			local win = buf.windows and buf.windows[1]
+			if win then
+				vim.api.nvim_buf_set_var(buf.bufnr, 'scope', win) -- save window id
+			end
+		end
+	})
+end
+

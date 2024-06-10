@@ -43,6 +43,7 @@ return {
 		close_with_esc_ft = {'help', 'man', 'qf', 'lazy'},
 		typewriter_mode = true,
 		typewriter_mode_ft = {'help', 'man'},
+		scoped_buffers = true,
 	},
 }
 
