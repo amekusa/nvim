@@ -12,30 +12,32 @@ function M:init(options)
 	M.super.init(self, options)
 	self.options = vim.tbl_deep_extend('keep', self.options or {}, {
 		-- default options
+		max_length = 0,
 		symbols = {
-			sep = '  ',
+			-- cur = '', -- Nerdfont eb2c
+			cur = '󰐊', -- Nerdfont f040a
+			-- cur = '▷', -- U+25B7 White right-pointing triangle
+			-- cur = '▶', -- U+25B6 Black right-pointing triangle
+			mod = '*',
+			sep = ' ',
+			ell = '', -- Nerdfont
 		}
 	})
 end
 
 function M:render_buf(buf, is_curr)
-	local r = ''
-	-- local icon = '' -- Nerdfont eb2c
-	local icon = '󰐊' -- Nerdfont f040a
-	-- local icon = '▷' -- U+25B7 White right-pointing triangle
-	-- local icon = '▶' -- U+25B6 Black right-pointing triangle
-	local label = buf.name ~= '' and vim.fs.basename(buf.name) or '[No Name]'
-	r = r..(is_curr and icon..' ' or '  ')..label..(buf.changed == 1 and ' *' or ' ')
-	return r
+	local sym = self.options.symbols
+	return (is_curr and sym.cur..' ' or '  ')
+		..(buf.name ~= '' and vim.fs.basename(buf.name) or '[No Name]')
+		..(buf.changed == 1 and ' '..sym.mod or '  ')
 end
 
 function M:update_status()
 	local bufs = vim.fn.getbufinfo({buflisted = 1})
 	if #bufs == 0 then return '' end
 
-	local r
-	local max = math.floor(2 * vim.o.columns / 3)
-	local sep = self.options.symbols.sep
+	local max = self.options.max_length
+	local sym = self.options.symbols
 
 	-- find current index
 	local curr = vim.api.nvim_get_current_buf()
@@ -44,11 +46,12 @@ function M:update_status()
 		i = i - 1
 	end
 
-	-- render current (or the 1st one)
+	-- render current item (or the 1st one)
 	local buf = bufs[i]
-	r = self:render_buf(buf, buf.bufnr == curr)
+	local r = self:render_buf(buf, buf.bufnr == curr)
 
-	-- render left and right, until exceeds the max length
+	-- expand rendering from the current index towards left and right,
+	-- until exceeds the max length
 	local left_done, right_done
 	local j = 1
 	repeat
@@ -57,7 +60,7 @@ function M:update_status()
 		if not left_done then
 			buf = bufs[i - j]
 			if buf then
-				local left = self:render_buf(buf)
+				local left = self:render_buf(buf)..sym.sep
 				len = len + #left
 				if len > max
 					then break
@@ -71,7 +74,7 @@ function M:update_status()
 		if not right_done then
 			buf = bufs[i + j]
 			if buf then
-				local right = self:render_buf(buf)
+				local right = sym.sep..self:render_buf(buf)
 				len = len + #right
 				if len > max
 					then break
@@ -87,9 +90,8 @@ function M:update_status()
 	until left_done and right_done
 
 	-- add ellipsis marks if truncated
-	local ellip = '...'
-	if not left_done  then r = ellip..r end
-	if not right_done then r = r..ellip end
+	if not left_done  then r = sym.ell..r end
+	if not right_done then r = r..sym.ell end
 
 	return r
 end
