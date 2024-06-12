@@ -57,6 +57,16 @@ fn.no = function(x)
 	return x == '' or x == 0
 end
 
+-- Writes a file with the given date
+fn.write = function(file, data, mode)
+	local f = io.open(file, mode or 'w')
+	if not f then
+		return fn.log("fn.write(): failed to open: "..file, 'ERROR')
+	end
+	f:write(data)
+	f:close()
+end
+
 -- Returns an array of keys in the given table
 fn.table_keys = function(t)
 	local r,i = {},1
