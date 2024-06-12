@@ -22,17 +22,18 @@ local default_options = {
 	}
 }
 
+local section_redirects = {
+	lualine_x = 'lualine_c',
+	lualine_y = 'lualine_b',
+	lualine_z = 'lualine_a',
+}
+
 local function get_hl(section, is_active)
 	local suffix = is_active and highlight.get_mode_suffix() or '_inactive'
-	local section_redirects = {
-		lualine_x = 'lualine_c',
-		lualine_y = 'lualine_b',
-		lualine_z = 'lualine_a',
-	}
-	if section_redirects[section] then
-		section = highlight.highlight_exists(section..suffix) and section or section_redirects[section]
+	if section_redirects[section] and not highlight.highlight_exists(section..suffix)
+		then return section_redirects[section]..suffix
+		else return section..suffix
 	end
-	return section..suffix
 end
 
 function M:init(options)
