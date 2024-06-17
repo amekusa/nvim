@@ -16,8 +16,13 @@ local default_options = {
 	},
 	symbols = {
 		mod = '*', -- mark for a modified buffer
-		sep = '', -- buffer separator
+		sep = ' ', -- buffer separator
 		ell = '', -- ellipsis (nerdfont)
+		concise = {
+			mod = '*',
+			sep = '',
+			ell = '',
+		}
 	}
 }
 
@@ -68,7 +73,7 @@ function M:render_buf(buf, concise)
 		end
 	end
 	if buf.changed == 1 then
-		r = self.options.symbols.mod..r
+		r = (concise and self.options.symbols.concise.mod or self.options.symbols.mod)..r
 	end
 	return ' '..r..' '
 end
@@ -77,12 +82,14 @@ function M:update_status()
 	local bufs = vim.fn.getbufinfo({buflisted = 1})
 	if #bufs == 0 then return '' end
 
-	local concise = #bufs >= self.options.concise.on
-	local sym = self.options.symbols
 	local max = self.options.max_length; if max
 		then if type(max) == 'function' then max = max(self) end
 		else max = -60 + (self.options.globalstatus and vim.go.columns or vim.fn.winwidth(0))
 	end
+
+	local sym = self.options.symbols
+	local concise = #bufs >= self.options.concise.on
+	if concise then sym = sym.concise end
 
 	local hl1 = highlight.component_format_highlight(self.highlights.active)
 	local hl2 = highlight.component_format_highlight(self.highlights.inactive)
