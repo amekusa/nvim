@@ -11,10 +11,13 @@ local default_options = {
 		active   = {gui = 'bold'},
 		inactive = nil,
 	},
+	concise = { -- concise mode
+		on = 5, -- number of buffers to activate
+	},
 	symbols = {
-		mod = '*',
-		sep = '',
-		ell = '', -- nerdfont
+		mod = '*', -- mark for a modified buffer
+		sep = '', -- buffer separator
+		ell = '', -- ellipsis (nerdfont)
 	}
 }
 
@@ -54,15 +57,27 @@ function M:init(options)
 	}
 end
 
-function M:render_buf(buf)
-	return ' '..(buf.changed == 1 and self.options.symbols.mod or '')..
-		(buf.name ~= '' and vim.fs.basename(buf.name) or '[No Name]')..' '
+function M:render_buf(buf, concise)
+	local r
+	if buf.name == '' then
+		r = '[No Name]'
+	else
+		r = vim.fn.fnamemodify(buf.name, ':t')
+		if concise then
+			r = vim.fn.fnamemodify(r, ':r')
+		end
+	end
+	if buf.changed == 1 then
+		r = self.options.symbols.mod..r
+	end
+	return ' '..r..' '
 end
 
 function M:update_status()
 	local bufs = vim.fn.getbufinfo({buflisted = 1})
 	if #bufs == 0 then return '' end
 
+	local concise = #bufs >= self.options.concise.on
 	local sym = self.options.symbols
 	local max = self.options.max_length; if max
 		then if type(max) == 'function' then max = max(self) end
@@ -82,7 +97,7 @@ function M:update_status()
 	-- render current item (or the 1st one)
 	local buf = bufs[i]
 	local is_curr = buf.bufnr == curr
-	local r = self:render_buf(buf)
+	local r = self:render_buf(buf, concise)
 	local len = #r
 	r = (is_curr and hl1 or hl2)..r
 
@@ -95,7 +110,7 @@ function M:update_status()
 		if not left_done then
 			buf = bufs[i - j]
 			if buf then
-				local left = self:render_buf(buf)
+				local left = self:render_buf(buf, concise)
 				len = #left + #sym.sep + len
 				if len > max then break end
 				r = hl2..left..sym.sep..r
@@ -107,7 +122,7 @@ function M:update_status()
 		if not right_done then
 			buf = bufs[i + j]
 			if buf then
-				local right = self:render_buf(buf)
+				local right = self:render_buf(buf, concise)
 				len = len + #sym.sep + #right
 				if len > max then break end
 				r = r..sym.sep..hl2..right
