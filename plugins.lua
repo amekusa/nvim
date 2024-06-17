@@ -88,6 +88,23 @@ local plugins = { -- in alphabetical order
 		end
 	},
 	{
+		-- preview color values
+		'norcalli/nvim-colorizer.lua', enabled = true,
+		ft = {
+			'html', 'php',
+			'css', 'less',
+			'javascript',
+			'svg',
+		},
+		config = function(this)
+			require('colorizer').setup(this.ft, {
+				names = false, -- color names
+				rgb_fn = true, -- rgb(...) function
+				hsl_fn = true, -- hsl(...) function
+			})
+		end
+	},
+	{
 		-- smart comment-out
 		'numToStr/Comment.nvim', enabled = true,
 		dependencies = {'nvim-treesitter/nvim-treesitter'},
