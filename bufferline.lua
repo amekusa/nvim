@@ -11,9 +11,7 @@ local default_options = {
 		active   = {gui = 'bold'},
 		inactive = nil,
 	},
-	concise = { -- concise mode
-		on = 5, -- number of buffers to activate
-	},
+	concise = 5, -- concise mode (number of buffers to activate)
 	symbols = {
 		mod = '*', -- mark for a modified buffer
 		sep = ' ', -- buffer separator
@@ -82,13 +80,13 @@ function M:update_status()
 	local bufs = vim.fn.getbufinfo({buflisted = 1})
 	if #bufs == 0 then return '' end
 
-	local max = self.options.max_length; if max
+	local opts = self.options
+	local max = opts.max_length; if max
 		then if type(max) == 'function' then max = max(self) end
-		else max = -60 + (self.options.globalstatus and vim.go.columns or vim.fn.winwidth(0))
+		else max = -60 + (opts.globalstatus and vim.go.columns or vim.fn.winwidth(0))
 	end
-
-	local sym = self.options.symbols
-	local concise = #bufs >= self.options.concise.on
+	local sym = opts.symbols
+	local concise = #bufs >= opts.concise
 	if concise then sym = sym.concise end
 
 	local hl1 = highlight.component_format_highlight(self.highlights.active)
