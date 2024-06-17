@@ -253,25 +253,10 @@ local plugins = { -- in alphabetical order
 			local filetype = {'filetype', icon_only = true}
 			local diff     = {'diff', symbols = {modified = '*'}}
 
-			-- custom component: buffer line
-			local buffers = function()
-				local r = ''
-				local icon = '' -- Nerdfont eb2c
-				-- local icon = '󰐊' -- Nerdfont f040a
-				-- local icon = '▷' -- U+25B7 White right-pointing triangle
-				-- local icon = '▶' -- U+25B6 Black right-pointing triangle
-				local cur = vim.api.nvim_get_current_buf()
-				local bufs = vim.fn.getbufinfo({buflisted = 1, bufloaded = 1})
-				local n = #bufs
-				for i = 1, n, 1 do
-					local buf = bufs[i]
-					local label = vim.fs.basename(buf.name)
-					if label ~= '' then
-						r = r..(buf.bufnr == cur and icon..' ' or '  ')..label..(buf.changed == 1 and ' *' or ' ')..(i < n and '  ' or '')
-					end
-				end
-				return r
-			end
+			local buffers = {
+				require(my.ns..'.extras.bufferline'),
+				max_length_offset = 50,
+			}
 
 			require('lualine').setup({
 				options = {
@@ -291,7 +276,7 @@ local plugins = { -- in alphabetical order
 					lualine_a = {'mode'},
 					lualine_b = {branch},
 					lualine_c = {filetype, buffers},
-					lualine_x = {diff, 'diagnostics', 'filesize'},
+					lualine_x = {'diagnostics', diff, 'filesize'},
 					lualine_y = {'progress'},
 					lualine_z = {'location'}
 				},
