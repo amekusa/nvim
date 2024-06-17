@@ -7,7 +7,7 @@ local highlight = require('lualine.highlight')
 local default_options = {
 	max_length = nil,
 	use_mode_colors = false,
-	buffers_color = {
+	highlights = {
 		active   = {gui = 'bold'},
 		inactive = nil,
 	},
@@ -35,7 +35,7 @@ end
 function M:init(options)
 	M.super.init(self, vim.tbl_deep_extend('keep', options or {}, default_options))
 
-	local hl = self.options.buffers_color
+	local hl = self.options.highlights
 	local section = 'lualine_'..self.options.self.section
 
 	if not hl.active then
