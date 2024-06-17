@@ -32,8 +32,18 @@ local ts_langs = {
 	'php', 'phpdoc',
 }
 
-local plugins = { -- in alphabetical order
+local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	---- #A ----
+	{
+		-- automatically close brackets (****.)
+		'windwp/nvim-autopairs', enabled = true,
+		lazy = false,
+		config = function()
+			require('nvim-autopairs').setup({
+				-- options
+			})
+		end
+	},
 	---- #B ----
 	---- #C ----
 	{
@@ -273,6 +283,9 @@ local plugins = { -- in alphabetical order
 			local buffers = {
 				require(my.ns..'.extras.bufferline'),
 				max_length_offset = 50,
+				highlights = {
+					active = {fg = '#7e9cd8'},
+				}
 			}
 
 			require('lualine').setup({
@@ -520,63 +533,11 @@ local plugins = { -- in alphabetical order
 		end
 	},
 	---- #N ----
-	{
-		-- automatically close brackets (****.)
-		'windwp/nvim-autopairs', enabled = true,
-		lazy = false,
-		config = function()
-			require('nvim-autopairs').setup({
-				-- options
-			})
-		end
-	},
-	{
-		-- devdocs viewer (****.)
-		'luckasRanarison/nvim-devdocs', enabled = true,
-		branch = 'master', -- latest commit on master
-		dependencies = {
-			'nvim-lua/plenary.nvim',
-			'nvim-treesitter/nvim-treesitter',
-			'nvim-telescope/telescope.nvim',
-		},
-		init = function(this)
-			autoload(this, 'Devdocs')
-			map('devdocs: Open',         'n', '<Leader>D', '<Cmd>DevdocsOpen<CR>')
-			map('devdocs: Open Current', 'n', '<Leader>d', '<Cmd>DevdocsOpenCurrent<CR>')
-		end,
-		cmd = {
-			'DevdocsOpen',
-			'DevdocsOpenCurrent',
-			'DevdocsInstall',
-			'DevdocsUpdateAll',
-		},
-		config = function()
-			require('nvim-devdocs').setup({
-				ensure_installed = {
-					'lua-5.1', 'lua-5.2',
-					'javascript', 'node',
-					'html', 'css',
-					'php',
-				},
-				filetypes = {
-					lua = {'lua-5.1', 'lua-5.2'},
-					javascript = {'javascript', 'node'},
-					html = {'html', 'css', 'javascript'},
-					css = {'css'},
-					php = {'php', 'html', 'css', 'javascript'},
-				},
-				after_open = function(buf)
-					vim.bo[buf].buflisted = true -- enable going back to opened docs
-					map('devdocs: Close', 'n', '<Esc>', function() my.fn.buf_close(buf, true) end, {buffer = buf})
-				end,
-				-- use external markdown viewer
-				previewer_cmd   = 'glow',
-				cmd_args        = {'-s', 'dark', '-w', '128'},
-				picker_cmd      = 'glow',
-				picker_cmd_args = {'-s', 'dark', '-w', '80'},
-			})
-		end
-	},
+	---- #O ----
+	---- #P ----
+	---- #Q ----
+	---- #R ----
+	---- #S ----
 	{
 		-- snippets manager (****.)
 		'chrisgrieser/nvim-scissors', enabled = true,
@@ -616,6 +577,37 @@ local plugins = { -- in alphabetical order
 					-- change_line     = 'cS',
 				},
 			})
+		end
+	},
+	---- #T ----
+	{
+		-- fuzzy finder (*****)
+		'nvim-telescope/telescope.nvim', enabled = true,
+		dependencies = {'nvim-lua/plenary.nvim'},
+		lazy = false,
+		config = function()
+			require('telescope').setup({
+				defaults = {
+					layout_strategy = 'vertical',
+				},
+			})
+			local api = require('telescope.builtin')
+			map('telescope: Builtin',                'n', '<Leader>t', api.builtin)
+			map('telescope: Files',                  'n', '<Leader>f', api.find_files)
+			map('telescope: Grep',                   'n', '<Leader><Leader>f', api.live_grep)
+			map('telescope: Buffers',                'n', '<Leader>b', api.buffers)
+			map('telescope: Commands',               'n', '<Leader>;', api.commands)
+			map('telescope: Help',                   'n', '<Leader>h', api.help_tags)
+			map('telescope: Man Pages',              'n', '<Leader><Leader>m', api.man_pages)
+			map('telescope: Quickfix',               'n', '<Leader><Leader>q', api.quickfix)
+			map('telescope: Options',                'n', '<Leader><Leader>o', api.vim_options)
+			map('telescope: Registers',              'n', '<Leader><Leader>r', api.registers)
+			map('telescope: Keymaps',                'n', '<Leader>k', api.keymaps)
+			map('telescope: Treesitter Symbols',     'n', '<Leader>s', api.treesitter)
+			map('telescope: Commits',                'n', '<Leader><Leader>C', api.git_commits)
+			map('telescope: Commits for the Buffer', 'n', '<Leader><Leader>c', api.git_bcommits)
+			--map('telescope: Commits in the Range', 'x', '<Leader><Leader>c', api.git_bcommits_range)
+			--   NOTE: this causes error bc 'git_bcommits_range' is nil. no idea how to fix it.
 		end
 	},
 	{
@@ -795,42 +787,6 @@ local plugins = { -- in alphabetical order
 					}
 				}
 			})
-		end
-	},
-	---- #O ----
-	---- #P ----
-	---- #Q ----
-	---- #R ----
-	---- #S ----
-	---- #T ----
-	{
-		-- fuzzy finder (*****)
-		'nvim-telescope/telescope.nvim', enabled = true,
-		dependencies = {'nvim-lua/plenary.nvim'},
-		lazy = false,
-		config = function()
-			require('telescope').setup({
-				defaults = {
-					layout_strategy = 'vertical',
-				},
-			})
-			local api = require('telescope.builtin')
-			map('telescope: Builtin',                'n', '<Leader>t', api.builtin)
-			map('telescope: Files',                  'n', '<Leader>f', api.find_files)
-			map('telescope: Grep',                   'n', '<Leader><Leader>f', api.live_grep)
-			map('telescope: Buffers',                'n', '<Leader>b', api.buffers)
-			map('telescope: Commands',               'n', '<Leader>;', api.commands)
-			map('telescope: Help',                   'n', '<Leader>h', api.help_tags)
-			map('telescope: Man Pages',              'n', '<Leader><Leader>m', api.man_pages)
-			map('telescope: Quickfix',               'n', '<Leader><Leader>q', api.quickfix)
-			map('telescope: Options',                'n', '<Leader><Leader>o', api.vim_options)
-			map('telescope: Registers',              'n', '<Leader><Leader>r', api.registers)
-			map('telescope: Keymaps',                'n', '<Leader>k', api.keymaps)
-			map('telescope: Treesitter Symbols',     'n', '<Leader>s', api.treesitter)
-			map('telescope: Commits',                'n', '<Leader><Leader>C', api.git_commits)
-			map('telescope: Commits for the Buffer', 'n', '<Leader><Leader>c', api.git_bcommits)
-			--map('telescope: Commits in the Range', 'x', '<Leader><Leader>c', api.git_bcommits_range)
-			--   NOTE: this causes error bc 'git_bcommits_range' is nil. no idea how to fix it.
 		end
 	},
 	---- #U ----
