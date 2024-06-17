@@ -8,16 +8,12 @@ local default_options = {
 	max_length = nil,
 	use_mode_colors = false,
 	buffers_color = {
-		active = nil,
+		active   = {gui = 'bold'},
 		inactive = nil,
 	},
 	symbols = {
-		-- cur = '', -- nerdfont eb2c
-		cur = '󰐊', -- nerdfont f040a
-		-- cur = '▷', -- u+25b7 white right-pointing triangle
-		-- cur = '▶', -- u+25b6 black right-pointing triangle
 		mod = '*',
-		sep = ' ',
+		sep = '',
 		ell = '', -- nerdfont
 	}
 }
@@ -58,11 +54,9 @@ function M:init(options)
 	}
 end
 
-function M:render_buf(buf, is_curr)
-	local sym = self.options.symbols
-	return (is_curr and sym.cur..' ' or '  ')..
-		(buf.name ~= '' and vim.fs.basename(buf.name) or '[No Name]')..
-		(buf.changed == 1 and ' '..sym.mod or '  ')
+function M:render_buf(buf)
+	return ' '..(buf.changed == 1 and self.options.symbols.mod or '')..
+		(buf.name ~= '' and vim.fs.basename(buf.name) or '[No Name]')..' '
 end
 
 function M:update_status()
@@ -88,7 +82,7 @@ function M:update_status()
 	-- render current item (or the 1st one)
 	local buf = bufs[i]
 	local is_curr = buf.bufnr == curr
-	local r = self:render_buf(buf, is_curr)
+	local r = self:render_buf(buf)
 	local len = #r
 	r = (is_curr and hl1 or hl2)..r
 
