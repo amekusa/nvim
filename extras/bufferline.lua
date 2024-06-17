@@ -6,6 +6,7 @@ local highlight = require('lualine.highlight')
 
 local default_options = {
 	max_length = nil,
+	max_length_offset = 60,
 	use_mode_colors = false,
 	highlights = {
 		active   = {gui = 'bold'},
@@ -83,7 +84,8 @@ function M:update_status()
 	local opts = self.options
 	local max = opts.max_length; if max
 		then if type(max) == 'function' then max = max(self) end
-		else max = -60 + (opts.globalstatus and vim.go.columns or vim.fn.winwidth(0))
+		else max = opts.globalstatus and vim.go.columns or vim.fn.winwidth(0)
+		max = max - opts.max_length_offset
 	end
 	local sym = opts.symbols
 	local concise = #bufs >= opts.concise
