@@ -284,7 +284,8 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 				require(my.ns..'.extras.bufferline'),
 				max_length_offset = 50,
 				highlights = {
-					active = {fg = '#7e9cd8'},
+					-- active   = {gui = 'bold'},
+					inactive = {fg = '#938aa9'}, -- kanagawa:springViolet1
 				}
 			}
 
