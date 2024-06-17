@@ -62,9 +62,9 @@ function M:render_buf(buf, concise)
 	if buf.name == '' then
 		r = '[No Name]'
 	else
-		r = vim.fn.fnamemodify(buf.name, ':t')
+		r = vim.fn.fnamemodify(buf.name, ':t') -- basename
 		if concise then
-			r = vim.fn.fnamemodify(r, ':r')
+			r = vim.fn.fnamemodify(r, ':r') -- remove extension
 		end
 	end
 	if buf.changed == 1 then
