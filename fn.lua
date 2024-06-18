@@ -121,6 +121,14 @@ fn.buf_show = function(buf)
 	vim.api.nvim_win_set_buf(win.winid, buf.bufnr)
 end
 
+-- Shows the latest buffer
+fn.buf_show_latest = function()
+	local my = _custom
+	if my.var.latest_buf then
+		fn.buf_show(my.var.latest_buf)
+	end
+end
+
 -- Cycles through buffers
 fn.buf_cycle = function(to, bufs)
 	local curr = vim.api.nvim_get_current_buf()
@@ -139,10 +147,7 @@ fn.buf_cycle = function(to, bufs)
 			return
 		end
 	end
-	local my = _custom
-	if my.var.latest_buf then
-		fn.buf_show(my.var.latest_buf)
-	end
+	fn.buf_show_latest()
 end
 
 -- Indents the current line
