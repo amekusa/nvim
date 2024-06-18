@@ -10,24 +10,24 @@ local fn = {}
 --   - TRACE
 --   - WARN
 --   - OFF
-fn.log = function(msg, level)
+function fn.log(msg, level)
 	vim.api.nvim_notify(msg, vim.log.levels[level or 'INFO'], {})
 end
 
 -- Returns whether the given value is truthy
-fn.yes = function(x)
+function fn.yes(x)
 	if not x then return false end
 	return x ~= '' and x ~= 0
 end
 
 -- Returns whether the given value is falsey
-fn.no = function(x)
+function fn.no(x)
 	if not x then return true end
 	return x == '' or x == 0
 end
 
 -- Writes a file with the given date
-fn.write = function(file, data, mode)
+function fn.write(file, data, mode)
 	local f = io.open(file, mode or 'w')
 	if not f then
 		return fn.log("fn.write(): failed to open: "..file, 'ERROR')
@@ -37,7 +37,7 @@ fn.write = function(file, data, mode)
 end
 
 -- Returns an array of keys in the given table
-fn.table_keys = function(t)
+function fn.table_keys(t)
 	local r,i = {},1
 	for k,_ in pairs(t) do
 		r[i] = k
@@ -47,7 +47,7 @@ fn.table_keys = function(t)
 end
 
 -- Returns an array of values in the given table
-fn.table_values = function(t)
+function fn.table_values(t)
 	local r,i = {},1
 	for _,v in pairs(t) do
 		r[i] = v
@@ -57,12 +57,12 @@ fn.table_values = function(t)
 end
 
 -- Returns whether `str` starts with `with`
-fn.starts = function(str, with)
+function fn.starts(str, with)
    return string.sub(str, 1, string.len(with)) == with
 end
 
 -- Alias of `vim.keymap.set` but the description comes first
-fn.map = function(desc, mode, from, to, opts)
+function fn.map(desc, mode, from, to, opts)
 	if not opts then opts = {} end
 	opts.desc = desc
 	return vim.keymap.set(mode, from, to, opts)
@@ -71,7 +71,7 @@ end
 -- Converts the given special keycode (like <CR>, <Tab>, or <Esc>, etc.)
 -- into the format that is applicable to `feedkeys()`
 local keys = {}
-fn.key = function(code)
+function fn.key(code)
 	if not keys[code] then
 		keys[code] = vim.api.nvim_replace_termcodes('<'..code..'>', true, false, true)
 	end
@@ -79,7 +79,7 @@ fn.key = function(code)
 end
 
 -- Closes the given buffer
-fn.buf_close = function(buf, force, bufs)
+function fn.buf_close(buf, force, bufs)
 	local curr = vim.api.nvim_get_current_buf()
 	buf = buf or curr
 	bufs = bufs or vim.fn.getbufinfo({buflisted = 1})
@@ -100,14 +100,14 @@ fn.buf_close = function(buf, force, bufs)
 end
 
 -- Returns whether the given buffer is the last entry
-fn.buf_is_last = function(buf, bufs)
+function fn.buf_is_last(buf, bufs)
 	buf = buf or vim.api.nvim_get_current_buf()
 	bufs = bufs or vim.fn.getbufinfo({buflisted = 1})
 	return bufs[#bufs] and (bufs[#bufs].bufnr == buf)
 end
 
 -- Shows the given buffer
-fn.buf_show = function(buf)
+function fn.buf_show(buf)
 	buf = type(buf) == 'table' and buf or vim.fn.getbufinfo(buf)[1]
 	if not buf then return fn.log("buf_show(): invalid buffer", 'ERROR') end
 	vim.fn.bufload(buf.bufnr)
@@ -122,7 +122,7 @@ fn.buf_show = function(buf)
 end
 
 -- Shows the latest buffer
-fn.buf_show_latest = function()
+function fn.buf_show_latest()
 	local my = _custom
 	if my.var.latest_buf then
 		fn.buf_show(my.var.latest_buf)
@@ -130,7 +130,7 @@ fn.buf_show_latest = function()
 end
 
 -- Cycles through buffers
-fn.buf_cycle = function(to, bufs)
+function fn.buf_cycle(to, bufs)
 	local curr = vim.api.nvim_get_current_buf()
 	bufs = bufs or vim.fn.getbufinfo({buflisted = 1})
 	local n = #bufs
@@ -151,7 +151,7 @@ fn.buf_cycle = function(to, bufs)
 end
 
 -- Indents the current line
-fn.indent = function()
+function fn.indent()
 	local line = vim.api.nvim_get_current_line()
 	if line == '' then
 		vim.cmd.stopinsert()
@@ -163,7 +163,7 @@ fn.indent = function()
 end
 
 -- set the current window to "typewriter" mode
-fn.typewriter_mode = function(set)
+function fn.typewriter_mode(set)
 	if set == nil then -- toggle
 		set = vim.wo.scrolloff <= vim.go.scrolloff
 	end
