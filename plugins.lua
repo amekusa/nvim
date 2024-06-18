@@ -2,7 +2,6 @@
 local my = vim.g._custom
 local conf = my.conf.plugins
 local map = my.fn.map
-local autoload = my.fn.autoload
 
 -- filetypes to load treesitter
 local ts_filetypes = {
@@ -336,9 +335,6 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	{
 		-- LSP package manager (***..)
 		'williamboman/mason.nvim', enabled = true,
-		init = function(this)
-			autoload(this, 'Mason')
-		end,
 		cmd = {
 			'Mason',
 			'MasonInstall',
@@ -749,9 +745,6 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 			--'nvim-treesitter/nvim-treesitter-textobjects',
 			--'nvim-treesitter/nvim-treesitter-context',
 		},
-		init = function(this)
-			autoload(this, 'TS')
-		end,
 		cmd = {
 			'TSInstallInfo',
 			'TSConfigInfo',
@@ -855,10 +848,4 @@ lazy.setup(plugins, {
 		}
 	},
 })
-
--- set custom autoloader
-my.fn.set_autoloader(function(plugin)
-	if plugin._.loaded then return end
-	lazy.load({plugins = plugin})
-end)
 
