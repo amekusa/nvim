@@ -139,6 +139,10 @@ fn.buf_rotate = function(to, bufs)
 			return
 		end
 	end
+	local my = _custom
+	if my.var.latest_buf then
+		fn.buf_show(my.var.latest_buf)
+	end
 end
 
 -- Indents the current line
