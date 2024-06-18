@@ -86,8 +86,8 @@ fn.buf_close = function(buf, force, bufs)
 
 	-- if the buffer is current, move to the prev/next buffer first
 	if buf == curr and fn.buf_is_last(buf, bufs)
-		then fn.buf_rotate(-1, bufs)
-		else fn.buf_rotate(1, bufs)
+		then fn.buf_cycle(-1, bufs)
+		else fn.buf_cycle(1, bufs)
 	end
 	if force -- delete the given (or current) buffer in background
 		then vim.cmd('bw! '..buf)
@@ -121,8 +121,8 @@ fn.buf_show = function(buf)
 	vim.api.nvim_win_set_buf(win.winid, buf.bufnr)
 end
 
--- Rotates buffers
-fn.buf_rotate = function(to, bufs)
+-- Cycles through buffers
+fn.buf_cycle = function(to, bufs)
 	local curr = vim.api.nvim_get_current_buf()
 	bufs = bufs or vim.fn.getbufinfo({buflisted = 1})
 	local n = #bufs

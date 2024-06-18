@@ -93,8 +93,8 @@ map('custom: Insert Mode', 'x', 'i', '<Esc>i')
 
 
 -- prev/next buffer
-map('custom: Prev Buffer', nxi, '<C-h>', function() my.fn.buf_rotate(-1) end)
-map('custom: Next Buffer', nxi, '<C-l>', function() my.fn.buf_rotate(1)  end)
+map('custom: Prev Buffer', nxi, '<C-h>', function() my.fn.buf_cycle(-1) end)
+map('custom: Next Buffer', nxi, '<C-l>', function() my.fn.buf_cycle(1)  end)
 
 -- close/reopen buffer
 map('custom: Close Buffer',  nx, '<Leader>x', function() my.fn.buf_close(nil, true) end)
