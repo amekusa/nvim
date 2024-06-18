@@ -168,10 +168,10 @@ fn.typewriter_mode = function(set)
 		set = vim.wo.scrolloff <= vim.go.scrolloff
 	end
 	if set then
-		fn.log("typewriter mode: on")
+		fn.log("typewriter mode: ON")
 		vim.wo.scrolloff = 100
 	else
-		fn.log("typewriter mode: off")
+		fn.log("typewriter mode: OFF")
 		vim.wo.scrolloff = vim.go.scrolloff
 	end
 end
