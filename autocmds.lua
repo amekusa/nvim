@@ -1,7 +1,8 @@
 ---- AUTO COMMANDS ----
-local my = vim.g._custom
-local conf = my.conf.autocmds
+local vim = vim
+local my = _custom
 local map = my.fn.map
+local conf = my.conf.autocmds
 local autocmd = vim.api.nvim_create_autocmd
 
 local function regex_ext(ext) -- returns a regex that matches with given file extensions

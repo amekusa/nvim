@@ -2,7 +2,8 @@
 -- github.com/amekusa/nvim
 
 -- global
-local my = {ns = (...)} -- namespace
+_custom = {ns = (...)} -- namespace
+local my = _custom
 
 -- root path
 my.path = vim.fn.stdpath('config')..'/lua/'..my.ns:gsub('%.', '/') -- replace '.' in namespace with '/'
@@ -24,9 +25,6 @@ end
 
 -- functions
 my.fn = require(my.ns..'.fn')
-
--- save to global
-vim.g._custom = my
 
 -- load modules
 if my.conf.options.enable then require(my.ns..'.options') end

@@ -1,5 +1,6 @@
 ---- KEYMAPS ----
-local my = vim.g._custom
+local vim = vim
+local my = _custom
 local map = my.fn.map
 
 --  Mode | Norm | Ins | Cmd | Vis | Sel | Opr | Term | Lang |

@@ -1,4 +1,5 @@
 ---- FUNCTIONS ----
+local vim = vim
 local fn = {}
 
 -- Notifies the user with the given message.

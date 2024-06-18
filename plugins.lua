@@ -1,7 +1,8 @@
 ---- PLUGINS ----
-local my = vim.g._custom
-local conf = my.conf.plugins
+local vim = vim
+local my = _custom
 local map = my.fn.map
+local conf = my.conf.plugins
 
 -- filetypes to load treesitter
 local ts_filetypes = {

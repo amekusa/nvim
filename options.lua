@@ -1,4 +1,5 @@
 ---- OPTIONS ----
+local vim = vim
 
 -- OS RELATED --
 -- clipboard support
