@@ -119,5 +119,10 @@ if conf.scoped_buffers then
 			end
 		end
 	})
+	autocmd('WinClosed', {
+		callback = function()
+			my.fn.buf_show_latest()
+		end
+	})
 end
 
