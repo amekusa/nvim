@@ -165,7 +165,6 @@ fn.typewriter_mode = function(set)
 	if set then
 		fn.log("typewriter mode: on")
 		vim.wo.scrolloff = 100
-		vim.api.nvim_feedkeys('zz', 'n', false)
 	else
 		fn.log("typewriter mode: off")
 		vim.wo.scrolloff = vim.go.scrolloff
