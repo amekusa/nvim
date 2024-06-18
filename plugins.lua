@@ -281,7 +281,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 			local diff     = {'diff', symbols = {modified = '*'}}
 
 			local buffers = {
-				require(my.ns..'.extras.bufferline'),
+				require(my.ns..'extras.bufferline'),
 				max_length_offset = 50,
 				highlights = {
 					-- active   = {gui = 'bold'},
@@ -328,7 +328,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		build = 'make install_jsregexp',
 		config = function()
 			require('luasnip.loaders.from_vscode').lazy_load({
-				paths = {my.path..'/snippets'}
+				paths = {my.path..'snippets'}
 			})
 		end
 	},
@@ -547,7 +547,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		},
 		config = function()
 			require('scissors').setup({
-				snippetDir = my.path..'/snippets',
+				snippetDir = my.path..'snippets',
 				jsonFormatter = 'jq',
 				editSnippetPopup = {
 					border = 'single',
@@ -804,7 +804,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 
 -- themes
 if conf.themes then
-	local themes = require(my.ns..'.themes')
+	local themes = require(my.ns..'themes')
 	for k,v in pairs(themes.list) do
 		if k == themes.select then
 			v.cond = true
@@ -838,7 +838,7 @@ vim.opt.rtp:prepend(lazy)
 -- install plugins
 lazy = require('lazy')
 lazy.setup(plugins, {
-	lockfile = my.path..'/plugins-lock.json',
+	lockfile = my.path..'plugins-lock.json',
 	defaults = { -- default options for each plugin
 		lazy = true,
 		version = '*', -- try installing the latest stable versions of plugins
