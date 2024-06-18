@@ -273,7 +273,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 			-- vim.o.cmdheight = 0 -- hide commandline when not in use
 			--   NOTE: This somehow breaks my keymaps in visual mode (NVIM v0.9.4)
 
-			local refresh = 1000
+			local refresh = 3000
 
 			-- components
 			local branch   = {'branch', icons_enabled = false}
