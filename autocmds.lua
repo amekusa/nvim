@@ -111,5 +111,13 @@ if conf.scoped_buffers then
 			end
 		end
 	})
+	autocmd('BufLeave', {
+		callback = function(ctx)
+			local buf = vim.fn.getbufinfo(ctx.buf)[1]
+			if buf.listed == 1 then
+				my.var.latest_buf = buf.bufnr
+			end
+		end
+	})
 end
 

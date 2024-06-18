@@ -1,9 +1,14 @@
 ---[ Amekusa's NeoVim Configuration ]---
 -- github.com/amekusa/nvim
 
--- global
-_custom = {ns = (...)} -- namespace
+
+-- global namespace
+_custom = {
+	ns = (...)..'.',
+	var = {},
+}
 local my = _custom
+local vim = vim
 
 -- root path
 my.path = vim.fn.stdpath('config')..'/lua/'..my.ns:gsub('%.', '/') -- replace '.' in namespace with '/'
