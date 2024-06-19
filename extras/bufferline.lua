@@ -14,12 +14,12 @@ local default_options = {
 		active   = {gui = 'bold'},
 		inactive = nil,
 	},
-	concise = 5, -- concise mode (number of buffers to activate)
+	compact = 5, -- compact mode (number of buffers to activate)
 	symbols = {
 		mod = '*', -- mark for a modified buffer
 		sep = ' ', -- buffer separator
 		ell = '', -- ellipsis (nerdfont)
-		concise = {
+		compact = {
 			mod = '*',
 			sep = '',
 			ell = '',
@@ -70,18 +70,18 @@ function M:init(options)
 	})
 end
 
-function M:render_buf(buf, concise)
+function M:render_buf(buf, compact)
 	local r
 	if buf.name == '' then
 		r = '[No Name]'
 	else
 		r = vim.fn.fnamemodify(buf.name, ':t') -- basename
-		if concise then
+		if compact then
 			r = vim.fn.fnamemodify(r, ':r') -- remove extension
 		end
 	end
 	if buf.changed == 1 then
-		r = (concise and self.options.symbols.concise.mod or self.options.symbols.mod)..r
+		r = (compact and self.options.symbols.compact.mod or self.options.symbols.mod)..r
 	end
 	return ' '..r..' '
 end
@@ -97,8 +97,8 @@ function M:update_status()
 		max = max - opts.max_length_offset
 	end
 	local sym = opts.symbols
-	local concise = #bufs >= opts.concise
-	if concise then sym = sym.concise end
+	local compact = #bufs >= opts.compact
+	if compact then sym = sym.compact end
 
 	local hl1 = highlight.component_format_highlight(self.highlights.active)
 	local hl2 = highlight.component_format_highlight(self.highlights.inactive)
@@ -113,7 +113,7 @@ function M:update_status()
 	-- render current item (or the 1st one)
 	local buf = bufs[i]
 	local is_curr = buf.bufnr == curr
-	local r = self:render_buf(buf, concise)
+	local r = self:render_buf(buf, compact)
 	local len = #r
 	r = (is_curr and hl1 or hl2)..r
 
@@ -126,7 +126,7 @@ function M:update_status()
 		if not left_done then
 			buf = bufs[i - j]
 			if buf then
-				local left = self:render_buf(buf, concise)
+				local left = self:render_buf(buf, compact)
 				len = #left + #sym.sep + len
 				if len > max then break end
 				r = hl2..left..sym.sep..r
@@ -138,7 +138,7 @@ function M:update_status()
 		if not right_done then
 			buf = bufs[i + j]
 			if buf then
-				local right = self:render_buf(buf, concise)
+				local right = self:render_buf(buf, compact)
 				len = len + #sym.sep + #right
 				if len > max then break end
 				r = r..sym.sep..hl2..right
