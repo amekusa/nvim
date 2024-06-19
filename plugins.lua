@@ -550,7 +550,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 				snippetDir = my.path..'snippets',
 				jsonFormatter = 'jq',
 				editSnippetPopup = {
-					border = 'single',
+					border = 'rounded',
 				}
 			})
 		end
