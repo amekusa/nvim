@@ -42,6 +42,25 @@ elseif theme == 'kanagawa' then
 				},
 			},
 		},
+		overrides = function(c)
+			local th = c.theme
+			return {
+				---- Transparent floating windows ----
+				NormalFloat = {bg = 'none'},
+				FloatBorder = {bg = 'none'},
+				FloatTitle  = {bg = 'none'},
+
+				-- Save an hlgroup with dark background and dimmed foreground
+				-- so that you can use it where your still want darker windows.
+				-- E.g.: autocmd TermOpen * setlocal winhighlight=Normal:NormalDark
+				NormalDark = {fg = th.ui.fg_dim, bg = th.ui.bg_m3},
+
+				-- Popular plugins that open floats will link to NormalFloat by default;
+				-- set their background accordingly if you wish to keep them dark and borderless
+				LazyNormal  = {bg = th.ui.bg_m3, fg = th.ui.fg_dim},
+				MasonNormal = {bg = th.ui.bg_m3, fg = th.ui.fg_dim},
+			}
+		end,
 	}
 
 end
