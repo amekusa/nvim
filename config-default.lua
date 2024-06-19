@@ -24,7 +24,7 @@ return {
 			-- 'nvim',         -- :Inspect, :InspectTree commands
 			'rplugin',      -- remote plugins
 			'shada',        -- persistent data between sessions
-			'spellfile',    -- spell checking(?)
+			-- 'spellfile',    -- whitelists for the spell checker
 			'tarPlugin',    -- editing *.tar directly
 			'tohtml',       -- 2html integration(?)
 			-- 'tutor',        -- vimtutor
