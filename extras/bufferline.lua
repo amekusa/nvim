@@ -1,6 +1,8 @@
 ---[ Amekusa's Bufferline ]---
 -- @author github.com/amekusa
 
+local vim = vim
+
 local M = require('lualine.component'):extend()
 local highlight = require('lualine.highlight')
 
@@ -59,6 +61,13 @@ function M:init(options)
 		active   = self:create_hl(hl.active,   'active'),
 		inactive = self:create_hl(hl.inactive, 'inactive'),
 	}
+
+	self.needs_update = true
+	vim.api.nvim_create_autocmd({'BufAdd', 'BufDelete', 'BufWinEnter', 'BufModifiedSet'}, {
+		callback = function()
+			self.needs_update = true
+		end
+	})
 end
 
 function M:render_buf(buf, concise)
@@ -150,17 +159,17 @@ function M:update_status()
 end
 
 function M:draw()
-	self.status = ''
-	self.applied_separator = ''
-
 	if self.options.cond ~= nil and self.options.cond() ~= true then
-		return self.status
+		return ''
 	end
-	local status = self:update_status()
-	if #status > 0 then
-		self.status = status
-		self:apply_section_separators()
-		self:apply_separator()
+	if self.needs_update then
+		self.applied_separator = ''
+		self.status = self:update_status()
+		if #self.status > 0 then
+			self:apply_section_separators()
+			self:apply_separator()
+		end
+		self.needs_update = false
 	end
 	return self.status
 end
