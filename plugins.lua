@@ -587,6 +587,11 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 			require('telescope').setup({
 				defaults = {
 					layout_strategy = 'vertical',
+					mappings = {
+						i = {
+							['<Esc>'] = 'close',
+						},
+					},
 				},
 			})
 			local api = require('telescope.builtin')
