@@ -206,16 +206,16 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					map('gitsigns: Diff',            'n', '<Leader>gD', function() api.diffthis('~') end,             opts)
 					map('gitsigns: Toggle Deleted',  'n', '<Leader>gx', api.toggle_deleted,                           opts)
 
-					map('gitsigns: Prev Hunk', 'n', '[c', function()
-						if vim.wo.diff then return '[c' end
+					map('gitsigns: Prev Hunk', 'n', '<Leader>k', function()
+						if vim.wo.diff then return '<Leader>k' end
 						vim.schedule(api.prev_hunk)
-						return '<ignore>'
+						return '<Ignore>'
 					end, {buffer = buf, expr = true})
 
-					map('gitsigns: Next Hunk', 'n', ']c', function()
-						if vim.wo.diff then return ']c' end
+					map('gitsigns: Next Hunk', 'n', '<Leader>j', function()
+						if vim.wo.diff then return '<Leader>j' end
 						vim.schedule(api.next_hunk)
-						return '<ignore>'
+						return '<Ignore>'
 					end, {buffer = buf, expr = true})
 				end,
 			})
