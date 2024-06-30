@@ -1,4 +1,5 @@
 # Amekusa's Neovim Configuration
+Tested Neovim version: 0.9.5
 
 ## Install
 ```sh
