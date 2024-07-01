@@ -62,9 +62,12 @@ function fn.starts(str, with)
 end
 
 -- Alias of `vim.keymap.set` but the description comes first
-function fn.map(desc, mode, from, to, opts)
+function fn.map(desc, mode, from, to, opts, opts2)
 	if not opts then opts = {} end
 	opts.desc = desc
+	if opts2 then -- merge
+		for k,v in pairs(opts2) do opts[k] = v end
+	end
 	return vim.keymap.set(mode, from, to, opts)
 end
 
