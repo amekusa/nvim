@@ -78,7 +78,7 @@ if conf.auto_stopinsert then
 	autocmd({'FocusLost', 'WinLeave'}, {
 		desc = 'Automatically escape insert mode',
 		callback = function()
-			vim.cmd.stopinsert()
+			if vim.fn.mode() ~= 'c' then vim.cmd.stopinsert() end
 		end
 	})
 end
