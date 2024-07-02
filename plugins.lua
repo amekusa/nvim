@@ -35,7 +35,7 @@ local ts_langs = {
 local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	---- #A ----
 	{
-		-- automatically close brackets (****.)
+		-- #autopairs: automatically close brackets (****.)
 		'windwp/nvim-autopairs', enabled = true,
 		lazy = false,
 		config = function()
@@ -47,7 +47,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	---- #B ----
 	---- #C ----
 	{
-		-- cheatsheet (***..)
+		-- #cheatsheet (***..)
 		'sudormrfbin/cheatsheet.nvim', enabled = true,
 		dependencies = {'nvim-telescope/telescope.nvim'},
 		init = function()
@@ -69,7 +69,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- code runner (****.)
+		-- #coderunner (****.)
 		'CRAG666/code_runner.nvim', enabled = true,
 		init = function()
 			map('coderunner: Run Code', 'n', '<Leader><CR><CR>', '<Cmd>RunCode<CR>')
@@ -98,7 +98,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- preview color values
+		-- #colorizer: preview color values
 		'norcalli/nvim-colorizer.lua', enabled = true,
 		ft = {
 			'html', 'php',
@@ -115,7 +115,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- smart comment-out
+		-- #comment: smartly commenting out
 		'numToStr/Comment.nvim', enabled = true,
 		dependencies = {'nvim-treesitter/nvim-treesitter'},
 		ft = ts_filetypes,
@@ -145,7 +145,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	---- #E ----
 	---- #F ----
 	{
-		-- jump with keypresses (*****)
+		-- #flash: jump with keypresses (*****)
 		'folke/flash.nvim', enabled = true,
 		lazy = false,
 		config = function()
@@ -176,7 +176,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	},
 	---- #G ----
 	{
-		-- shows git related signs to the gutter (*****)
+		-- #gitsigns: shows git related infos in the gutter (*****)
 		'lewis6991/gitsigns.nvim', enabled = true,
 		lazy = false,
 		config = function()
@@ -222,7 +222,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- guess indent style (***..)
+		-- #guess-indent: guessing indent style (***..)
 		'nmac427/guess-indent.nvim', enabled = true,
 		lazy = false,
 		config = function()
@@ -248,7 +248,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- 'gx' functionajity without the need of netrw (****.)
+		-- #gx: browsing the page under the cursor (****.)
 		'chrishrb/gx.nvim', enabled = true,
 		dependencies = {'nvim-lua/plenary.nvim'},
 		init = function()
@@ -264,7 +264,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	---- #K ----
 	---- #L ----
 	{
-		-- status bar
+		-- #lualine: status bar
 		'nvim-lualine/lualine.nvim', enabled = true,
     	dependencies = {'nvim-tree/nvim-web-devicons'},
 		lazy = false,
@@ -323,7 +323,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- snippet engine (***..)
+		-- #luasnip: snippet engine (***..)
 		'L3MON4D3/LuaSnip', enabled = true,
 		build = 'make install_jsregexp',
 		config = function()
@@ -334,7 +334,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	},
 	---- #M ----
 	{
-		-- LSP package manager (***..)
+		-- #mason: LSP package manager (***..)
 		'williamboman/mason.nvim', enabled = true,
 		cmd = {
 			'Mason',
@@ -347,7 +347,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- total LSP management
+		-- #mason-lspconfig: total LSP management
 		'williamboman/mason-lspconfig.nvim', enabled = true,
 		dependencies = {
 			'williamboman/mason.nvim', -- LSP package manager
@@ -512,7 +512,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- align text interactively (****.)
+		-- #mini.align: aligning text interactively (****.)
 		'echasnovski/mini.align', enabled = true,
 		-- usage:
 		--   1. select the lines to align
@@ -537,7 +537,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	---- #R ----
 	---- #S ----
 	{
-		-- snippets manager (****.)
+		-- #scissors: snippets manager (****.)
 		'chrisgrieser/nvim-scissors', enabled = true,
 		dependencies = {'nvim-telescope/telescope.nvim'}, -- optional
 		pin = true,
@@ -556,7 +556,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- smartly edit surrounding chars like {}, [], "", etc.
+		-- #surround: smartly edit surrounding chars like {}, [], "", etc.
 		'kylechui/nvim-surround', enabled = true,
 		lazy = false,
 		config = function()
@@ -579,7 +579,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	},
 	---- #T ----
 	{
-		-- fuzzy finder (*****)
+		-- #telescope: fuzzy finder (*****)
 		'nvim-telescope/telescope.nvim', enabled = true,
 		dependencies = {'nvim-lua/plenary.nvim'},
 		lazy = false,
@@ -622,7 +622,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- file-tree widget (***..)
+		-- #tree: file-tree widget (***..)
 		'nvim-tree/nvim-tree.lua', enabled = true,
 		dependencies = {'nvim-tree/nvim-web-devicons'},
 		lazy = false,
@@ -746,7 +746,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- language parser & syntax highlighter
+		-- #treesitter: parser & syntax highlighter
 		'nvim-treesitter/nvim-treesitter', enabled = true,
 		dependencies = {
 			-- optional modules
@@ -796,7 +796,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	---- #V ----
 	---- #W ----
 	{
-		-- shows pending keybinds
+		-- #which-key: showing pending keybinds
 		'folke/which-key.nvim', enabled = true,
 		lazy = false,
 		config = function()
