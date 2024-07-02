@@ -588,7 +588,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 			local layout  = require('telescope.actions.layout')
 			require('telescope').setup({
 				defaults = {
-					layout_strategy = 'flex',
+					layout_strategy = 'vertical',
 					mappings = {
 						i = {
 							['<Esc>'] = actions.close,
