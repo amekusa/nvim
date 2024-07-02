@@ -198,14 +198,14 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					map('gitsigns: Toggle Blame',    'n', 'gB', api.toggle_current_line_blame, opts)
 					map('gitsigns: Toggle Deleted',  'n', 'gD', api.toggle_deleted, opts)
 
-					map('gitsigns: Prev Hunk', 'n', '<Leader>k', function()
-						if vim.wo.diff then return '<Leader>k' end
+					map('gitsigns: Prev Hunk', 'n', 'gk', function()
+						if vim.wo.diff then return  'gk' end
 						vim.schedule(api.prev_hunk)
 						return '<Ignore>'
 					end, {buffer = buf, expr = true})
 
-					map('gitsigns: Next Hunk', 'n', '<Leader>j', function()
-						if vim.wo.diff then return '<Leader>j' end
+					map('gitsigns: Next Hunk', 'n', 'gj', function()
+						if vim.wo.diff then return  'gj' end
 						vim.schedule(api.next_hunk)
 						return '<Ignore>'
 					end, {buffer = buf, expr = true})
