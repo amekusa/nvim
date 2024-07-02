@@ -594,23 +594,21 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					},
 				},
 			})
-			local api = require('telescope.builtin')
-			map('telescope: Builtin',            'n', '<Leader>t',         api.builtin)
-			map('telescope: Files',              'n', '<Leader>f',         api.find_files)
-			map('telescope: Grep',               'n', '<Leader><Leader>f', api.live_grep)
-			map('telescope: Buffers',            'n', '<Leader>b',         api.buffers)
-			map('telescope: Commands',           'n', '<Leader>;',         api.commands)
-			map('telescope: Help',               'n', '<Leader>h',         api.help_tags)
-			map('telescope: Marks',              'n', '<Leader>m',         api.marks)
-			map('telescope: Quickfix',           'n', '<Leader>q',         api.quickfix)
-			map('telescope: Options',            'n', '<Leader><Leader>o', api.vim_options)
-			map('telescope: Registers',          'n', '<Leader><Leader>r', api.registers)
-			map('telescope: Keymaps',            'n', '<Leader><Leader>k', api.keymaps)
-			map('telescope: Treesitter Symbols', 'n', '<Leader>s',         api.treesitter)
-			map('telescope: Commits',            'n', '<Leader>gC',        api.git_commits)
-			map('telescope: Commits: Buffer',    'n', '<Leader>gc',        api.git_bcommits)
-			--map('telescope: Commits in the Range', 'x', '<Leader><Leader>c', api.git_bcommits_range)
-			--   NOTE: this causes error bc 'git_bcommits_range' is nil. no idea how to fix it.
+			local pick = require('telescope.builtin') -- builtin pickers
+			map('telescope: Builtin',            'n', '<Leader>t',         pick.builtin)
+			map('telescope: Files',              'n', '<Leader>f',         pick.find_files)
+			map('telescope: Grep',               'n', '<Leader>g',         pick.live_grep)
+			map('telescope: Buffers',            'n', '<Leader>b',         pick.buffers)
+			map('telescope: Commands',           'n', '<Leader>;',         pick.commands)
+			map('telescope: Help',               'n', '<Leader>h',         pick.help_tags)
+			map('telescope: Marks',              'n', '<Leader>m',         pick.marks)
+			map('telescope: Quickfix',           'n', '<Leader>q',         pick.quickfix)
+			map('telescope: Options',            'n', '<Leader><Leader>o', pick.vim_options)
+			map('telescope: Registers',          'n', '<Leader><Leader>r', pick.registers)
+			map('telescope: Keymaps',            'n', '<Leader><Leader>k', pick.keymaps)
+			map('telescope: Treesitter Symbols', 'n', '<Leader>s',         pick.treesitter)
+			map('telescope: Commits',            'n', '<Leader>gC',        pick.git_commits)
+			map('telescope: Commits: Buffer',    'n', '<Leader>gc',        pick.git_bcommits)
 		end
 	},
 	{
