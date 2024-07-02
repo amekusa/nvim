@@ -123,20 +123,15 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 			require('Comment').setup({
 				mappings = {
 					basic = true,
-					extra = true,
+					extra = false,
 				},
 				toggler = {
-					line  = 'gcc',
-					block = 'gbc',
+					line  = '#',
+					block = '*',
 				},
 				opleader = { -- operator-pending mappings in NORMAL and VISUAL mode
-					line  = 'gc',
-					block = 'gb',
-				},
-				extra = {
-					above = 'gcO', -- add comment on the line above
-					below = 'gco', -- add comment on the line below
-					eol   = 'gcA', -- add comment at the end of line
+					line  = '#',
+					block = '*',
 				},
 			})
 		end
