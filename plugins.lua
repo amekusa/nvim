@@ -584,12 +584,20 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		dependencies = {'nvim-lua/plenary.nvim'},
 		lazy = false,
 		config = function()
+			local actions = require('telescope.actions')
+			local layout  = require('telescope.actions.layout')
 			require('telescope').setup({
 				defaults = {
-					layout_strategy = 'vertical',
+					layout_strategy = 'flex',
 					mappings = {
 						i = {
-							['<Esc>'] = 'close',
+							['<Esc>'] = actions.close,
+							['<C-k>'] = actions.move_selection_previous,
+							['<C-j>'] = actions.move_selection_next,
+							['<C-p>'] = actions.cycle_history_prev,
+							['<C-n>'] = actions.cycle_history_next,
+							['<C-h>'] = layout.cycle_layout_prev,
+							['<C-l>'] = layout.cycle_layout_next,
 						},
 					},
 				},
