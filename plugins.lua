@@ -607,8 +607,8 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 			map('telescope: Registers',          'n', '<Leader><Leader>r', pick.registers)
 			map('telescope: Keymaps',            'n', '<Leader><Leader>k', pick.keymaps)
 			map('telescope: Treesitter Symbols', 'n', '<Leader>s',         pick.treesitter)
-			map('telescope: Commits',            'n', '<Leader>gC',        pick.git_commits)
-			map('telescope: Commits: Buffer',    'n', '<Leader>gc',        pick.git_bcommits)
+			map('telescope: Commits',            'n', 'gC',                pick.git_commits)
+			map('telescope: Commits: Buffer',    'n', 'gc',                pick.git_bcommits)
 		end
 	},
 	{
