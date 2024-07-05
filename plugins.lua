@@ -793,6 +793,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 			require('which-key').setup({
 				-- options
 			})
+			require('which-key.config').options.operators = {} -- disable hooking `gc` operator
 		end,
 	},
 	---- #X ----
