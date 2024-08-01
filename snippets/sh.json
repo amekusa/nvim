@@ -1,4 +1,23 @@
 {
+  "#!/usr/bin/env": {
+    "body": "#!/usr/bin/env $0",
+    "prefix": "#!/usr/bin/env"
+  },
+  "&> /dev/null + suppress + silent": {
+    "body": "&> /dev/null",
+    "prefix": [
+      "&> /dev/null",
+      "suppress",
+      "silent"
+    ]
+  },
+  "command -v \"cmd\" &> /dev/null + hascommand": {
+    "body": "command -v \"$1\" &> /dev/null",
+    "prefix": [
+      "command -v \"cmd\" &> /dev/null",
+      "hascommand"
+    ]
+  },
   "heredoc": {
     "body": [
       "cat <<- EOF",
