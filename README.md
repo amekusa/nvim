@@ -58,3 +58,5 @@ Example: Play macro `a` for each line:
 ### Advanced Editing
 `dt` + `any-char` deletes the string between the current position and the `char`.
 
+### Running shell commands
+`:!<command>`
