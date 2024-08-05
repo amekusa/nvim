@@ -1,4 +1,8 @@
 {
+  "\"${BASH_REMATCH[n]}\"": {
+    "body": "\"${BASH_REMATCH[${1:1}]}\"",
+    "prefix": "\"${BASH_REMATCH[n]}\""
+  },
   "#!/usr/bin/env": {
     "body": "#!/usr/bin/env $0",
     "prefix": "#!/usr/bin/env"
@@ -11,12 +15,63 @@
       "silent"
     ]
   },
+  "[[ regex_match ]]": {
+    "body": "[[ \"$${1:var}\" =~ ${2:regex} ]]",
+    "prefix": "[[ regex_match ]]"
+  },
+  "case": {
+    "body": [
+      "case \"$${1:var}\" in",
+      "${2:x})",
+      "\t$0",
+      "\t;;",
+      "esac"
+    ],
+    "prefix": "case"
+  },
+  "case args": {
+    "body": [
+      "case \"\\$1\" in",
+      "-$1)",
+      "\t$0",
+      "\t;;",
+      "-*)",
+      "\techo \"invalid argument '\\$1'\"",
+      "\t;;",
+      "esac"
+    ],
+    "prefix": "case args"
+  },
   "command -v \"cmd\" &> /dev/null + hascommand": {
     "body": "command -v \"$1\" &> /dev/null",
     "prefix": [
       "command -v \"cmd\" &> /dev/null",
       "hascommand"
     ]
+  },
+  "for args": {
+    "body": [
+      "for ${1:arg} in \"$@\"; do",
+      "\t$0",
+      "done"
+    ],
+    "prefix": "for args"
+  },
+  "for array": {
+    "body": [
+      "for ${1:each} in \"${${2:arr}[@]}\"; do",
+      "\t$0",
+      "done"
+    ],
+    "prefix": "for array"
+  },
+  "for array index": {
+    "body": [
+      "for ${1:i} in \"${!${2:arr}[@]}\"; do",
+      "\t$0\"${${2}[$${1}]}\"",
+      "done"
+    ],
+    "prefix": "for array index"
   },
   "heredoc": {
     "body": [
@@ -25,5 +80,54 @@
       "EOF"
     ],
     "prefix": "heredoc"
+  },
+  "if": {
+    "body": [
+      "if ${1:cond}; then",
+      "\t$0",
+      "fi"
+    ],
+    "prefix": "if"
+  },
+  "prompt": {
+    "body": [
+      "while true; do",
+      "\tread -n 1 -p \"${1:msg}? (Y/N) \" ${2:answer}; echo",
+      "\tcase \"$${2:answer}\" in",
+      "\t[Yy])",
+      "\t\t$3",
+      "\t\t;;",
+      "\t[Nn])",
+      "\t\t$4",
+      "\t\t;;",
+      "\t*) echo \"Type Y or N\" ;;",
+      "\tesac",
+      "done"
+    ],
+    "prefix": "prompt"
+  },
+  "usage + help": {
+    "body": [
+      "if [ $# = 0 ] || [ \"\\$1\" = \"--help\" ] || [ \"\\$1\" = \"-h\" ]; then",
+      "\tcat <<- EOF",
+      "\tUsage:",
+      "\t  \\$0 ${1:args}",
+      "\tEOF",
+      "\treturn 1",
+      "fi$0"
+    ],
+    "prefix": [
+      "usage",
+      "help"
+    ]
+  },
+  "while args": {
+    "body": [
+      "while [ $# -gt 0 ]; do",
+      "\t$0",
+      "\tshift",
+      "done"
+    ],
+    "prefix": "while args"
   }
 }
