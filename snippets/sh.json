@@ -19,6 +19,24 @@
     "body": "[[ \"$${1:var}\" =~ ${2:regex} ]]",
     "prefix": "[[ regex_match ]]"
   },
+  "[[:space:]] + regex space": {
+    "body": "[[:space:]]",
+    "prefix": [
+      "[[:space:]]",
+      "regex space"
+    ]
+  },
+  "array item + array element": {
+    "body": "\"\\${${1:arr}[${2:0}]}\"",
+    "prefix": [
+      "array item",
+      "array element"
+    ]
+  },
+  "array length": {
+    "body": "\"\\${#${1:arr}[@]}\"",
+    "prefix": "array length"
+  },
   "case": {
     "body": [
       "case \"$${1:var}\" in",
@@ -42,11 +60,38 @@
     ],
     "prefix": "case args"
   },
+  "case-1": {
+    "body": [
+      "case \"\\$${1:var}\" in",
+      "$2) $0;;",
+      "esac"
+    ],
+    "prefix": "case"
+  },
   "command -v \"cmd\" &> /dev/null + hascommand": {
     "body": "command -v \"$1\" &> /dev/null",
     "prefix": [
       "command -v \"cmd\" &> /dev/null",
       "hascommand"
+    ]
+  },
+  "date hms": {
+    "body": "date +'%H:%M:%S'",
+    "prefix": "date hms"
+  },
+  "date ymd": {
+    "body": "date +%F",
+    "prefix": "date ymd"
+  },
+  "date ymd hms": {
+    "body": "date +'%F %H:%M:%S'",
+    "prefix": "date ymd hms"
+  },
+  "echo var + debug": {
+    "body": "echo \"[DBG] ${1:var}: \\$$1\"",
+    "prefix": [
+      "echo var",
+      "debug"
     ]
   },
   "for args": {
@@ -106,9 +151,25 @@
     ],
     "prefix": "prompt"
   },
+  "read line by line + while read line": {
+    "body": [
+      "local IFS line",
+      "while IFS= read -r line; do",
+      "\t$0",
+      "done < ${1:file}"
+    ],
+    "prefix": [
+      "read line by line",
+      "while read line"
+    ]
+  },
+  "substring": {
+    "body": "\"\\${${1:var}:${2:1}}\"",
+    "prefix": "substring"
+  },
   "usage + help": {
     "body": [
-      "if [ $# = 0 ] || [ \"\\$1\" = \"--help\" ] || [ \"\\$1\" = \"-h\" ]; then",
+      "if [ -z \"\\$1\" ] || [ \"\\$1\" = \"--help\" ] || [ \"\\$1\" = \"-h\" ]; then",
       "\tcat <<- EOF",
       "\tUsage:",
       "\t  \\$0 ${1:args}",
