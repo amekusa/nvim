@@ -79,6 +79,10 @@
     "body": "date +'%H:%M:%S'",
     "prefix": "date hms"
   },
+  "date seconds": {
+    "body": "date +%s",
+    "prefix": "date seconds"
+  },
   "date ymd": {
     "body": "date +%F",
     "prefix": "date ymd"
@@ -86,6 +90,10 @@
   "date ymd hms": {
     "body": "date +'%F %H:%M:%S'",
     "prefix": "date ymd hms"
+  },
+  "echo stderr": {
+    "body": "echo $1 >&2",
+    "prefix": "echo stderr"
   },
   "echo var + debug": {
     "body": "echo \"[DBG] ${1:var}: \\$$1\"",
@@ -133,6 +141,14 @@
       "fi"
     ],
     "prefix": "if"
+  },
+  "local": {
+    "body": "local ${1:var}",
+    "prefix": "local"
+  },
+  "local var=\"$1\"; shift": {
+    "body": "local ${1:var}=\"\\$1\"; shift",
+    "prefix": "local var=\"$1\"; shift"
   },
   "prompt": {
     "body": [
