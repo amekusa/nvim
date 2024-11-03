@@ -584,6 +584,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					mappings = {
 						i = {
 							['<Esc>'] = actions.close,
+							['<C-e>'] = actions.preview_scrolling_up,
 							['<C-k>'] = actions.move_selection_previous,
 							['<C-j>'] = actions.move_selection_next,
 							['<C-p>'] = actions.cycle_history_prev,
@@ -734,7 +735,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 				end,
 			})
 			-- toggle focus nvim-tree
-			map('nvim-tree: Toggle focus', {'n','x','i','t'}, '<C-e>', function()
+			map('nvim-tree: Toggle focus', {'n','x','i','t'}, '<C-f>', function()
 				if api.tree.is_tree_buf() then -- is current pane nvim-tree?
 					my.fn.buf_cycle(-1)
 					return

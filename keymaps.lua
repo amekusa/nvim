@@ -36,6 +36,9 @@ map('custom: Next Word', nxo, '<M-Right>', 'w')
 map('custom: Next Word', 'i', '<M-Right>', '<C-o>w')
 map('custom: Next Word', 't', '<M-Right>', '<Esc>w')
 
+-- scrolling
+map('custom: Scroll Up', nx, '<C-e>', '<C-u>')
+
 -- better page-up/down
 map('custom: Page Up',   nxo, '<PageUp>',   '10kzz')
 map('custom: Page Up',   'i', '<PageUp>',   '<Esc>10kzzi')
