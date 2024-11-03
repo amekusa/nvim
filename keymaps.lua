@@ -117,11 +117,11 @@ map('custom: Find & Replace in the Range', 'x', '<Leader>/', [[:s/\v%V//gc<Left>
 --   NOTE: "magic" allows you to use regex-special chars without escaping.
 
 -- find & replace the current word
-map('custom: Find & Replace the Word', 'n', '<C-f>', [[:%s/<C-r><C-w>//gc<Left><Left><Left>]])
-map('custom: Find & Replace the Word', 'i', '<C-f>', [[<Esc>:%s/<C-r><C-w>//gc<Left><Left><Left>]])
+map('custom: Find & Replace the Word', 'n', '<C-x>', [[:%s/<C-r><C-w>//gc<Left><Left><Left>]])
+map('custom: Find & Replace the Word', 'i', '<C-x>', [[<Esc>:%s/<C-r><C-w>//gc<Left><Left><Left>]])
 
 -- find & replace the selected text
-map('custom: Find & Replace the Selected', 'x', '<C-f>', [[y:%s/<C-r>"//gc<Left><Left><Left>]])
+map('custom: Find & Replace the Selected', 'x', '<C-x>', [[y:%s/<C-r>"//gc<Left><Left><Left>]])
 --   NOTE: <C-r>" outputs the last yanked text
 
 
