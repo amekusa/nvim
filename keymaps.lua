@@ -36,18 +36,12 @@ map('custom: Next Word', nxo, '<M-Right>', 'w')
 map('custom: Next Word', 'i', '<M-Right>', '<C-o>w')
 map('custom: Next Word', 't', '<M-Right>', '<Esc>w')
 
--- scrolling
-map('custom: Scroll Up', nx, '<C-e>', '<C-u>')
-
--- better page-up/down
-map('custom: Page Up',   nxo, '<PageUp>',   '10kzz')
-map('custom: Page Up',   'i', '<PageUp>',   '<Esc>10kzzi')
-map('custom: Page Down', nxo, '<PageDown>', '10jzz')
-map('custom: Page Down', 'i', '<PageDown>', '<Esc>10jzzi')
-
 -- better home key
 map('custom: Home', nxo, '<Home>', '^')
 map('custom: Home', 'i', '<Home>', '<C-o>^')
+
+-- scrolling
+map('custom: Scroll Up', nx, '<C-e>', '<C-u>')
 
 
 -- indent/outdent
