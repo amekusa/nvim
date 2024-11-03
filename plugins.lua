@@ -741,11 +741,8 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					return
 				end
 				-- switch to nvim-tree
+				api.tree.find_file({open = true, current_window = false, focus = true})
 				vim.cmd.stopinsert() -- force normal mode
-				api.tree.find_file({
-					open = true, current_window = false,
-					focus = true,
-				})
 			end)
 		end
 	},
