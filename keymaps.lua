@@ -128,6 +128,11 @@ map('custom: Find & Replace the Selected', 'x', '<C-x>', [[y:%s/<C-r>"//gc<Left>
 --   NOTE: <C-r>" outputs the last yanked text
 
 
+-- increment/decrement the number
+map('custom: Increment the Number', nx, '+', '<C-a>')
+map('custom: Decrement the Number', nx, '-', '<C-x>')
+
+
 -- toggle typewriter mode
 map('custom: Typewriter Mode', nx, '<S-z>', function() my.fn.typewriter_mode() end)
 
