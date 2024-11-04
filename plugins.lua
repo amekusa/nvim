@@ -687,7 +687,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 				},
 				on_attach = function(buf)
 					local opts = {buffer = buf, nowait = true}
-					map('nvim-tree: Help',                   'n', 'H',             api.tree.toggle_help,           opts)
+					map('nvim-tree: Help',                   'n', 'g?',            api.tree.toggle_help,           opts)
 					map('nvim-tree: Close',                  'n', 'q',             api.tree.close,                 opts)
 					map('nvim-tree: Refresh',                'n', 'R',             api.tree.reload,                opts)
 					map('nvim-tree: CD',                     'n', '<Tab>',         api.tree.change_root_to_node,   opts)
@@ -756,7 +756,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 				end
 				-- switch to nvim-tree
 				api.tree.find_file({open = true, current_window = false, focus = true})
-				vim.api.nvim_feedkeys(my.fn.key('esc'), 'n', false) -- force normal mode
+				vim.api.nvim_feedkeys(my.fn.key('Esc'), 'n', false) -- force normal mode
 				--   NOTE: stopinsert() doesn't work on visual mode
 			end)
 		end
