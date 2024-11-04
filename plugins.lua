@@ -637,6 +637,8 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 				},
 				modified = {
 					enable = true, -- highlight modified files
+					show_on_dirs = true,
+					show_on_open_dirs = false,
 				},
 				diagnostics = {
 					enable = true, -- highlight the files with issues
@@ -646,7 +648,15 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					ignore_dirs = {'node_modules'}, -- this fixes the slow-shutdown issue
 				},
 				view = {
-					side = 'left',
+					float = {
+						enable = false,
+						open_win_config = {
+							width  = 32,
+							height = 24,
+							row    = 0,
+							col    = 0,
+						}
+					},
 				},
 				renderer = {
 					special_files = {},
@@ -668,6 +678,10 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 								enable = false,
 								color = false,
 							},
+						},
+						symlink_arrow = ' 󰌷 ',
+						glyphs = {
+							symlink = '󰌹',
 						},
 					},
 				},
