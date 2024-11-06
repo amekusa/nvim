@@ -89,7 +89,7 @@ map('custom: Left',                   'x', '<S-Left>',  '<Left>')
 
 
 -- normal mode
-map('custom: Normal Mode', 'i', 'jk', '<Esc>')
+map('custom: Normal Mode', 'i', 'jk', '<Esc><Right>')
 map('custom: Normal Mode', 'i', 'kj', '<Esc>')
 map('custom: Normal Mode', 'x', 'v',  '<Esc>')
 map('custom: Normal Mode', 'c', '<C-q>', '<C-c>')
