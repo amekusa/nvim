@@ -17,7 +17,6 @@ local map = my.fn.map
 --     l |  -   | yes | yes |  -  |  -  |  -  |  -   | yes  |
 
 -- mode combos
-local ni  = {'n','i'}
 local nx  = {'n','x'}
 local nxo = {'n','x','o'}
 local nxi = {'n','x','i'}
@@ -45,10 +44,13 @@ map('custom: Scroll Up', nx, '<C-e>', '<C-u>')
 
 
 -- indent/outdent
-map('custom: Indent',  'i', '<Tab>',   function() my.fn.indent() end);
-map('custom: Indent',  'x', '<Tab>',   ':><CR>gv');
-map('custom: Outdent', 'i', '<S-Tab>', '<Cmd><<CR>');
-map('custom: Outdent', 'x', '<S-Tab>', ':<<CR>gv');
+map('custom: Indent',  'n', '<Tab>',   '>>')
+map('custom: Indent',  'i', '<Tab>',   '<Cmd>><CR>')
+map('custom: Indent',  'x', '<Tab>',   ':><CR>gv')
+map('custom: Outdent', 'n', '<S-Tab>', '<<')
+map('custom: Outdent', 'i', '<S-Tab>', '<Cmd><<CR>')
+map('custom: Outdent', 'x', '<S-Tab>', ':<<CR>gv')
+
 
 -- move line(s) up/down
 map('custom: Move Line Up',    'n', '<C-k>', '<Cmd>m.-2<CR>==')
