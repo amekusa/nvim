@@ -57,6 +57,10 @@ map('custom: Insert Line Below', 'i', '<C-CR>', '<Esc>o')
 map('custom: Insert Line Above', 'n', '<S-CR>', 'O')
 map('custom: Insert Line Above', 'i', '<S-CR>', '<Esc>O')
 
+-- paste below/above
+map('custom: Paste Below', 'n', '<C-p>', 'o<Esc>0p')
+map('custom: Paste Above', 'n', '<S-p>', 'O<Esc>0p')
+
 -- move line(s) up/down
 map('custom: Move Line Up',    'n', '<C-k>', '<Cmd>m.-2<CR>==')
 map('custom: Move Line Down',  'n', '<C-j>', '<Cmd>m.+1<CR>==')
