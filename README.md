@@ -60,3 +60,7 @@ Example: Play macro `a` for each line:
 
 ### Running shell commands
 `:!<command>`
+
+### Setting the language (filetype) of the current buffer manually
+`:setf <filetype>`
+
