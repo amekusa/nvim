@@ -153,19 +153,7 @@ function fn.buf_cycle(to, bufs)
 	fn.buf_show_latest()
 end
 
--- Indents the current line
-function fn.indent()
-	local line = vim.api.nvim_get_current_line()
-	if line == '' then
-		vim.cmd.stopinsert()
-		vim.api.nvim_feedkeys('cc', 'n', false)
-	else
-		vim.cmd.stopinsert()
-		vim.api.nvim_feedkeys('^i'..fn.key('tab'), 'n', false)
-	end
-end
-
--- set the current window to "typewriter" mode
+-- Set the current window to "typewriter" mode
 function fn.typewriter_mode(set)
 	if set == nil then -- toggle
 		set = vim.wo.scrolloff <= vim.go.scrolloff
