@@ -52,10 +52,10 @@ map('custom: Outdent', 'i', '<S-Tab>', '<Cmd><<CR>')
 map('custom: Outdent', 'x', '<S-Tab>', ':<<CR>gv')
 
 -- insert line below/above
-map('custom: Insert Line Below', 'n', '<S-CR>', 'o')
-map('custom: Insert Line Below', 'i', '<S-CR>', '<Esc>o')
-map('custom: Insert Line Above', 'n', '<C-CR>', 'O')
-map('custom: Insert Line Above', 'i', '<C-CR>', '<Esc>O')
+map('custom: Insert Line Below', 'n', '<C-CR>', 'o')
+map('custom: Insert Line Below', 'i', '<C-CR>', '<Esc>o')
+map('custom: Insert Line Above', 'n', '<S-CR>', 'O')
+map('custom: Insert Line Above', 'i', '<S-CR>', '<Esc>O')
 
 -- move line(s) up/down
 map('custom: Move Line Up',    'n', '<C-k>', '<Cmd>m.-2<CR>==')
