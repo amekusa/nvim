@@ -75,6 +75,11 @@ vim.o.cursorline = true
 -- minimal number of screen lines to keep above and below the cursor
 vim.o.scrolloff = 10
 
+-- wrap long lines?
+vim.o.wrap = false
+vim.o.sidescroll = 1     -- side-scroll amount
+vim.o.sidescrolloff = 20 -- side-scroll threshold
+
 
 -- SEARCH --
 -- case-insensitive search unless \C or capital in query
