@@ -37,7 +37,7 @@ vim.g.matchparen_insert_timeout = 20 -- (ms)
 
 
 -- UI --
--- hide those ugly '~' (tilde) symbols
+-- hide ugly '~' (tilde) symbols
 vim.o.fillchars = 'eob: '
 -- line numbers
 vim.o.number = true
@@ -72,7 +72,7 @@ vim.o.smartindent = true -- autoindent new line?
 vim.o.inccommand = 'split'
 -- highlight the current line
 vim.o.cursorline = true
--- minimal number of screen lines to keep above and below the cursor
+-- scroll threshold
 vim.o.scrolloff = 10
 
 -- wrap long lines?
