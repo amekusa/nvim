@@ -54,6 +54,8 @@ vim.o.pumheight = 5 -- [default: 0 (unlimited)]
 
 
 -- EDITOR --
+-- highlight the current line
+vim.o.cursorline = true
 -- whitespace chars --
 vim.o.list = true -- show them?
 vim.opt.listchars = {
@@ -62,23 +64,19 @@ vim.opt.listchars = {
 	nbsp  = '␣'
 }
 -- indent style --
-vim.o.expandtab = false -- use soft-tabs?
-vim.o.tabstop = 4       -- tab width
-vim.o.shiftwidth = 0    -- 0: fallback to tabstop
+vim.o.expandtab = false  -- use soft-tabs?
+vim.o.tabstop = 4        -- tab width
+vim.o.shiftwidth = 0     -- 0: fallback to tabstop
 vim.o.breakindent = true -- indent wrapped lines?
 vim.o.smartindent = true -- autoindent new line?
-
--- preview substitutions as you type
-vim.o.inccommand = 'split'
--- highlight the current line
-vim.o.cursorline = true
 -- scroll threshold
 vim.o.scrolloff = 10
-
--- wrap long lines?
-vim.o.wrap = false
-vim.o.sidescroll = 1     -- side-scroll amount
-vim.o.sidescrolloff = 20 -- side-scroll threshold
+-- horizontal scrolling --
+vim.o.wrap = false       -- wrap long lines?
+vim.o.sidescroll = 1     -- scroll amount
+vim.o.sidescrolloff = 20 -- scroll threshold
+-- preview substitutions as you type
+vim.o.inccommand = 'split'
 
 
 -- SEARCH --
