@@ -70,11 +70,11 @@ vim.o.shiftwidth = 0     -- 0: fallback to tabstop
 vim.o.breakindent = true -- indent wrapped lines?
 vim.o.smartindent = true -- autoindent new line?
 -- scroll threshold
-vim.o.scrolloff = 10
+vim.o.scrolloff = 16
 -- horizontal scrolling --
 vim.o.wrap = false       -- wrap long lines?
-vim.o.sidescroll = 1     -- scroll amount
-vim.o.sidescrolloff = 20 -- scroll threshold
+vim.o.sidescroll = 8     -- scroll amount
+vim.o.sidescrolloff = 16 -- scroll threshold
 -- preview substitutions as you type
 vim.o.inccommand = 'split'
 
