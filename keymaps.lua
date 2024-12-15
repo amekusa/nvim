@@ -40,7 +40,9 @@ map('custom: Home', nxo, '<Home>', '^')
 map('custom: Home', 'i', '<Home>', '<C-o>^')
 
 -- scrolling
-map('custom: Scroll Up', nx, '<C-e>', '<C-u>')
+map('custom: Scroll Up',    nx, '<C-e>', '<C-u>')
+map('custom: Scroll Left',  nx, 'zh',    '16zh')
+map('custom: Scroll Right', nx, 'zl',    '16zl')
 
 
 -- indent/outdent
