@@ -645,7 +645,13 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 				},
 				filesystem_watchers = {
 					enable = true,
-					ignore_dirs = {'node_modules'}, -- this fixes the slow-shutdown issue
+					debounce_delay = 250, -- (ms) [default: 50]
+					ignore_dirs = { -- this fixes the slow-shutdown issue
+						'.git',
+						'node_modules',
+						'vendor',
+						'build',
+					},
 				},
 				view = {
 					float = {
