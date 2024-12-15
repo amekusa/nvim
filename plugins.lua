@@ -1,5 +1,6 @@
 ---- PLUGINS ----
 local vim = vim
+local autocmd = vim.api.nvim_create_autocmd
 local my = _custom
 local map = my.fn.map
 local conf = my.conf.plugins
@@ -765,6 +766,19 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 				vim.api.nvim_feedkeys(my.fn.key('Esc'), 'n', false) -- force normal mode
 				--   NOTE: stopinsert() doesn't work on visual mode
 			end)
+
+			-- close tree on leave
+			if conf.tree.autoclose then
+				autocmd('BufEnter', {
+					callback = function(ctx)
+						local buf = vim.fn.getbufinfo(ctx.buf)[1]
+						if buf.listed == 1 then
+							api.tree.close()
+						end
+					end
+				})
+			end
+
 		end
 	},
 	{

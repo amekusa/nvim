@@ -13,6 +13,9 @@ return {
 	plugins = {
 		enable = true,
 		themes = true,
+		tree = {
+			autoclose = true,
+		},
 		disable_builtins = {
 			-- 'editorconfig', -- editorconfig integration
 			'gzip',         -- editing *.gzip directly
