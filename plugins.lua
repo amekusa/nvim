@@ -654,6 +654,20 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 						'build',
 					},
 				},
+				actions = {
+					open_file = {
+						quit_on_open = false,
+					},
+					file_popup = { -- settings for show_info_popup
+						open_win_config = {
+							col = 0,
+							row = 1,
+							relative = 'cursor',
+							border   = 'single',
+							style    = 'minimal',
+						},
+					},
+				},
 				view = {
 					float = {
 						enable = false,
@@ -661,8 +675,8 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 							width  = 32,
 							height = 24,
 							row    = 0,
-							col    = 0,
-						}
+							col    = 1,
+						},
 					},
 				},
 				renderer = {
@@ -691,6 +705,9 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 							symlink = '󰌹',
 						},
 					},
+				},
+				help = {
+					sort_by = 'desc',
 				},
 				on_attach = function(buf)
 					local opts = {buffer = buf, nowait = true}
@@ -755,8 +772,9 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					end, opts)
 				end,
 			})
+
 			-- toggle focus nvim-tree
-			map('nvim-tree: Toggle focus', {'n','x','i','t'}, '<C-f>', function()
+			map('nvim-tree: Toggle Focus', {'n','x','i','t'}, '<C-f>', function()
 				if api.tree.is_tree_buf() then -- is current pane nvim-tree?
 					my.fn.buf_cycle(-1)
 					return
