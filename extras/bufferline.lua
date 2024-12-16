@@ -68,6 +68,8 @@ function M:init(options)
 			self.needs_update = true
 		end
 	})
+
+	self.last_curr_i = 1
 end
 
 function M:render_buf(buf, compact)
@@ -106,19 +108,21 @@ function M:update_status()
 	-- find current index
 	local curr = vim.api.nvim_get_current_buf()
 	local i = #bufs
-	while i > 1 and bufs[i].bufnr ~= curr do
+	while i > 0 and bufs[i].bufnr ~= curr do
 		i = i - 1
+	end
+	if i == 0 -- if the current buffer is not listed,
+		then i = self.last_curr_i -- use the last current index
+		else self.last_curr_i = i -- or update the last current index
 	end
 
 	-- render current item (or the 1st one)
 	local buf = bufs[i]
-	local is_curr = buf.bufnr == curr
 	local r = self:render_buf(buf, compact)
-	local len = #r
-	r = (is_curr and hl1 or hl2)..r
+	local len = #r -- total length
+	r = hl1..r
 
-	-- expand rendering from the current index towards left and right,
-	-- until exceeds the max length
+	-- extend rendering from the current index towards left/right ends
 	local left_done, right_done
 	local j = 1
 	repeat
@@ -127,8 +131,8 @@ function M:update_status()
 			buf = bufs[i - j]
 			if buf then
 				local left = self:render_buf(buf, compact)
-				len = #left + #sym.sep + len
-				if len > max then break end
+				len = #left + #sym.sep + len -- total length
+				if len > max then break end -- truncate
 				r = hl2..left..sym.sep..r
 			else
 				left_done = true
@@ -139,8 +143,8 @@ function M:update_status()
 			buf = bufs[i + j]
 			if buf then
 				local right = self:render_buf(buf, compact)
-				len = len + #sym.sep + #right
-				if len > max then break end
+				len = len + #sym.sep + #right -- total length
+				if len > max then break end -- truncate
 				r = r..sym.sep..hl2..right
 			else
 				right_done = true
