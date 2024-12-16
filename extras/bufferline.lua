@@ -63,7 +63,7 @@ function M:init(options)
 	}
 
 	self.needs_update = true
-	vim.api.nvim_create_autocmd({'BufAdd', 'BufDelete', 'BufWinEnter', 'BufModifiedSet'}, {
+	vim.api.nvim_create_autocmd({'BufAdd', 'BufDelete', 'BufEnter', 'BufModifiedSet'}, {
 		callback = function()
 			self.needs_update = true
 		end
