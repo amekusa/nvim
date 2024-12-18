@@ -156,7 +156,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					autojump = false, -- automatically jump when there is only one match?
 				},
 				label = {
-					uppercase = true, -- allow uppercase labels?
+					uppercase = false, -- allow uppercase labels?
 					current = true, -- add a label for the first match?
 				},
 				modes = {
