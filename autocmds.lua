@@ -115,7 +115,14 @@ if conf.scoped_buffers then
 		callback = function(ctx)
 			local buf = vim.fn.getbufinfo(ctx.buf)[1]
 			if buf.listed == 1 then
-				my.var.latest_buf = buf.bufnr
+				if type(my.var.buf_history) ~= 'table' then
+					my.var.buf_history = {}
+				else
+					while #my.var.buf_history > 62 do
+						table.remove(my.var.buf_history, 1)
+					end
+				end
+				table.insert(my.var.buf_history, buf.bufnr);
 			end
 		end
 	})

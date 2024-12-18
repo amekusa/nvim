@@ -1,5 +1,6 @@
 ---- FUNCTIONS ----
 local vim = vim
+local my = _custom
 local fn = {}
 
 -- Notifies the user with the given message.
@@ -126,9 +127,8 @@ end
 
 -- Shows the latest buffer
 function fn.buf_show_latest()
-	local my = _custom
-	if my.var.latest_buf then
-		fn.buf_show(my.var.latest_buf)
+	if type(my.var.buf_history) == 'table' then
+		fn.buf_show(my.var.buf_history[#my.var.buf_history])
 	end
 end
 
