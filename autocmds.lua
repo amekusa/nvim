@@ -101,16 +101,7 @@ if conf.typewriter_mode then
 	})
 end
 
-if conf.scoped_buffers then
-	autocmd('BufWinEnter', {
-		callback = function(ctx)
-			local buf = vim.fn.getbufinfo(ctx.buf)[1]
-			local win = buf.windows and buf.windows[1]
-			if win then
-				vim.api.nvim_buf_set_var(buf.bufnr, 'scope', win) -- save window id
-			end
-		end
-	})
+if conf.buffer_history then
 	autocmd('BufLeave', {
 		callback = function(ctx)
 			local buf = vim.fn.getbufinfo(ctx.buf)[1]
@@ -118,11 +109,23 @@ if conf.scoped_buffers then
 				if type(my.var.buf_history) ~= 'table' then
 					my.var.buf_history = {}
 				else
-					while #my.var.buf_history > 62 do
+					while #my.var.buf_history > (conf.buffer_history_limit - 1) do
 						table.remove(my.var.buf_history, 1)
 					end
 				end
 				table.insert(my.var.buf_history, buf.bufnr);
+			end
+		end
+	})
+end
+
+if conf.scoped_buffers then
+	autocmd('BufWinEnter', {
+		callback = function(ctx)
+			local buf = vim.fn.getbufinfo(ctx.buf)[1]
+			local win = buf.windows and buf.windows[1]
+			if win then
+				vim.api.nvim_buf_set_var(buf.bufnr, 'scope', win) -- save window id
 			end
 		end
 	})
