@@ -125,20 +125,14 @@ function fn.buf_show(buf)
 	vim.api.nvim_win_set_buf(win.winid, buf.bufnr)
 end
 
--- Shows the latest buffer
-function fn.buf_show_latest()
-	if type(my.var.buf_history) == 'table' then
-		fn.buf_show(my.var.buf_history[#my.var.buf_history])
-	end
-end
 
 -- Cycles through buffers
-function fn.buf_cycle(to, bufs)
-	local curr = vim.api.nvim_get_current_buf()
+function fn.buf_cycle(to, bufs, from)
+	from = from or vim.api.nvim_get_current_buf()
 	bufs = bufs or vim.fn.getbufinfo({buflisted = 1})
 	local n = #bufs
 	for i = 1, n do
-		if bufs[i].bufnr == curr then
+		if bufs[i].bufnr == from then
 			i = i + to
 			if i <= 0 then
 				fn.buf_show(bufs[n])
@@ -150,7 +144,9 @@ function fn.buf_cycle(to, bufs)
 			return
 		end
 	end
-	fn.buf_show_latest()
+	if type(my.var.buf_history) == 'table' and #my.var.buf_history > 0 then
+		fn.buf_cycle(to, bufs, my.var.buf_history[#my.var.buf_history])
+	end
 end
 
 -- Set the current window to "typewriter" mode
