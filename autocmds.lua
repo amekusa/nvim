@@ -106,14 +106,14 @@ if conf.buffer_history then
 		callback = function(ctx)
 			local buf = vim.fn.getbufinfo(ctx.buf)[1]
 			if buf.listed == 1 then
-				if type(my.var.buf_history) ~= 'table' then
-					my.var.buf_history = {}
-				else
+				if type(my.var.buf_history) == 'table' then
 					while #my.var.buf_history > (conf.buffer_history_limit - 1) do
 						table.remove(my.var.buf_history, 1)
 					end
+					table.insert(my.var.buf_history, buf.bufnr);
+				else
+					my.var.buf_history = {buf.bufnr}
 				end
-				table.insert(my.var.buf_history, buf.bufnr);
 			end
 		end
 	})
