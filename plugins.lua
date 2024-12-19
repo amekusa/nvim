@@ -776,7 +776,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 			-- toggle focus nvim-tree
 			map('nvim-tree: Toggle Focus', {'n','x','i','t'}, '<C-f>', function()
 				if api.tree.is_tree_buf() then -- is current pane nvim-tree?
-					my.fn.buf_cycle(-1)
+					my.fn.buf_cycle(0)
 					return
 				end
 				-- switch to nvim-tree
