@@ -117,6 +117,22 @@ if conf.buffer_history then
 			end
 		end
 	})
+	autocmd('BufDelete', {
+		callback = function(ctx)
+			-- filter out the buffer from buf_history
+			local buf = vim.fn.getbufinfo(ctx.buf)[1]
+			if buf.listed == 1 and type(my.var.buf_history) == 'table' then
+				local t = {} -- new buf_history
+				local n = #my.var.buf_history
+				for i = 1, n do
+					if my.var.buf_history[i] ~= buf.bufnr then
+						table.insert(t, my.var.buf_history[i])
+					end
+				end
+				my.var.buf_history = t
+			end
+		end
+	})
 end
 
 if conf.scoped_buffers then
