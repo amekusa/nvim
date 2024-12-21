@@ -74,12 +74,12 @@ end
 
 -- Converts the given special keycode (like <CR>, <Tab>, or <Esc>, etc.)
 -- into the format that is applicable to `feedkeys()`
-local keys = {}
+local keycodes = {}
 function fn.key(code)
-	if not keys[code] then
-		keys[code] = vim.api.nvim_replace_termcodes('<'..code..'>', true, false, true)
+	if not keycodes[code] then
+		keycodes[code] = vim.api.nvim_replace_termcodes('<'..code..'>', true, false, true)
 	end
-	return keys[code]
+	return keycodes[code]
 end
 
 -- Closes the given buffer
