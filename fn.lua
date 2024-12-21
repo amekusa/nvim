@@ -66,7 +66,7 @@ function fn.table_copy(t)
 	return r
 end
 
--- Merge 2 tables
+-- Merges one table into another
 function fn.table_merge(t1, t2, new)
 	local r
 	if new
