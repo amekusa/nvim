@@ -259,6 +259,9 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	{
 		-- #lualine: status bar
 		'nvim-lualine/lualine.nvim', enabled = true,
+		commit = '640260d7c2d98779cab89b1e7088ab14ea354a02',
+		--   NOTE: This is at right before the commit: 0978a6c. (https://github.com/nvim-lualine/lualine.nvim/commit/0978a6c8a862d999baf51366926c7b56eb9cf3d1)
+		--         The commit: 0978a6c introduced some unwanted changes which makes lualine doesn't refresh via autocmds.
     	dependencies = {'nvim-tree/nvim-web-devicons'},
 		lazy = false,
 		config = function()
