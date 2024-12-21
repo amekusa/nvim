@@ -907,7 +907,6 @@ lazy.setup(plugins, {
 	lockfile = my.path..'plugins-lock.json',
 	defaults = { -- default options for each plugin
 		lazy = true,
-		version = '*', -- try installing the latest stable versions of plugins
 	},
 	performance = {
 		rtp = {
