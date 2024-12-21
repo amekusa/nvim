@@ -57,6 +57,28 @@ function fn.table_values(t)
 	return r
 end
 
+-- Creates a copy of the given table
+function fn.table_copy(t)
+	local r = {}
+	for k,v in pairs(t) do
+		r[k] = v
+	end
+	return r
+end
+
+-- Merge 2 tables
+function fn.table_merge(t1, t2, new)
+	local r
+	if new
+		then r = fn.table_copy(t1)
+		else r = t1
+	end
+	for k,v in pairs(t2) do
+		r[k] = v
+	end
+	return r
+end
+
 -- Returns whether `str` starts with `with`
 function fn.starts(str, with)
    return string.sub(str, 1, string.len(with)) == with
