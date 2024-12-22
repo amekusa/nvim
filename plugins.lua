@@ -582,20 +582,22 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		config = function()
 			local actions = require('telescope.actions')
 			local layout  = require('telescope.actions.layout')
+			local mappings = {
+				['<C-w>'] = actions.close,
+				['<C-e>'] = actions.preview_scrolling_up,
+				['<C-k>'] = actions.move_selection_previous,
+				['<C-j>'] = actions.move_selection_next,
+				['<C-p>'] = actions.cycle_history_prev,
+				['<C-n>'] = actions.cycle_history_next,
+				['<C-h>'] = layout.cycle_layout_prev,
+				['<C-l>'] = layout.cycle_layout_next,
+			}
 			require('telescope').setup({
 				defaults = {
 					layout_strategy = 'vertical',
 					mappings = {
-						i = {
-							['<Esc>'] = actions.close,
-							['<C-e>'] = actions.preview_scrolling_up,
-							['<C-k>'] = actions.move_selection_previous,
-							['<C-j>'] = actions.move_selection_next,
-							['<C-p>'] = actions.cycle_history_prev,
-							['<C-n>'] = actions.cycle_history_next,
-							['<C-h>'] = layout.cycle_layout_prev,
-							['<C-l>'] = layout.cycle_layout_next,
-						},
+						n = mappings,
+						i = mappings,
 					},
 				},
 			})
