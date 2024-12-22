@@ -99,7 +99,7 @@ end
 local keycodes = {}
 function fn.key(code)
 	if not keycodes[code] then
-		keycodes[code] = vim.api.nvim_replace_termcodes('<'..code..'>', true, false, true)
+		keycodes[code] = vim.api.nvim_replace_termcodes(code, true, false, true)
 	end
 	return keycodes[code]
 end
