@@ -39,6 +39,9 @@ map('custom: Next Word', 't', '<M-Right>', '<Esc>w')
 map('custom: Home', nxo, '<Home>', '^')
 map('custom: Home', 'i', '<Home>', '<C-o>^')
 
+-- remap end key
+map('custom: End', nxo, ';', '<End>')
+
 -- scrolling
 map('custom: Scroll Up',    nx, '<C-e>', '<C-u>')
 map('custom: Scroll Left',  nx, 'zh',    '16zh')
