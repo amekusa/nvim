@@ -104,8 +104,8 @@ function fn.key(code)
 	return keycodes[code]
 end
 
---- Indents the current line
-function fn.indent()
+--- Smartly indents the current line
+function fn.smart_indent()
 	local _
 	local line = vim.api.nvim_get_current_line()
 	if line == '' then -- empty line

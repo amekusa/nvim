@@ -46,7 +46,7 @@ map('custom: Scroll Right', nx, 'zl',    '16zl')
 
 
 -- indent/outdent
-map('custom: Indent',  ni,  '<Tab>',   my.fn.indent)
+map('custom: Indent',  ni,  '<Tab>',   my.fn.smart_indent)
 map('custom: Indent',  'x', '<Tab>',   ':><CR>gv')
 map('custom: Outdent', ni,  '<S-Tab>', '<Cmd><<CR>')
 map('custom: Outdent', 'x', '<S-Tab>', ':<<CR>gv')
