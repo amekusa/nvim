@@ -104,6 +104,44 @@ function fn.key(code)
 	return keycodes[code]
 end
 
+--- Indents the current line
+function fn.indent()
+	local _
+	local line = vim.api.nvim_get_current_line()
+	if line == '' then -- empty line
+		vim.cmd.startinsert()
+		local lnum     = vim.api.nvim_win_get_cursor(0)[1]
+		local lnum_max = vim.api.nvim_buf_line_count(0)
+
+		-- get indents in the prev line
+		local indents_prev = ''
+		if lnum > 1 then
+			_,_,indents_prev = vim.api.nvim_buf_get_lines(0, lnum - 2, lnum - 1, true)[1]:find([[^(%s*)]])
+		end
+
+		-- get indents in the next line
+		local indents_next = ''
+		if lnum < lnum_max then
+			_,_,indents_next = vim.api.nvim_buf_get_lines(0, lnum, lnum + 1, true)[1]:find([[^(%s*)]])
+		end
+
+		-- use longer one
+		local len_prev = indents_prev:len()
+		local len_next = indents_next:len()
+		if len_prev > 0 or len_next > 0 then
+			if len_prev > len_next
+				then vim.api.nvim_set_current_line(indents_prev)
+				else vim.api.nvim_set_current_line(indents_next)
+			end
+			vim.api.nvim_win_set_cursor(0, {lnum, 1000}) -- set cursor to EoL
+		else
+			vim.api.nvim_feedkeys(fn.key('<Tab>'), 'n', false) -- just type <Tab>
+		end
+	else
+		vim.cmd('>') -- shift the current line to right
+	end
+end
+
 -- Closes the given buffer
 function fn.buf_close(buf, force, bufs)
 	local curr = vim.api.nvim_get_current_buf()
