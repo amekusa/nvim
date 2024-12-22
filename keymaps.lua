@@ -46,11 +46,9 @@ map('custom: Scroll Right', nx, 'zl',    '16zl')
 
 
 -- indent/outdent
-map('custom: Indent',  'n', '<Tab>',   '>>')
-map('custom: Indent',  'i', '<Tab>',   '<Cmd>><CR>')
+map('custom: Indent',  ni,  '<Tab>',   my.fn.indent)
 map('custom: Indent',  'x', '<Tab>',   ':><CR>gv')
-map('custom: Outdent', 'n', '<S-Tab>', '<<')
-map('custom: Outdent', 'i', '<S-Tab>', '<Cmd><<CR>')
+map('custom: Outdent', ni,  '<S-Tab>', '<Cmd><<CR>')
 map('custom: Outdent', 'x', '<S-Tab>', ':<<CR>gv')
 
 -- insert line below/above
