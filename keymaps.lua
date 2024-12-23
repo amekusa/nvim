@@ -17,6 +17,7 @@ local map = my.fn.map
 -- |    l |  -   | yes | yes |  -  |  -  |  -  |  -   | yes  |
 
 -- mode combos
+local ni  = {'n','i'}
 local nx  = {'n','x'}
 local nxo = {'n','x','o'}
 local nxi = {'n','x','i'}
