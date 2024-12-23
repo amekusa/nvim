@@ -73,8 +73,10 @@ function fn.table_merge(t1, t2, new)
 		then r = fn.table_copy(t1)
 		else r = t1
 	end
-	for k,v in pairs(t2) do
-		r[k] = v
+	if t2 then
+		for k,v in pairs(t2) do
+			r[k] = v
+		end
 	end
 	return r
 end
