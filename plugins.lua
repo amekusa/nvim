@@ -447,7 +447,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					-- language servers to install
 					'lua_ls',
 					'eslint',
-					'tsserver',
+					'ts_ls',
 					'cssls',
 				},
 				handlers = {
@@ -488,8 +488,8 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 							}
 						})
 					end,
-					['tsserver'] = function()
-						lsp.tsserver.setup({
+					['ts_ls'] = function()
+						lsp.ts_ls.setup({
 							filetypes = {
 								'javascript'
 							},
