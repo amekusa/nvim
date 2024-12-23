@@ -369,6 +369,13 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 						luasnip.lsp_expand(args.body)
 					end
 				},
+				sources = cmp.config.sources({ -- completion sources
+					{name = 'luasnip', priority = 10},
+					{name = 'nvim_lsp', priority = 5, max_item_count = 12},
+				}),
+				completion = {
+					keyword_length = 2,
+				},
 				confirmation = {
 					default_behavior = cmp.ConfirmBehavior.Replace
 				},
