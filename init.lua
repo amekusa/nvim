@@ -1,6 +1,7 @@
 ---[ Amekusa's NeoVim Configuration ]---
 -- github.com/amekusa/nvim
 
+local vim = vim
 
 -- global namespace
 _custom = {
@@ -8,7 +9,6 @@ _custom = {
 	var = {},
 }
 local my = _custom
-local vim = vim
 
 -- root path
 my.path = vim.fn.stdpath('config')..'/lua/'..my.ns:gsub('%.', '/') -- replace '.' in namespace with '/'
@@ -19,6 +19,18 @@ my.conf = require(my.ns..'config-default')
 -- user config (if it exists)
 if vim.fn.filereadable(my.path..'config.lua') ~= 0 then
 	my.conf = vim.tbl_deep_extend('force', my.conf, require(my.ns..'config'))
+end
+
+-- detect current os
+if not my.conf.os then
+	local os = vim.uv.os_uname().sysname:lower()
+	if os:find('darwin') then
+		my.os = 'mac'
+	elseif os:find('windows') then
+		my.os = 'win'
+	else
+		my.os = 'linux'
+	end
 end
 
 -- enable vim.loader
