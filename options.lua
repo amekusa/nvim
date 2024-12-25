@@ -7,10 +7,10 @@ local vim = vim
 vim.o.clipboard = 'unnamedplus'
 -- mouse support ('a' for all modes)
 vim.o.mouse = 'a'
--- enable 24-bit color
+-- enable 24-bit color?
 vim.o.termguicolors = true
--- disable swap files
-vim.o.swapfile = false
+-- enable swap files?
+vim.o.swapfile = true
 
 
 -- MINOR TWEAKS --
