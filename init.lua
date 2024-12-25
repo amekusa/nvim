@@ -22,11 +22,11 @@ if vim.fn.filereadable(my.path..'config.lua') ~= 0 then
 end
 
 -- detect current os
-if not my.conf.os then
-	local os = vim.uv.os_uname().sysname:lower()
-	if os:find('darwin') then
+if not my.conf.uname then
+	local uname = vim.uv.os_uname().sysname:lower()
+	if uname:find('darwin') then
 		my.os = 'mac'
-	elseif os:find('windows') then
+	elseif uname:find('windows') then
 		my.os = 'win'
 	else
 		my.os = 'linux'
