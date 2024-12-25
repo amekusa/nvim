@@ -47,7 +47,7 @@ return {
 		typewriter_mode = true,
 		typewriter_mode_ft = {'help', 'man'},
 		buffer_history = true,
-		buffer_history_limit = 63,
+		buffer_history_limit = 15,
 		scoped_buffers = true,
 	},
 }
