@@ -43,6 +43,30 @@ return {
 		detect_large_file_size_bigger = 1000 * 1024,
 		clear_jumplist = true,
 		auto_stopinsert = true,
+		auto_switch_inputs = true,
+		auto_switch_inputs_opts = {
+			linux = {
+				enable = true,
+				cmd_get = 'ibus engine',
+				cmd_set = 'ibus engine',
+				input_n = nil, -- auto
+			},
+			mac = {
+				enable = true,
+				cmd_get = 'im-select',
+				cmd_set = 'im-select',
+				input_n = nil, -- auto
+				-- input_n = 'com.apple.keylayout.ABC',
+				-- input_n = 'com.apple.keylayout.US',
+				-- input_n = 'com.apple.keylayout.USExtended',
+			},
+			win = {
+				enable = true,
+				cmd_get = 'im-select.exe',
+				cmd_set = 'im-select.exe',
+				input_n = nil, -- auto
+			},
+		},
 		close_with_esc = true,
 		close_with_esc_ft = {'help', 'man', 'qf', 'lazy'},
 		typewriter_mode = true,
