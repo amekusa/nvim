@@ -3,6 +3,7 @@
 -- copy this file (config-default.lua) as config.lua
 
 return {
+	os = nil, -- linux/mac/win or nil to autodetect
 	loader = true, -- enable vim.loader ?
 	options = {
 		enable = true,
