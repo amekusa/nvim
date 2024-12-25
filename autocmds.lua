@@ -86,18 +86,16 @@ end
 if conf.auto_switch_inputs then
 	local opts = conf.auto_switch_inputs_opts[my.os]
 	if opts.enable then
-		local input_n = opts.input_n
+		local input_n
 		local input_i
-		if not input_n then -- auto detect input_n
-			autocmd('InsertEnter', {
-				callback = function()
-					input_n = vim.fn.system(opts.cmd_get) -- save input to input_n
-					if input_i and (input_i ~= input_n) then -- switch to input_i
-						vim.fn.system(opts.cmd_set..' '..input_i)
-					end
+		autocmd('InsertEnter', {
+			callback = function()
+				input_n = opts.input_n or vim.fn.system(opts.cmd_get) -- save input to input_n
+				if input_i and (input_i ~= input_n) then -- switch to input_i
+					vim.fn.system(opts.cmd_set..' '..input_i)
 				end
-			})
-		end
+			end
+		})
 		autocmd('InsertLeave', {
 			callback = function()
 				input_i = vim.fn.system(opts.cmd_get) -- save input to input_i
