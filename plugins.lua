@@ -441,17 +441,27 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 						end
 					end, {'i','s'}),
 				},
-				sources = cmp.config.sources({ -- completion sources
-					{name = 'luasnip', priority = 10},
-					{name = 'nvim_lsp', priority = 5, max_item_count = 12},
-				}),
 			})
+
 			-- setup LSPs
 			local caps = require('cmp_nvim_lsp').default_capabilities()
 			local lsp = require('lspconfig')
-			local find_root = function(file, buf)
-				return vim.fs.root(buf, {'.git'}) or vim.uv.cwd()
+
+			-- returns a new root_dir finder
+			local root_finder = function(marker, fallback)
+				if fallback == nil then -- default to cwd
+					fallback = vim.uv.cwd()
+				elseif fallback == false then -- do not fallback
+					fallback = nil
+				end
+				return function(_,buf)
+					return vim.fs.root(buf, marker) or fallback
+				end
 			end
+
+			-- repository root (generic root-finder)
+			local repo_root = root_finder({'.git', '.hg'})
+
 			require('mason-lspconfig').setup({
 				ensure_installed = {
 					-- language servers to install
@@ -459,13 +469,14 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					'eslint',
 					'ts_ls',
 					'cssls',
+					-- 'ols',
 				},
 				handlers = {
 					-- setup language servers
 					['lua_ls'] = function()
 						lsp.lua_ls.setup({
 							capabilities = caps,
-							root_dir = find_root,
+							root_dir = repo_root,
 							settings = {
 								Lua = {
 									runtime = {
@@ -488,7 +499,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					['eslint'] = function()
 						lsp.eslint.setup({
 							capabilities = caps,
-							root_dir = find_root,
+							root_dir = root_finder({'eslint.config.js'}, false),
 							settings = {
 								packageManager = 'npm', -- this enables the lsp to find the global eslint
 							}
@@ -497,7 +508,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					['ts_ls'] = function()
 						lsp.ts_ls.setup({
 							capabilities = caps,
-							root_dir = find_root,
+							root_dir = repo_root,
 							filetypes = {
 								'javascript'
 							},
@@ -506,7 +517,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					function(server_name) -- default handler
 						lsp[server_name].setup({
 							capabilities = caps,
-							root_dir = find_root,
+							root_dir = repo_root,
 						})
 					end,
 				}
