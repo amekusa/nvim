@@ -97,12 +97,14 @@ end
 
 -- Converts the given special keycode (like <CR>, <Tab>, or <Esc>, etc.)
 -- into the format that is applicable to `feedkeys()`
-local keycodes = {}
-function fn.key(code)
-	if not keycodes[code] then
-		keycodes[code] = vim.api.nvim_replace_termcodes(code, true, false, true)
+do
+	local keycodes = {}
+	function fn.key(code)
+		if not keycodes[code] then
+			keycodes[code] = vim.api.nvim_replace_termcodes(code, true, false, true)
+		end
+		return keycodes[code]
 	end
-	return keycodes[code]
 end
 
 --- Smartly indents the current line
