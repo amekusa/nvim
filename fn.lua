@@ -95,10 +95,11 @@ function fn.map(desc, mode, from, to, opts)
 	return vim.keymap.set(mode, from, to, opts)
 end
 
--- Converts the given special keycode (like <CR>, <Tab>, or <Esc>, etc.)
--- into the format that is applicable to `feedkeys()`
 do
 	local keycodes = {}
+
+	-- Converts the given special keycode (like <CR>, <Tab>, or <Esc>, etc.)
+	-- into the format that is applicable to `feedkeys()`
 	function fn.key(code)
 		if not keycodes[code] then
 			keycodes[code] = vim.api.nvim_replace_termcodes(code, true, false, true)
@@ -187,7 +188,6 @@ function fn.buf_show(buf)
 	vim.api.nvim_set_current_win(win.winid)
 	vim.api.nvim_win_set_buf(win.winid, buf.bufnr)
 end
-
 
 -- Cycles through buffers
 function fn.buf_cycle(to, bufs, from)
