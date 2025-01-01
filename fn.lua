@@ -46,7 +46,7 @@ function fn.arr_index_of(a, find)
 end
 
 -- Returns an array of keys in the given table
-function fn.table_keys(t)
+function fn.tbl_keys(t)
 	local r,i = {},1
 	for k,_ in pairs(t) do
 		r[i] = k
@@ -56,7 +56,7 @@ function fn.table_keys(t)
 end
 
 -- Returns an array of values in the given table
-function fn.table_values(t)
+function fn.tbl_values(t)
 	local r,i = {},1
 	for _,v in pairs(t) do
 		r[i] = v
@@ -66,7 +66,7 @@ function fn.table_values(t)
 end
 
 -- Creates a copy of the given table
-function fn.table_copy(t)
+function fn.tbl_copy(t)
 	local r = {}
 	for k,v in pairs(t) do
 		r[k] = v
@@ -75,10 +75,10 @@ function fn.table_copy(t)
 end
 
 -- Merges one table into another
-function fn.table_merge(t1, t2, new)
+function fn.tbl_merge(t1, t2, new)
 	local r
 	if new
-		then r = fn.table_copy(t1)
+		then r = fn.tbl_copy(t1)
 		else r = t1
 	end
 	if t2 then
