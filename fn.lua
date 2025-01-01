@@ -37,6 +37,14 @@ function fn.write(file, data, mode)
 	f:close()
 end
 
+-- Searches a value in the given array and returns the index or 0 if not found
+function fn.arr_index_of(a, find)
+	for i = 1, #a do
+		if a[i] == find then return i end
+	end
+	return 0
+end
+
 -- Returns an array of keys in the given table
 function fn.table_keys(t)
 	local r,i = {},1
