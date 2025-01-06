@@ -561,8 +561,8 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	{
 		-- #scissors: snippets manager (****.)
 		'chrisgrieser/nvim-scissors', enabled = true,
+		commit = '6cf49a2244dd618b88a4c8d08a8daf939219758d',
 		dependencies = {'nvim-telescope/telescope.nvim'}, -- optional
-		pin = true,
 		cmd = {
 			'ScissorsEditSnippet',
 			'ScissorsAddNewSnippet',
@@ -570,10 +570,25 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		config = function()
 			require('scissors').setup({
 				snippetDir = my.path..'snippets',
-				jsonFormatter = 'jq',
+				jsonFormatter = 'jq', -- yq/jq/none
 				editSnippetPopup = {
-					border = 'rounded',
-				}
+					height = 0.4,
+					width  = 0.6,
+					border = 'solid',
+					keymaps = {
+						cancel                   = '<C-q>',
+						saveChanges              = '<C-s>', -- alternatively, can also   use `:w`
+						goBackToSearch           = '<Esc>',
+						deleteSnippet            = '<Leader>x',
+						duplicateSnippet         = '<Leader>d',
+						openInFile               = '<C-o>',
+						insertNextToken          = '<C-t>', -- insert         &   normal mode
+						jumpBetweenBodyAndPrefix = '<C-y>', -- insert         &   normal mode
+					},
+				},
+				telescope = {
+					alsoSearchSnippetBody = true,
+				},
 			})
 		end
 	},
