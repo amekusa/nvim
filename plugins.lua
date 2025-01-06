@@ -36,6 +36,16 @@ local ts_langs = {
 local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	---- #A ----
 	{
+		-- #auto-input-switch: automatically switch the input sources
+		'amekusa/auto-input-switch.nvim', enabled = true,
+		lazy = false,
+		config = function()
+			require('auto-input-switch').setup({
+				-- options
+			})
+		end
+	},
+	{
 		-- #autopairs: automatically close brackets (****.)
 		'windwp/nvim-autopairs', enabled = true,
 		lazy = false,
