@@ -21,18 +21,6 @@ if vim.fn.filereadable(my.path..'config.lua') ~= 0 then
 	my.conf = vim.tbl_deep_extend('force', my.conf, require(my.ns..'config'))
 end
 
--- detect current os
-if not my.conf.uname then
-	local uname = vim.uv.os_uname().sysname:lower()
-	if uname:find('darwin') then
-		my.os = 'mac'
-	elseif uname:find('windows') then
-		my.os = 'win'
-	else
-		my.os = 'linux'
-	end
-end
-
 -- enable vim.loader
 -- NOTE: Cached lua files are in ~/.cache/nvim/luac
 if my.conf.loader then
