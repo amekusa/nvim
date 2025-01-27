@@ -1,7 +1,9 @@
 ---- KEYMAPS ----
 local vim = vim
 local my = _custom
-local map = my.fn.map
+local fn = my.fn
+local map = fn.map
+local buf_cycle = fn.buf_cycle
 
 -- | Mode | Norm | Ins | Cmd | Vis | Sel | Opr | Term | Lang |
 -- +------+------+-----+-----+-----+-----+-----+------+------+
@@ -50,7 +52,7 @@ map('custom: Scroll Right', nx, 'zl',    '16zl')
 
 
 -- indent/outdent
-map('custom: Indent',  ni,  '<Tab>',   my.fn.smart_indent)
+map('custom: Indent',  ni,  '<Tab>',   fn.smart_indent)
 map('custom: Indent',  'x', '<Tab>',   ':><CR>gv')
 map('custom: Outdent', ni,  '<S-Tab>', '<Cmd><<CR>')
 map('custom: Outdent', 'x', '<S-Tab>', ':<<CR>gv')
@@ -101,11 +103,11 @@ map('custom: Insert Mode', 'x', 'i', '<Esc>i')
 
 
 -- prev/next buffer
-map('custom: Prev Buffer', nxi, '<C-h>', function() my.fn.buf_cycle(-1) end)
-map('custom: Next Buffer', nxi, '<C-l>', function() my.fn.buf_cycle(1)  end)
+map('custom: Prev Buffer', nxi, '<C-h>', function() buf_cycle(-1) end)
+map('custom: Next Buffer', nxi, '<C-l>', function() buf_cycle(1)  end)
 
 -- close/reopen buffer
-map('custom: Close Buffer',  nx, '<Leader>x', function() my.fn.buf_close(nil, true) end)
+map('custom: Close Buffer',  nx, '<Leader>x', fn.buf_close)
 map('custom: Reopen Buffer', nx, '<Leader>z', '<Cmd>conf e<CR>')
 
 
@@ -139,5 +141,5 @@ map('custom: Decrement the Number', nx, '-', '<C-x>')
 
 
 -- toggle typewriter mode
-map('custom: Typewriter Mode', nx, '<S-z>', function() my.fn.typewriter_mode() end)
+map('custom: Typewriter Mode', nx, '<S-z>', fn.typewriter_mode)
 
