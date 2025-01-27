@@ -1,88 +1,91 @@
 ---- OPTIONS ----
 local vim = vim
+local g = vim.g
+local o = vim.o
+local opt = vim.opt
 
 
 -- GENERAL --
 -- clipboard support
-vim.o.clipboard = 'unnamedplus'
+o.clipboard = 'unnamedplus'
 -- mouse support ('a' for all modes)
-vim.o.mouse = 'a'
+o.mouse = 'a'
 -- enable 24-bit color?
-vim.o.termguicolors = true
+o.termguicolors = true
 -- enable swap files?
-vim.o.swapfile = true
+o.swapfile = true
 
 
 -- MINOR TWEAKS --
 -- wait-time for idle state
-vim.o.updatetime = 1000 -- (ms) [default: 4000]
+o.updatetime = 1000 -- (ms) [default: 4000]
 -- wait-time for key-combos
-vim.o.timeoutlen = 250 -- (ms) [default: 1000]
+o.timeoutlen = 250 -- (ms) [default: 1000]
 -- timeout for redraw
-vim.o.redrawtime = 500 -- (ms) [default: 2000]
+o.redrawtime = 500 -- (ms) [default: 2000]
 -- max column for syntax highlighting
-vim.o.synmaxcol = 400 -- [default: 3000]
+o.synmaxcol = 400 -- [default: 3000]
 -- redraw the screen lazily
-vim.o.lazyredraw = true -- [default: false]
+o.lazyredraw = true -- [default: false]
 -- default regex engine
-vim.o.regexpengine = 0 -- [default: 0]
+o.regexpengine = 0 -- [default: 0]
 --   0: auto
 --   1: old engine
 --   2: NFA engine
 
 -- fix slow matchparen on large files
-vim.g.matchparen_timeout = 20 -- (ms)
-vim.g.matchparen_insert_timeout = 20 -- (ms)
+g.matchparen_timeout = 20 -- (ms)
+g.matchparen_insert_timeout = 20 -- (ms)
 --   See: https://vi.stackexchange.com/questions/5128/matchpairs-makes-vim-slow/5318#5318
 
 
 -- UI --
 -- hide ugly '~' (tilde) symbols
-vim.o.fillchars = 'eob: '
+o.fillchars = 'eob: '
 -- line numbers
-vim.o.number = true
-vim.o.relativenumber = false
+o.number = true
+o.relativenumber = false
 -- mode indicator
-vim.o.showmode = true
+o.showmode = true
 -- sign column
-vim.o.signcolumn = 'yes'
+o.signcolumn = 'yes'
 -- how new splits should be opened
-vim.o.splitright = true
-vim.o.splitbelow = true
+o.splitright = true
+o.splitbelow = true
 -- item limit of the popup menu
-vim.o.pumheight = 5 -- [default: 0 (unlimited)]
+o.pumheight = 5 -- [default: 0 (unlimited)]
 
 
 -- EDITOR --
 -- highlight the current line
-vim.o.cursorline = true
+o.cursorline = true
 -- whitespace chars --
-vim.o.list = true -- show them?
-vim.opt.listchars = {
+o.list = true -- show them?
+opt.listchars = {
 	tab   = '» ',
 	trail = '·',
 	nbsp  = '␣'
 }
 -- indent style --
-vim.o.expandtab = false  -- use soft-tabs?
-vim.o.tabstop = 4        -- tab width
-vim.o.shiftwidth = 0     -- 0: fallback to tabstop
-vim.o.breakindent = true -- indent wrapped lines?
-vim.o.smartindent = true -- autoindent new line?
+o.expandtab = false  -- use soft-tabs?
+o.tabstop = 4        -- tab width
+o.shiftwidth = 0     -- 0: fallback to tabstop
+o.breakindent = true -- indent wrapped lines?
+o.smartindent = true -- autoindent new line?
 -- scroll threshold
-vim.o.scrolloff = 16
+o.scrolloff = 16
 -- horizontal scrolling --
-vim.o.wrap = false       -- wrap long lines?
-vim.o.sidescroll = 8     -- scroll amount
-vim.o.sidescrolloff = 16 -- scroll threshold
+o.wrap = false       -- wrap long lines?
+o.sidescroll = 8     -- scroll amount
+o.sidescrolloff = 16 -- scroll threshold
 -- preview substitutions as you type
-vim.o.inccommand = 'split'
+o.inccommand = 'split'
 
 
 -- SEARCH --
 -- case-insensitive search unless \C or capital in query
-vim.o.ignorecase = true
-vim.o.smartcase = true
+o.ignorecase = true
+o.smartcase = true
 -- set highlight on search
-vim.o.hlsearch = true
+o.hlsearch = true
 
