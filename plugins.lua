@@ -334,7 +334,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		build = 'make install_jsregexp',
 		config = function()
 			require('luasnip.loaders.from_vscode').lazy_load({
-				paths = {my.path..'snippets'}
+				paths = {my.root..'snippets'}
 			})
 		end
 	},
@@ -569,7 +569,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		},
 		config = function()
 			require('scissors').setup({
-				snippetDir = my.path..'snippets',
+				snippetDir = my.root..'snippets',
 				jsonFormatter = 'jq', -- yq/jq/none
 				editSnippetPopup = {
 					height = 0.4,
@@ -959,7 +959,7 @@ vim.opt.rtp:prepend(lazy)
 -- install plugins
 lazy = require('lazy')
 lazy.setup(plugins, {
-	lockfile = my.path..'plugins-lock.json',
+	lockfile = my.root..'plugins-lock.json',
 	defaults = { -- default options for each plugin
 		lazy = true,
 	},

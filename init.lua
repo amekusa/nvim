@@ -3,37 +3,41 @@
 
 local vim = vim
 
--- global namespace
-_custom = {
-	ns = (...)..'.',
-	var = {},
-}
-local my = _custom
+-- namespace
+local ns = (...)..'.'
 
 -- root path
-my.path = vim.fn.stdpath('config')..'/lua/'..my.ns:gsub('%.', '/') -- replace '.' in namespace with '/'
+local root = vim.fn.stdpath('config')..'/lua/'..ns:gsub('%.', '/') -- replace '.' in namespace with '/'
 
 -- default config
-my.conf = require(my.ns..'config-default')
+local conf = require(ns..'config-default')
 
 -- user config (if it exists)
-if vim.fn.filereadable(my.path..'config.lua') ~= 0 then
-	my.conf = vim.tbl_deep_extend('force', my.conf, require(my.ns..'config'))
+if vim.fn.filereadable(root..'config.lua') ~= 0 then
+	conf = vim.tbl_deep_extend('force', conf, require(ns..'config'))
 end
 
 -- enable vim.loader
 -- NOTE: Cached lua files are in ~/.cache/nvim/luac
-if my.conf.loader then
+if conf.loader then
 	require('vim.fs')
 	vim.loader.enable()
 end
 
+-- custom global
+_custom = {
+	ns   = ns,
+	root = root,
+	conf = conf,
+	var  = {},
+}
+
 -- functions
-my.fn = require(my.ns..'fn')
+_custom.fn = require(ns..'fn')
 
 -- load modules
-if my.conf.options.enable then require(my.ns..'options') end
-if my.conf.keymaps.enable then require(my.ns..'keymaps') end
-if my.conf.plugins.enable then require(my.ns..'plugins') end
-if my.conf.autocmds.enable then require(my.ns..'autocmds') end
+if conf.options.enable then require(ns..'options') end
+if conf.keymaps.enable then require(ns..'keymaps') end
+if conf.plugins.enable then require(ns..'plugins') end
+if conf.autocmds.enable then require(ns..'autocmds') end
 
