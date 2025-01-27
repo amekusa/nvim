@@ -670,6 +670,10 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 			vim.g.loaded_netrwPlugin = 1
 
 			local api = require('nvim-tree.api')
+			local api_tree  = api.tree
+			local api_node  = api.node
+			local api_marks = api.marks
+			local api_fs    = api.fs
 			require('nvim-tree').setup({
 				disable_netrw = true,
 				hijack_cursor = true,
@@ -758,84 +762,83 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 				on_attach = function(buf)
 					local opts = {buffer = buf, nowait = true}
 					local function open()
-						local node = api.tree.get_node_under_cursor()
-						api.node.open.edit()
+						local node = api_tree.get_node_under_cursor()
+						api_node.open.edit()
 						if node.open and node.nodes and #node.nodes > 0 then
 							vim.api.nvim_feedkeys(my.fn.key('<Down>'), 'n', false)
 						end
 					end
-					map('nvim-tree: Help',                   'n', '?',             api.tree.toggle_help,           opts)
-					map('nvim-tree: Quit',                   'n', 'q',             api.tree.close,                 opts)
-					map('nvim-tree: Refresh',                'n', 'R',             api.tree.reload,                opts)
-					map('nvim-tree: Info',                   'n', 'i',             api.node.show_info_popup,       opts)
-					map('nvim-tree: Close',                  'n', 'h',             api.node.navigate.parent_close, opts)
-					map('nvim-tree: Close',                  'n', '<Left>',        api.node.navigate.parent_close, opts)
+					map('nvim-tree: Help',                   'n', '?',             api_tree.toggle_help,           opts)
+					map('nvim-tree: Quit',                   'n', 'q',             api_tree.close,                 opts)
+					map('nvim-tree: Refresh',                'n', 'R',             api_tree.reload,                opts)
+					map('nvim-tree: Info',                   'n', 'i',             api_node.show_info_popup,       opts)
+					map('nvim-tree: Close',                  'n', 'h',             api_node.navigate.parent_close, opts)
+					map('nvim-tree: Close',                  'n', '<Left>',        api_node.navigate.parent_close, opts)
 					map('nvim-tree: Open',                   'n', 'l',             open,                           opts)
 					map('nvim-tree: Open',                   'n', '<Right>',       open,                           opts)
 					map('nvim-tree: Open',                   'n', '<CR>',          open,                           opts)
 					map('nvim-tree: Open',                   'n', '<2-LeftMouse>', open,                           opts)
 					map('nvim-tree: Open & Close',           'n', 'e',             function()
 						open()
-						api.tree.close()
+						api_tree.close()
 					end, opts)
-					map('nvim-tree: Open: Vertical Split',   'n', 'I',             api.node.open.vertical,         opts)
-					map('nvim-tree: Open: Horizontal Split', 'n', '-',             api.node.open.horizontal,       opts)
-					map('nvim-tree: Open: System',           'n', 'o',             api.node.run.system,            opts)
-					map('nvim-tree: Prev Sibling',           'n', 'K',             api.node.navigate.sibling.prev, opts)
-					map('nvim-tree: Next Sibling',           'n', 'J',             api.node.navigate.sibling.next, opts)
-					map('nvim-tree: Prev Git',               'n', 'gk',            api.node.navigate.git.prev,     opts)
-					map('nvim-tree: Next Git',               'n', 'gj',            api.node.navigate.git.next,     opts)
-					map('nvim-tree: Collapse All',           'n', 'x',             api.tree.collapse_all,          opts)
-					map('nvim-tree: Expand All',             'n', 'X',             api.tree.expand_all,            opts)
-					map('nvim-tree: Descend',                'n', '<Tab>',         api.tree.change_root_to_node,   opts)
-					map('nvim-tree: Ascend',                 'n', 'u',             api.tree.change_root_to_parent, opts)
-					map('nvim-tree: Ascend',                 'n', '<S-Tab>',       api.tree.change_root_to_parent, opts)
-					map('nvim-tree: Create',                 'n', 'a',             api.fs.create,                  opts)
-					map('nvim-tree: Copy',                   'n', 'y',             api.fs.copy.node,               opts)
-					map('nvim-tree: Copy Relative Path',     'n', 'Y',             api.fs.copy.relative_path,      opts)
-					map('nvim-tree: Copy Absolute Path',     'n', '<C-y>',         api.fs.copy.absolute_path,      opts)
+					map('nvim-tree: Open: Vertical Split',   'n', 'I',             api_node.open.vertical,         opts)
+					map('nvim-tree: Open: Horizontal Split', 'n', '-',             api_node.open.horizontal,       opts)
+					map('nvim-tree: Open: System',           'n', 'o',             api_node.run.system,            opts)
+					map('nvim-tree: Prev Sibling',           'n', 'K',             api_node.navigate.sibling.prev, opts)
+					map('nvim-tree: Next Sibling',           'n', 'J',             api_node.navigate.sibling.next, opts)
+					map('nvim-tree: Prev Git',               'n', 'gk',            api_node.navigate.git.prev,     opts)
+					map('nvim-tree: Next Git',               'n', 'gj',            api_node.navigate.git.next,     opts)
+					map('nvim-tree: Collapse All',           'n', 'x',             api_tree.collapse_all,          opts)
+					map('nvim-tree: Expand All',             'n', 'X',             api_tree.expand_all,            opts)
+					map('nvim-tree: Descend',                'n', '<Tab>',         api_tree.change_root_to_node,   opts)
+					map('nvim-tree: Ascend',                 'n', 'u',             api_tree.change_root_to_parent, opts)
+					map('nvim-tree: Ascend',                 'n', '<S-Tab>',       api_tree.change_root_to_parent, opts)
+					map('nvim-tree: Create',                 'n', 'a',             api_fs.create,                  opts)
+					map('nvim-tree: Copy',                   'n', 'y',             api_fs.copy.node,               opts)
+					map('nvim-tree: Copy Relative Path',     'n', 'Y',             api_fs.copy.relative_path,      opts)
+					map('nvim-tree: Copy Absolute Path',     'n', '<C-y>',         api_fs.copy.absolute_path,      opts)
 					map('nvim-tree: Mark',                   'n', 'v',             function()
-						api.marks.toggle()
-						api.node.navigate.sibling.next()
+						api_marks.toggle()
+						api_node.navigate.sibling.next()
 					end, opts)
 					map('nvim-tree: Cut (Move)',             'n', 'd',             function()
-						if #api.marks.list() > 0
-							then api.marks.bulk.move()
-							else api.fs.cut()
+						if #api_marks.list() > 0
+							then api_marks.bulk.move()
+							else api_fs.cut()
 						end
 					end, opts)
 					map('nvim-tree: Trash',                  'n', 'D',             function()
-						if #api.marks.list() > 0
-							then api.marks.bulk.trash()
-							else api.fs.trash()
+						if #api_marks.list() > 0
+							then api_marks.bulk.trash()
+							else api_fs.trash()
 						end
 					end, opts)
-					map('nvim-tree: Paste',                  'n', 'p',             api.fs.paste,                   opts)
-					map('nvim-tree: Rename',                 'n', 'r',             api.fs.rename,                  opts)
-					map('nvim-tree: Run Command',            'n', ';',             api.node.run.cmd,               opts)
+					map('nvim-tree: Paste',                  'n', 'p',             api_fs.paste,                   opts)
+					map('nvim-tree: Rename',                 'n', 'r',             api_fs.rename,                  opts)
+					map('nvim-tree: Run Command',            'n', ';',             api_node.run.cmd,               opts)
 					map('nvim-tree: Filter',                 'n', 'f',             api.live_filter.start,          opts)
 					map('nvim-tree: Filter',                 'n', 'F',             api.live_filter.start,          opts)
 					map('nvim-tree: Clear',                  'n', '<Esc>',         function()
 						api.live_filter.clear()
-						api.marks.clear()
-						api.tree.reload()
+						api_marks.clear()
+						api_tree.reload()
 					end, opts, {remap = true})
 					map('nvim-tree: Toggle Hidden',          'n', '.',             function()
-						api.tree.toggle_gitignore_filter()
-						api.tree.toggle_custom_filter()
-						-- api.tree.toggle_hidden_filter() -- toggle dotfiles
+						api_tree.toggle_gitignore_filter()
+						api_tree.toggle_custom_filter()
 					end, opts)
 				end,
 			})
 
 			-- toggle focus nvim-tree
 			map('nvim-tree: Toggle Focus', {'n','x','i','t'}, '<C-f>', function()
-				if api.tree.is_tree_buf() then -- is current pane nvim-tree?
+				if api_tree.is_tree_buf() then -- is current pane nvim-tree?
 					my.fn.buf_cycle(0)
 					return
 				end
 				-- switch to nvim-tree
-				api.tree.find_file({open = true, current_window = false, focus = true})
+				api_tree.find_file({open = true, current_window = false, focus = true})
 				vim.api.nvim_feedkeys(my.fn.key('<Esc>'), 'n', false) -- force normal mode
 				--   NOTE: stopinsert() doesn't work on visual mode
 			end)
@@ -846,7 +849,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					callback = function(ctx)
 						local buf = vim.fn.getbufinfo(ctx.buf)[1]
 						if buf.listed == 1 then
-							api.tree.close()
+							api_tree.close()
 						end
 					end
 				})
