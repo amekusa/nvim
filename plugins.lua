@@ -41,7 +41,17 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		lazy = false,
 		config = function()
 			require('auto-input-switch').setup({
-				-- options
+				restore = {enable = false},
+				match = {
+					enable = true,
+					file_pattern = {
+						'*.md',
+						'*.txt',
+					},
+					languages = {
+						Ja = {enable = true},
+					},
+				},
 			})
 		end
 	},
