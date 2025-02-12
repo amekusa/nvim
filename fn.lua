@@ -1,6 +1,7 @@
 ---- FUNCTIONS ----
 local vim = vim
 local api = vim.api
+local fn = vim.fn
 local my = _custom
 local M = {}
 
@@ -159,7 +160,7 @@ end
 function M.buf_close(buf, force, bufs)
 	local curr = api.nvim_get_current_buf()
 	buf = buf or curr
-	bufs = bufs or vim.fn.getbufinfo({buflisted = 1})
+	bufs = bufs or fn.getbufinfo({buflisted = 1})
 
 	-- if the buffer is current, move to the prev/next buffer first
 	if buf == curr and M.buf_is_last(buf, bufs)
@@ -179,19 +180,19 @@ end
 -- Returns whether the given buffer is the last entry
 function M.buf_is_last(buf, bufs)
 	buf = buf or api.nvim_get_current_buf()
-	bufs = bufs or vim.fn.getbufinfo({buflisted = 1})
+	bufs = bufs or fn.getbufinfo({buflisted = 1})
 	return bufs[#bufs] and (bufs[#bufs].bufnr == buf)
 end
 
 -- Shows the given buffer
 function M.buf_show(buf)
-	buf = type(buf) == 'table' and buf or vim.fn.getbufinfo(buf)[1]
+	buf = type(buf) == 'table' and buf or fn.getbufinfo(buf)[1]
 	if not buf then return M.log("buf_show(): invalid buffer", 'ERROR') end
-	vim.fn.bufload(buf.bufnr)
+	fn.bufload(buf.bufnr)
 
 	local win = buf.variables.scope
-	if win then win = vim.fn.getwininfo(win)[1] end
-	if not win then win = vim.fn.getwininfo(buf.windows[1] or api.nvim_get_current_win())[1] end
+	if win then win = fn.getwininfo(win)[1] end
+	if not win then win = fn.getwininfo(buf.windows[1] or api.nvim_get_current_win())[1] end
 
 	api.nvim_set_current_tabpage(win.tabnr)
 	api.nvim_set_current_win(win.winid)
@@ -201,7 +202,7 @@ end
 -- Cycles through buffers
 function M.buf_cycle(to, bufs, from)
 	from = from or api.nvim_get_current_buf()
-	bufs = bufs or vim.fn.getbufinfo({buflisted = 1})
+	bufs = bufs or fn.getbufinfo({buflisted = 1})
 	local n = #bufs
 	for i = 1, n do
 		if bufs[i].bufnr == from then
