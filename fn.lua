@@ -2,7 +2,7 @@
 local vim = vim
 local api = vim.api
 local my = _custom
-local fn = {}
+local M = {}
 
 -- Notifies the user with the given message.
 -- levels:
@@ -12,34 +12,34 @@ local fn = {}
 --   - TRACE
 --   - WARN
 --   - OFF
-function fn.log(msg, level)
+function M.log(msg, level)
 	api.nvim_notify(msg, vim.log.levels[level or 'INFO'], {})
 end
 
 -- Returns whether the given value is truthy
-function fn.yes(x)
+function M.yes(x)
 	if not x then return false end
 	return x ~= '' and x ~= 0
 end
 
 -- Returns whether the given value is falsey
-function fn.no(x)
+function M.no(x)
 	if not x then return true end
 	return x == '' or x == 0
 end
 
 -- Writes a file with the given date
-function fn.write(file, data, mode)
+function M.write(file, data, mode)
 	local f = io.open(file, mode or 'w')
 	if not f then
-		return fn.log("fn.write(): failed to open: "..file, 'ERROR')
+		return M.log("write(): failed to open: "..file, 'ERROR')
 	end
 	f:write(data)
 	f:close()
 end
 
 -- Searches a value in the given array and returns the index or 0 if not found
-function fn.arr_index_of(a, find)
+function M.arr_index_of(a, find)
 	for i = 1, #a do
 		if a[i] == find then return i end
 	end
@@ -47,7 +47,7 @@ function fn.arr_index_of(a, find)
 end
 
 -- Returns an array of keys in the given table
-function fn.tbl_keys(t)
+function M.tbl_keys(t)
 	local r,i = {},1
 	for k,_ in pairs(t) do
 		r[i] = k
@@ -57,7 +57,7 @@ function fn.tbl_keys(t)
 end
 
 -- Returns an array of values in the given table
-function fn.tbl_values(t)
+function M.tbl_values(t)
 	local r,i = {},1
 	for _,v in pairs(t) do
 		r[i] = v
@@ -67,7 +67,7 @@ function fn.tbl_values(t)
 end
 
 -- Creates a copy of the given table
-function fn.tbl_copy(t)
+function M.tbl_copy(t)
 	local r = {}
 	for k,v in pairs(t) do
 		r[k] = v
@@ -76,10 +76,10 @@ function fn.tbl_copy(t)
 end
 
 -- Merges one table into another
-function fn.tbl_merge(t1, t2, new)
+function M.tbl_merge(t1, t2, new)
 	local r
 	if new
-		then r = fn.tbl_copy(t1)
+		then r = M.tbl_copy(t1)
 		else r = t1
 	end
 	if t2 then
@@ -91,12 +91,12 @@ function fn.tbl_merge(t1, t2, new)
 end
 
 -- Returns whether `str` starts with `with`
-function fn.starts(str, with)
+function M.starts(str, with)
    return string.sub(str, 1, string.len(with)) == with
 end
 
 -- Alias of `vim.keymap.set` but the description comes first
-function fn.map(desc, mode, from, to, opts)
+function M.map(desc, mode, from, to, opts)
 	if opts
 		then opts.desc = desc
 		else opts = {desc = desc}
@@ -109,7 +109,7 @@ do
 
 	-- Converts the given special keycode (like <CR>, <Tab>, or <Esc>, etc.)
 	-- into the format that is applicable to `feedkeys()`
-	function fn.key(code)
+	function M.key(code)
 		if not keycodes[code] then
 			keycodes[code] = api.nvim_replace_termcodes(code, true, false, true)
 		end
@@ -118,7 +118,7 @@ do
 end
 
 --- Smartly indents the current line
-function fn.smart_indent()
+function M.smart_indent()
 	local _
 	local line = api.nvim_get_current_line()
 	if line == '' then -- empty line
@@ -148,7 +148,7 @@ function fn.smart_indent()
 			end
 			api.nvim_win_set_cursor(0, {lnum, 1000}) -- set cursor to EoL
 		else
-			api.nvim_feedkeys(fn.key('<Tab>'), 'n', false) -- just type <Tab>
+			api.nvim_feedkeys(M.key('<Tab>'), 'n', false) -- just type <Tab>
 		end
 	else
 		vim.cmd('>') -- shift the current line to right
@@ -156,15 +156,15 @@ function fn.smart_indent()
 end
 
 -- Closes the given buffer
-function fn.buf_close(buf, force, bufs)
+function M.buf_close(buf, force, bufs)
 	local curr = api.nvim_get_current_buf()
 	buf = buf or curr
 	bufs = bufs or vim.fn.getbufinfo({buflisted = 1})
 
 	-- if the buffer is current, move to the prev/next buffer first
-	if buf == curr and fn.buf_is_last(buf, bufs)
-		then fn.buf_cycle(-1, bufs)
-		else fn.buf_cycle(1, bufs)
+	if buf == curr and M.buf_is_last(buf, bufs)
+		then M.buf_cycle(-1, bufs)
+		else M.buf_cycle(1, bufs)
 	end
 	if force -- delete the given (or current) buffer in background
 		then vim.cmd('bw! '..buf)
@@ -177,16 +177,16 @@ function fn.buf_close(buf, force, bufs)
 end
 
 -- Returns whether the given buffer is the last entry
-function fn.buf_is_last(buf, bufs)
+function M.buf_is_last(buf, bufs)
 	buf = buf or api.nvim_get_current_buf()
 	bufs = bufs or vim.fn.getbufinfo({buflisted = 1})
 	return bufs[#bufs] and (bufs[#bufs].bufnr == buf)
 end
 
 -- Shows the given buffer
-function fn.buf_show(buf)
+function M.buf_show(buf)
 	buf = type(buf) == 'table' and buf or vim.fn.getbufinfo(buf)[1]
-	if not buf then return fn.log("buf_show(): invalid buffer", 'ERROR') end
+	if not buf then return M.log("buf_show(): invalid buffer", 'ERROR') end
 	vim.fn.bufload(buf.bufnr)
 
 	local win = buf.variables.scope
@@ -199,7 +199,7 @@ function fn.buf_show(buf)
 end
 
 -- Cycles through buffers
-function fn.buf_cycle(to, bufs, from)
+function M.buf_cycle(to, bufs, from)
 	from = from or api.nvim_get_current_buf()
 	bufs = bufs or vim.fn.getbufinfo({buflisted = 1})
 	local n = #bufs
@@ -207,33 +207,33 @@ function fn.buf_cycle(to, bufs, from)
 		if bufs[i].bufnr == from then
 			i = i + to
 			if i <= 0 then
-				fn.buf_show(bufs[n])
+				M.buf_show(bufs[n])
 			elseif i > n then
-				fn.buf_show(bufs[1])
+				M.buf_show(bufs[1])
 			else
-				fn.buf_show(bufs[i])
+				M.buf_show(bufs[i])
 			end
 			return
 		end
 	end
 	if type(my.var.buf_history) == 'table' and #my.var.buf_history > 0 then
-		fn.buf_cycle(to, bufs, my.var.buf_history[#my.var.buf_history])
+		M.buf_cycle(to, bufs, my.var.buf_history[#my.var.buf_history])
 	end
 end
 
 -- Set the current window to "typewriter" mode
-function fn.typewriter_mode(set)
+function M.typewriter_mode(set)
 	if set == nil then -- toggle
 		set = vim.wo.scrolloff <= vim.go.scrolloff
 	end
 	if set then
-		fn.log("typewriter mode: ON")
+		M.log("typewriter mode: ON")
 		vim.wo.scrolloff = 100
 	else
-		fn.log("typewriter mode: OFF")
+		M.log("typewriter mode: OFF")
 		vim.wo.scrolloff = vim.go.scrolloff
 	end
 end
 
-return fn
+return M
 
