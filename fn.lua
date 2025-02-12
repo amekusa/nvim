@@ -1,5 +1,6 @@
 ---- FUNCTIONS ----
 local vim = vim
+local api = vim.api
 local my = _custom
 local fn = {}
 
@@ -12,7 +13,7 @@ local fn = {}
 --   - WARN
 --   - OFF
 function fn.log(msg, level)
-	vim.api.nvim_notify(msg, vim.log.levels[level or 'INFO'], {})
+	api.nvim_notify(msg, vim.log.levels[level or 'INFO'], {})
 end
 
 -- Returns whether the given value is truthy
@@ -110,7 +111,7 @@ do
 	-- into the format that is applicable to `feedkeys()`
 	function fn.key(code)
 		if not keycodes[code] then
-			keycodes[code] = vim.api.nvim_replace_termcodes(code, true, false, true)
+			keycodes[code] = api.nvim_replace_termcodes(code, true, false, true)
 		end
 		return keycodes[code]
 	end
@@ -119,22 +120,22 @@ end
 --- Smartly indents the current line
 function fn.smart_indent()
 	local _
-	local line = vim.api.nvim_get_current_line()
+	local line = api.nvim_get_current_line()
 	if line == '' then -- empty line
 		vim.cmd.startinsert()
-		local lnum     = vim.api.nvim_win_get_cursor(0)[1]
-		local lnum_max = vim.api.nvim_buf_line_count(0)
+		local lnum     = api.nvim_win_get_cursor(0)[1]
+		local lnum_max = api.nvim_buf_line_count(0)
 
 		-- get indents in the prev line
 		local indents_prev = ''
 		if lnum > 1 then
-			_,_,indents_prev = vim.api.nvim_buf_get_lines(0, lnum - 2, lnum - 1, true)[1]:find([[^(%s*)]])
+			_,_,indents_prev = api.nvim_buf_get_lines(0, lnum - 2, lnum - 1, true)[1]:find([[^(%s*)]])
 		end
 
 		-- get indents in the next line
 		local indents_next = ''
 		if lnum < lnum_max then
-			_,_,indents_next = vim.api.nvim_buf_get_lines(0, lnum, lnum + 1, true)[1]:find([[^(%s*)]])
+			_,_,indents_next = api.nvim_buf_get_lines(0, lnum, lnum + 1, true)[1]:find([[^(%s*)]])
 		end
 
 		-- use longer one
@@ -142,12 +143,12 @@ function fn.smart_indent()
 		local len_next = indents_next:len()
 		if len_prev > 0 or len_next > 0 then
 			if len_prev > len_next
-				then vim.api.nvim_set_current_line(indents_prev)
-				else vim.api.nvim_set_current_line(indents_next)
+				then api.nvim_set_current_line(indents_prev)
+				else api.nvim_set_current_line(indents_next)
 			end
-			vim.api.nvim_win_set_cursor(0, {lnum, 1000}) -- set cursor to EoL
+			api.nvim_win_set_cursor(0, {lnum, 1000}) -- set cursor to EoL
 		else
-			vim.api.nvim_feedkeys(fn.key('<Tab>'), 'n', false) -- just type <Tab>
+			api.nvim_feedkeys(fn.key('<Tab>'), 'n', false) -- just type <Tab>
 		end
 	else
 		vim.cmd('>') -- shift the current line to right
@@ -156,7 +157,7 @@ end
 
 -- Closes the given buffer
 function fn.buf_close(buf, force, bufs)
-	local curr = vim.api.nvim_get_current_buf()
+	local curr = api.nvim_get_current_buf()
 	buf = buf or curr
 	bufs = bufs or vim.fn.getbufinfo({buflisted = 1})
 
@@ -177,7 +178,7 @@ end
 
 -- Returns whether the given buffer is the last entry
 function fn.buf_is_last(buf, bufs)
-	buf = buf or vim.api.nvim_get_current_buf()
+	buf = buf or api.nvim_get_current_buf()
 	bufs = bufs or vim.fn.getbufinfo({buflisted = 1})
 	return bufs[#bufs] and (bufs[#bufs].bufnr == buf)
 end
@@ -190,16 +191,16 @@ function fn.buf_show(buf)
 
 	local win = buf.variables.scope
 	if win then win = vim.fn.getwininfo(win)[1] end
-	if not win then win = vim.fn.getwininfo(buf.windows[1] or vim.api.nvim_get_current_win())[1] end
+	if not win then win = vim.fn.getwininfo(buf.windows[1] or api.nvim_get_current_win())[1] end
 
-	vim.api.nvim_set_current_tabpage(win.tabnr)
-	vim.api.nvim_set_current_win(win.winid)
-	vim.api.nvim_win_set_buf(win.winid, buf.bufnr)
+	api.nvim_set_current_tabpage(win.tabnr)
+	api.nvim_set_current_win(win.winid)
+	api.nvim_win_set_buf(win.winid, buf.bufnr)
 end
 
 -- Cycles through buffers
 function fn.buf_cycle(to, bufs, from)
-	from = from or vim.api.nvim_get_current_buf()
+	from = from or api.nvim_get_current_buf()
 	bufs = bufs or vim.fn.getbufinfo({buflisted = 1})
 	local n = #bufs
 	for i = 1, n do
