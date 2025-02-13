@@ -19,8 +19,10 @@ o.swapfile = true
 -- MINOR TWEAKS --
 -- wait-time for idle state
 o.updatetime = 1000 -- (ms) [default: 4000]
--- wait-time for key-combos
+-- wait-time for key combos
 o.timeoutlen = 250 -- (ms) [default: 1000]
+-- wait-time for <esc> key combos
+o.ttimeoutlen = 10 -- (ms) [default: 50]
 -- timeout for redraw
 o.redrawtime = 500 -- (ms) [default: 2000]
 -- max column for syntax highlighting
