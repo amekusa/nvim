@@ -69,11 +69,15 @@ opt.listchars = {
 	nbsp  = '␣'
 }
 -- indent style --
+vim.cmd('filetype indent off') -- do not override indentexpr
+o.indentexpr = ''
+o.autoindent  = true -- copy the current indentation level?
+o.smartindent = true -- enable a bit more advanced indentation?
+o.cindent     = false -- optimize for C-style languages?
+o.breakindent = false -- indent wrapped lines?
 o.expandtab = false  -- use soft-tabs?
 o.tabstop = 4        -- tab width
 o.shiftwidth = 0     -- 0: fallback to tabstop
-o.breakindent = true -- indent wrapped lines?
-o.smartindent = true -- autoindent new line?
 -- scroll threshold
 o.scrolloff = 16
 -- horizontal scrolling --
