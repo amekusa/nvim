@@ -70,13 +70,14 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		-- #cheatsheet (***..)
 		'sudormrfbin/cheatsheet.nvim', enabled = true,
 		dependencies = {'nvim-telescope/telescope.nvim'},
-		init = function()
-			map('cheatsheet: Open', 'n', '<Leader>?', '<Cmd>Cheatsheet<CR>')
-		end,
+		lazy = true,
 		cmd = {
 			'Cheatsheet',
 			'CheatsheetEdit',
 		},
+		init = function()
+			map('cheatsheet: Open', 'n', '<Leader>?', '<Cmd>Cheatsheet<CR>')
+		end,
 		config = function()
 			require('cheatsheet').setup({
 				bundled_cheatsheets = {
@@ -91,17 +92,18 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	{
 		-- #coderunner (****.)
 		'CRAG666/code_runner.nvim', enabled = true,
-		init = function()
-			map('coderunner: Run Code', 'n', '<Leader><CR><CR>', '<Cmd>RunCode<CR>')
-			map('coderunner: Run File', 'n', '<Leader><CR>f',    '<Cmd>RunFile<CR>')
-			map('coderunner: Close',    'n', '<Leader><CR>x',    '<Cmd>RunClose<CR>')
-		end,
+		lazy = true,
 		cmd = {
 			'RunCode',
 			'RunFile',
 			'RunProject',
 			'RunClose',
 		},
+		init = function()
+			map('coderunner: Run Code', 'n', '<Leader><CR><CR>', '<Cmd>RunCode<CR>')
+			map('coderunner: Run File', 'n', '<Leader><CR>f',    '<Cmd>RunFile<CR>')
+			map('coderunner: Close',    'n', '<Leader><CR>x',    '<Cmd>RunClose<CR>')
+		end,
 		config = function()
 			require('code_runner').setup({
 				mode = 'term',
@@ -135,9 +137,10 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- #comment: smartly commenting out
+		-- #comment: comment-out utility
 		'numToStr/Comment.nvim', enabled = true,
 		dependencies = {'nvim-treesitter/nvim-treesitter'},
+		lazy = true,
 		ft = ts_filetypes,
 		config = function()
 			require('Comment').setup({
@@ -162,7 +165,6 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	{
 		-- #flash: jump with keypresses (*****)
 		'folke/flash.nvim', enabled = true,
-		lazy = false,
 		config = function()
 			require('flash').setup({
 				search = {
@@ -261,11 +263,12 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		-- #gx: browsing the page under the cursor (****.)
 		'chrishrb/gx.nvim', enabled = true,
 		dependencies = {'nvim-lua/plenary.nvim'},
+		lazy = true,
+		cmd = 'Browse',
 		init = function()
 			vim.g.netrw_nogx = 1 -- disable netrw gx
 			map('gx: Browse', 'n', 'gx', '<Cmd>Browse<CR>')
 		end,
-		cmd = 'Browse',
 		config = true,
 	},
 	---- #H ----
@@ -282,18 +285,15 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		'brianhuster/live-preview.nvim', enabled = true,
 		dependencies = {'nvim-telescope/telescope.nvim'},
 		lazy = true,
-		cmd = {
-			'LivePreview',
-		},
+		cmd = 'LivePreview',
 	},
 	{
 		-- #lualine: status bar
 		'nvim-lualine/lualine.nvim', enabled = true,
 		commit = '640260d7c2d98779cab89b1e7088ab14ea354a02',
 		--   NOTE: This is at right before the commit: 0978a6c. (https://github.com/nvim-lualine/lualine.nvim/commit/0978a6c8a862d999baf51366926c7b56eb9cf3d1)
-		--         The commit: 0978a6c introduced some unwanted changes which makes lualine doesn't refresh via autocmds.
+		--         The commit: 0978a6c introduced some unwanted changes which make lualine doesn't refresh via autocmds anymore.
     	dependencies = {'nvim-tree/nvim-web-devicons'},
-		lazy = false,
 		config = function()
 			vim.o.showmode = false -- hide mode indicator which is redundant
 			-- vim.o.cmdheight = 0 -- hide commandline when not in use
@@ -362,6 +362,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	{
 		-- #mason: LSP package manager (***..)
 		'williamboman/mason.nvim', enabled = true,
+		lazy = true,
 		cmd = {
 			'Mason',
 			'MasonInstall',
@@ -383,6 +384,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 			'L3MON4D3/LuaSnip', -- snippet engine
 			'saadparwaiz1/cmp_luasnip', -- required for nvim-cmp to work with LuaSnip
 		},
+		lazy = true,
 		ft = ts_filetypes,
 		cmd = {
 			'LspInfo',
@@ -883,6 +885,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 			--'nvim-treesitter/nvim-treesitter-textobjects',
 			--'nvim-treesitter/nvim-treesitter-context',
 		},
+		lazy = true,
 		cmd = {
 			'TSInstallInfo',
 			'TSConfigInfo',
