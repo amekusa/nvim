@@ -194,7 +194,6 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	{
 		-- #gitsigns: shows git related infos in the gutter (*****)
 		'lewis6991/gitsigns.nvim', enabled = true,
-		lazy = false,
 		config = function()
 			local api = require('gitsigns')
 			api.setup({
@@ -237,7 +236,6 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	{
 		-- #guess-indent: guessing indent style (***..)
 		'nmac427/guess-indent.nvim', enabled = true,
-		lazy = false,
 		config = function()
 			map('guess-indent: Guess Indent', 'n', 'gI', '<Cmd>GuessIndent<CR>')
 			require('guess-indent').setup({
@@ -618,7 +616,6 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	{
 		-- #surround: smartly edit surrounding chars like {}, [], "", etc.
 		'kylechui/nvim-surround', enabled = true,
-		lazy = false,
 		config = function()
 			require('nvim-surround').setup({
 				keymaps = {
@@ -642,7 +639,6 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		-- #telescope: fuzzy finder (*****)
 		'nvim-telescope/telescope.nvim', enabled = true,
 		dependencies = {'nvim-lua/plenary.nvim'},
-		lazy = false,
 		config = function()
 			local actions = require('telescope.actions')
 			local layout  = require('telescope.actions.layout')
@@ -686,7 +682,6 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		-- #tree: file-tree widget (***..)
 		'nvim-tree/nvim-tree.lua', enabled = true,
 		dependencies = {'nvim-tree/nvim-web-devicons'},
-		lazy = false,
 		config = function()
 			-- disable netrw
 			vim.g.loaded_netrw = 1
@@ -933,7 +928,6 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	{
 		-- #which-key: showing pending keybinds
 		'folke/which-key.nvim', enabled = true,
-		lazy = false,
 		config = function()
 			require('which-key').setup({
 				-- options
@@ -984,7 +978,7 @@ lazy = require('lazy')
 lazy.setup(plugins, {
 	lockfile = my.root..'plugins-lock.json',
 	defaults = { -- default options for each plugin
-		lazy = true,
+		lazy = false,
 	},
 	performance = {
 		rtp = {
