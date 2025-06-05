@@ -277,6 +277,19 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	---- #K ----
 	---- #L ----
 	{
+		-- #live-preview: preview files in a web browser with live-updates (****.)
+		-- usage:
+		--   :LivePreview start
+		--   :LivePreview pick
+		--   :LivePreview close
+		'brianhuster/live-preview.nvim', enabled = true,
+		dependencies = {'nvim-telescope/telescope.nvim'},
+		lazy = true,
+		cmd = {
+			'LivePreview',
+		},
+	},
+	{
 		-- #lualine: status bar
 		'nvim-lualine/lualine.nvim', enabled = true,
 		commit = '640260d7c2d98779cab89b1e7088ab14ea354a02',
