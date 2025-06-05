@@ -58,7 +58,6 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	{
 		-- #autopairs: automatically close brackets (****.)
 		'windwp/nvim-autopairs', enabled = true,
-		lazy = false,
 		config = function()
 			require('nvim-autopairs').setup({
 				-- options
