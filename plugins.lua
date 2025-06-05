@@ -871,7 +871,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		-- #treesitter: parser & syntax highlighter
 		'nvim-treesitter/nvim-treesitter', enabled = true,
 		dependencies = {
-			-- optional modules
+			-- optional modules:
 			'nvim-treesitter/nvim-treesitter-refactor',
 			--'nvim-treesitter/nvim-treesitter-textobjects',
 			--'nvim-treesitter/nvim-treesitter-context',
@@ -894,9 +894,12 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					enable = true,
 				},
 				indent = {
-					enable = true,
+					enable = false,
 				},
-				refactor = {
+				refactor = { -- nvim-treesitter-refactor module is required
+					navigation = {
+						enable = false, -- doesn't always work. use LSP instead
+					},
 					highlight_definitions = {
 						enable = true,
 						clear_on_cursor_move = false,
@@ -905,10 +908,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 						enable = false,
 					},
 					smart_rename = {
-						enable = true,
-						keymaps = {
-							smart_rename = '<Leader>r',
-						}
+						enable = false, -- this is not smart at all. don't use it
 					}
 				}
 			})
