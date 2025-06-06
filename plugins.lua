@@ -392,6 +392,9 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 			'LspUninstall'
 		},
 		config = function()
+			-- make unused vars/functions more visible
+			vim.api.nvim_set_hl(0, 'DiagnosticUnnecessary', {underdashed = true})
+
 			---- SETUP LSPS ----
 			local caps = require('cmp_nvim_lsp').default_capabilities()
 			local lsp = require('lspconfig')
