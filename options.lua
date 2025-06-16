@@ -61,6 +61,11 @@ o.pumheight = 5 -- [default: 0 (unlimited)]
 
 
 -- EDITOR --
+-- disable filetype-specific options
+vim.cmd('filetype plugin off') -- do not override formatoptions
+vim.cmd('filetype indent off') -- do not override indentexpr
+-- autoformat options (:help fo-table)
+o.formatoptions = 'tcqjlro/B' -- [default: tcqj]
 -- show whitespace chars?
 o.list = true
 -- whitespace chars representations
@@ -70,7 +75,6 @@ opt.listchars = {
 	nbsp  = '␣'
 }
 ---- indentation style ----
-vim.cmd('filetype indent off') -- do not override indentexpr
 o.indentexpr = '' -- do not use indentexpr
 o.autoindent = false -- copy the current indents?
 o.smartindent = false -- enable a bit more advanced indenting?
