@@ -208,6 +208,8 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 				},
 				on_attach = function(buf)
 					local opts = {buffer = buf}
+					map('gitsigns: Prev Hunk',       'n', '<C-p>', function() api.nav_hunk('prev') end, opts)
+					map('gitsigns: Next Hunk',       'n', '<C-n>', function() api.nav_hunk('next') end, opts)
 					map('gitsigns: Stage Hunk',      'n', 'gs', api.stage_hunk, opts)
 					map('gitsigns: Stage Hunk',      'x', 'gs', function() api.stage_hunk({vim.fn.line('.'), vim.fn.line('v')}) end, opts)
 					map('gitsigns: Reset Hunk',      'n', 'gr', api.reset_hunk, opts)
@@ -218,18 +220,6 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					map('gitsigns: Blame Line',      'n', 'gb', function() api.blame_line({full = true}) end, opts)
 					map('gitsigns: Toggle Blame',    'n', 'gB', api.toggle_current_line_blame, opts)
 					map('gitsigns: Toggle Deleted',  'n', 'gD', api.toggle_deleted, opts)
-
-					map('gitsigns: Prev Hunk', 'n', 'gk', function()
-						if vim.wo.diff then return  'gk' end
-						vim.schedule(api.prev_hunk)
-						return '<Ignore>'
-					end, {buffer = buf, expr = true})
-
-					map('gitsigns: Next Hunk', 'n', 'gj', function()
-						if vim.wo.diff then return  'gj' end
-						vim.schedule(api.next_hunk)
-						return '<Ignore>'
-					end, {buffer = buf, expr = true})
 				end,
 			})
 		end
