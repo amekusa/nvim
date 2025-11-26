@@ -38,6 +38,10 @@ map('custom: Next Word', nxo, '<M-Right>', 'w')
 map('custom: Next Word', 'i', '<M-Right>', '<C-o>w')
 map('custom: Next Word', 't', '<M-Right>', '<Esc>w')
 
+-- delete the prev word (option + backspace)
+map('custom: Delete Word', 'n', '<M-BS>', 'db');
+map('custom: Delete Word', 'i', '<M-BS>', '<C-o>db');
+
 -- better home key
 map('custom: Home', nxo, '<Home>', '^')
 map('custom: Home', 'i', '<Home>', '<C-o>^')
