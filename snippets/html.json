@@ -1,0 +1,22 @@
+{
+  "<kbd>...</kbd>": {
+    "body": "<kbd>$1</kbd>",
+    "prefix": "<kbd>...</kbd>"
+  },
+  "<link rel=\"stylesheet\" href=\"style.css\">": {
+    "body": "<link rel=\"stylesheet\" href=\"${1:style.css}\">",
+    "prefix": "<link rel=\"stylesheet\" href=\"style.css\">"
+  },
+  "<meta charset=\"utf-8\">": {
+    "body": "<meta charset=\"utf-8\">",
+    "prefix": "<meta charset=\"utf-8\">"
+  },
+  "<tag class=\"...\">...</tag>": {
+    "body": "<${1:div} class=\"$2\">$3</$1>",
+    "prefix": "<tag class=\"...\">...</tag>"
+  },
+  "<tag>...</tag>": {
+    "body": "<${1:div}>$2</$1>",
+    "prefix": "<tag>...</tag>"
+  }
+}
