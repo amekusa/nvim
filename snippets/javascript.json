@@ -6,6 +6,10 @@
       ":shebang"
     ]
   },
+  ".then(_ => { ... })": {
+    "body": ".then($1 => {})",
+    "prefix": ".then(_ => { ... })"
+  },
   "/** :docblock */": {
     "body": [
       "/**",
@@ -49,8 +53,15 @@
     ]
   },
   "const _ = _": {
-    "body": "const $1 = $0",
+    "body": "const $1 = $2;",
     "prefix": "const _ = _"
+  },
+  "const _ = require('_') + :require": {
+    "body": "const $1 = require('$2');",
+    "prefix": [
+      "const _ = require('_')",
+      ":require"
+    ]
   },
   "constructor(_) { ... }": {
     "body": [
@@ -72,9 +83,13 @@
     "body": "function $1($2) {$0}",
     "prefix": "function _(_) { ... }"
   },
-  "import _ from _": {
+  "import _ from '_'": {
     "body": "import $1 from '$2';",
-    "prefix": "import _ from _"
+    "prefix": "import _ from '_'"
+  },
+  "let _ = _": {
+    "body": "let $1 = $2;",
+    "prefix": "let _ = _"
   },
   "switch (typeof _) { ... }": {
     "body": [
