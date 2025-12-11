@@ -1,45 +1,82 @@
 {
-  "/**": {
+  "#!/usr/bin/env node + :shebang": {
+    "body": "#!/usr/bin/env node",
+    "prefix": [
+      "#!/usr/bin/env node",
+      ":shebang"
+    ]
+  },
+  "/** :docblock */": {
     "body": [
       "/**",
-      " * $0",
+      " * $1",
       " */"
     ],
-    "prefix": "/**"
+    "prefix": "/** :docblock */"
   },
-  "@param": {
+  ":arrow": {
+    "body": "$1 => {$0}",
+    "prefix": ":arrow"
+  },
+  ":arrow2": {
+    "body": "($1) => {$0}",
+    "prefix": ":arrow2"
+  },
+  ":for-array": {
+    "body": "for (let i = ${1:0}; i < ${2:arr}.length; i++) $0",
+    "prefix": ":for-array"
+  },
+  "@param {_} _ - _": {
     "body": "@param {${1:type}} ${2:name} - ${3:desc}",
-    "prefix": "@param"
+    "prefix": "@param {_} _ - _"
   },
-  "@return": {
+  "@return {_} _": {
     "body": "@return {${1:type}}${2: desc}",
-    "prefix": "@return"
+    "prefix": "@return {_} _"
   },
-  "console.debug()": {
+  "console.debug(_) + :debug": {
     "body": "console.debug($1);",
-    "prefix": "console.debug()"
+    "prefix": [
+      "console.debug(_)",
+      ":debug"
+    ]
   },
-  "console.log()": {
+  "console.log(_) + :log": {
     "body": "console.log($1);",
-    "prefix": "console.log()"
+    "prefix": [
+      "console.log(_)",
+      ":log"
+    ]
   },
-  "export": {
-    "body": "export $0",
-    "prefix": "export"
+  "const _ = _": {
+    "body": "const $1 = $0",
+    "prefix": "const _ = _"
   },
-  "for": {
-    "body": "for (let i = 0; i = ${1:arr}.length; i++) $0",
-    "prefix": "for"
+  "constructor(_) { ... }": {
+    "body": [
+      "constructor(${1:}) {",
+      "\t$0",
+      "}"
+    ],
+    "prefix": "constructor(_) { ... }"
   },
-  "function": {
+  "export _": {
+    "body": "export $0;",
+    "prefix": "export _"
+  },
+  "export default _": {
+    "body": "export default ${1:};",
+    "prefix": "export default _"
+  },
+  "function _(_) { ... }": {
     "body": "function $1($2) {$0}",
-    "prefix": "function"
+    "prefix": "function _(_) { ... }"
   },
-  "import": {
+  "import _ from _": {
     "body": "import $1 from '$2';",
-    "prefix": "import"
+    "prefix": "import _ from _"
   },
-  "switch (typeof var)": {
+  "switch (typeof _) { ... }": {
     "body": [
       "switch (typeof $1) {",
       "case '$2':",
@@ -47,6 +84,6 @@
       "\tbreak;",
       "}"
     ],
-    "prefix": "switch (typeof var)"
+    "prefix": "switch (typeof _) { ... }"
   }
 }
