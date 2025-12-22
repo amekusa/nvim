@@ -159,17 +159,28 @@ end
 -- Closes the given buffer
 function M.buf_close(buf, force, bufs)
 	local curr = api.nvim_get_current_buf()
-	buf = buf or curr
+	buf = fn.getbufinfo(buf or curr)[1]
+	if buf.changed ~= 0 then
+		local choice = fn.confirm(
+			'The buffer is modified but not saved. Force close?',
+			'&Yes\n&No',
+			2  -- default choice (2 = No)
+		)
+		if choice == 1
+			then force = true
+			else return
+		end
+	end
 	bufs = bufs or fn.getbufinfo({buflisted = 1})
 
 	-- if the buffer is current, move to the prev/next buffer first
-	if buf == curr and M.buf_is_last(buf, bufs)
+	if buf.bufnr == curr and M.buf_is_last(buf.bufnr, bufs)
 		then M.buf_cycle(-1, bufs)
 		else M.buf_cycle(1, bufs)
 	end
 	if force -- delete the given (or current) buffer in background
-		then vim.cmd('bw! '..buf)
-		else vim.cmd('bw '..buf)
+		then vim.cmd('bd! '..buf.bufnr)
+		else vim.cmd('bd '..buf.bufnr)
 	end
 	-- NOTE:
 	--   Due to ':bd (nil)' not respecting 'buflisted',
