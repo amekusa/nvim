@@ -162,7 +162,7 @@ function M.buf_close(buf, force, bufs)
 	buf = fn.getbufinfo(buf or curr)[1]
 	if buf.changed ~= 0 then
 		local choice = fn.confirm(
-			'The buffer is modified but not saved. Force close?',
+			'The buffer has unsaved changes. Force close?',
 			'&Yes\n&No',
 			2  -- default choice (2 = No)
 		)
