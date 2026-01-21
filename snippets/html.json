@@ -1,4 +1,12 @@
 {
+  ":comment": {
+    "body": "<!-- $1 -->",
+    "prefix": ":comment"
+  },
+  "<!DOCTYPE html>": {
+    "body": "<!DOCTYPE html>",
+    "prefix": "<!DOCTYPE html>"
+  },
   "<kbd>...</kbd>": {
     "body": "<kbd>$1</kbd>",
     "prefix": "<kbd>...</kbd>"

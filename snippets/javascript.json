@@ -6,9 +6,9 @@
       ":shebang"
     ]
   },
-  ".then(_ => { ... })": {
-    "body": ".then($1 => {})",
-    "prefix": ".then(_ => { ... })"
+  ".then(_ => _)": {
+    "body": ".then($1 => $2)",
+    "prefix": ".then(_ => _)"
   },
   "/** :docblock */": {
     "body": [
@@ -22,13 +22,53 @@
     "body": "$1 => {$0}",
     "prefix": ":arrow"
   },
-  ":arrow2": {
+  ":arrow-paren": {
     "body": "($1) => {$0}",
-    "prefix": ":arrow2"
+    "prefix": ":arrow-paren"
+  },
+  ":debug-var": {
+    "body": "console.debug('${1:var}:', $1);",
+    "prefix": ":debug-var"
+  },
+  ":for": {
+    "body": "for (let ${1:i} = 0; $1 < $2; $1++) {$0}",
+    "prefix": ":for"
   },
   ":for-array": {
-    "body": "for (let i = ${1:0}; i < ${2:arr}.length; i++) $0",
+    "body": [
+      "for (let ${1:i} = ${2:0}; $1 < ${3:arr}.length; $1++) {",
+      "\t$0$3[$1]",
+      "}"
+    ],
     "prefix": ":for-array"
+  },
+  ":for-in-obj": {
+    "body": [
+      "for (let k in ${1:obj}) {",
+      "\tlet v = $1[k];",
+      "\t$0",
+      "}"
+    ],
+    "prefix": ":for-in-obj"
+  },
+  ":for-map-keys": {
+    "body": [
+      "for (let ${1:k} of ${2:map}.keys()) {",
+      "\t$0$2.get(k);",
+      "}"
+    ],
+    "prefix": ":for-map-keys"
+  },
+  ":for-obj-keys": {
+    "body": [
+      "let ${1:keys} = Object.keys(${2:obj});",
+      "for (let ${3:i} = 0; $3 < $1.length; $3++) {",
+      "\tlet k = $1[$3];",
+      "\tlet v = $2[k];",
+      "\t$0",
+      "}"
+    ],
+    "prefix": ":for-obj-keys"
   },
   "@param {_} _ - _": {
     "body": "@param {${1:type}} ${2:name} - ${3:desc}",
@@ -37,6 +77,17 @@
   "@return {_} _": {
     "body": "@return {${1:type}}${2: desc}",
     "prefix": "@return {_} _"
+  },
+  "Array.isArray(_)": {
+    "body": "Array.isArray($1)",
+    "prefix": "Array.isArray(_)"
+  },
+  "case _:": {
+    "body": [
+      "case $1:",
+      "\t$0"
+    ],
+    "prefix": "case _:"
   },
   "console.debug(_) + :debug": {
     "body": "console.debug($1);",
@@ -72,16 +123,27 @@
     "prefix": "constructor(_) { ... }"
   },
   "export _": {
-    "body": "export $0;",
+    "body": "export $0",
     "prefix": "export _"
   },
+  "export _ as _ from _": {
+    "body": "export ${1:*} as $2 from '$3';",
+    "prefix": "export _ as _ from _"
+  },
   "export default _": {
-    "body": "export default ${1:};",
+    "body": "export default ${1:}",
     "prefix": "export default _"
   },
   "function _(_) { ... }": {
     "body": "function $1($2) {$0}",
     "prefix": "function _(_) { ... }"
+  },
+  "if (_) { ... } + :if-braces": {
+    "body": "if ($1) {$0}",
+    "prefix": [
+      "if (_) { ... }",
+      ":if-braces"
+    ]
   },
   "import _ from '_'": {
     "body": "import $1 from '$2';",
@@ -90,6 +152,30 @@
   "let _ = _": {
     "body": "let $1 = $2;",
     "prefix": "let _ = _"
+  },
+  "new Error(_, {cause: _}) + :error-cause": {
+    "body": "new Error(`$1`, {cause: $2})",
+    "prefix": [
+      "new Error(_, {cause: _})",
+      ":error-cause"
+    ]
+  },
+  "new Promise((done, fail) => { ... })": {
+    "body": "new Promise((${1:done}, ${2:fail}) => {$0})",
+    "prefix": "new Promise((done, fail) => { ... })"
+  },
+  "switch (_) { ... } + :switch-case": {
+    "body": [
+      "switch ($1) {",
+      "case $2:",
+      "\t$0",
+      "\tbreak;",
+      "}"
+    ],
+    "prefix": [
+      "switch (_) { ... }",
+      ":switch-case"
+    ]
   },
   "switch (typeof _) { ... }": {
     "body": [
@@ -100,5 +186,13 @@
       "}"
     ],
     "prefix": "switch (typeof _) { ... }"
+  },
+  "undefined": {
+    "body": "undefined",
+    "prefix": "undefined"
+  },
+  "{@link _}": {
+    "body": "{@link $1}",
+    "prefix": "{@link _}"
   }
 }
