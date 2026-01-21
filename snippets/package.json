@@ -9,9 +9,16 @@
       },
       {
         "language": [
-          "javascript"
+          "javascript",
+          "vue"
         ],
         "path": "./javascript.json"
+      },
+      {
+        "language": [
+          "vue"
+        ],
+        "path": "./vue.json"
       },
       {
         "language": [

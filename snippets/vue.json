@@ -1,0 +1,12 @@
+{
+  "export default { setup() { ... } }": {
+    "body": [
+      "export default {",
+      "\tsetup() {",
+      "\t\t$0",
+      "\t},",
+      "};"
+    ],
+    "prefix": "export default { setup() { ... } }"
+  }
+}
