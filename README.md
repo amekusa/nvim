@@ -48,7 +48,7 @@ Example: Play macro `a` for each line:
 ### Marks
 `m` + `any-char` registers the current line to the jumplist of the current buffer.  
 `'` + `char` makes the cursor jump to the mark.  
-`'"` jumps to the last mark.  
+`''` jumps to the last mark.  
 
 ### Motions
 `f` + `any-char` jumps to the first matched `char` in the current line.  
