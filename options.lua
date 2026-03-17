@@ -7,7 +7,7 @@ local opt = vim.opt
 
 -- GENERAL --
 -- enable clipboard integration
-o.clipboard = 'unnamedplus'
+opt.clipboard:append('unnamedplus')
 -- enable mouse integration ('a' for all modes)
 o.mouse = 'a'
 -- enable 24-bit color?
