@@ -872,6 +872,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	{
 		-- #treesitter: parser & syntax highlighter
 		'nvim-treesitter/nvim-treesitter', enabled = true,
+		branch = 'master', -- 'main' is newer but incompatible
 		dependencies = {
 			-- optional modules:
 			'nvim-treesitter/nvim-treesitter-refactor',
