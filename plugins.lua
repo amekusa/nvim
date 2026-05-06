@@ -497,10 +497,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					-- confirm selected suggestion
 					['<CR>'] = cmp.mapping(function(fallback)
 						if cmp.visible() and cmp.get_selected_entry() then
-							if luasnip.expandable()
-								then luasnip.expand()
-								else cmp.confirm({select = false})
-							end
+							cmp.confirm({select = true})
 						else
 							fallback()
 						end
@@ -508,10 +505,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					-- confirm the first suggestion (or selected one)
 					['<C-CR>'] = cmp.mapping(function(fallback)
 						if cmp.visible() then
-							if luasnip.expandable()
-								then luasnip.expand()
-								else cmp.confirm({select = true})
-							end
+							cmp.confirm({select = true})
 						else
 							fallback()
 						end
