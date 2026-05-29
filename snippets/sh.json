@@ -1,78 +1,249 @@
 {
-  "\"${BASH_REMATCH[n]}\"": {
-    "body": "\"${BASH_REMATCH[${1:1}]}\"",
-    "prefix": "\"${BASH_REMATCH[n]}\""
+  "(bash) \"$BASH_VERSINFO\"": {
+    "body": "\"\\$BASH_VERSINFO\"",
+    "prefix": "(bash) \"$BASH_VERSINFO\""
   },
-  "#!/usr/bin/env": {
-    "body": "#!/usr/bin/env $0",
-    "prefix": "#!/usr/bin/env"
+  "(bash) \"${BASH_REMATCH[_]}\"": {
+    "body": "\"\\${BASH_REMATCH[${1:1}]}\"",
+    "prefix": "(bash) \"${BASH_REMATCH[_]}\""
   },
-  "&> /dev/null + suppress + silent": {
-    "body": "&> /dev/null",
+  "(bash) \"${FUNCNAME[0]}\"": {
+    "body": "\"\\${FUNCNAME[0]}\"",
+    "prefix": "(bash) \"${FUNCNAME[0]}\""
+  },
+  "(zsh) \"$ZSH_VERSION\"": {
+    "body": "\"\\$ZSH_VERSION\"",
+    "prefix": "(zsh) \"$ZSH_VERSION\""
+  },
+  ":array + local -a _=(_)": {
+    "body": "local -a ${1:arr}=($2)",
     "prefix": [
-      "&> /dev/null",
-      "suppress",
-      "silent"
+      ":array",
+      "local -a _=(_)"
     ]
   },
-  "[[ regex_match ]]": {
-    "body": "[[ \"$${1:var}\" =~ ${2:regex} ]]",
-    "prefix": "[[ regex_match ]]"
-  },
-  "[[:space:]] + regex space": {
-    "body": "[[:space:]]",
-    "prefix": [
-      "[[:space:]]",
-      "regex space"
-    ]
-  },
-  "array item + array element": {
+  ":array item + :array element": {
     "body": "\"\\${${1:arr}[${2:0}]}\"",
     "prefix": [
-      "array item",
-      "array element"
+      ":array item",
+      ":array element"
     ]
   },
-  "array length": {
+  ":array length": {
     "body": "\"\\${#${1:arr}[@]}\"",
-    "prefix": "array length"
+    "prefix": ":array length"
   },
-  "case": {
-    "body": [
-      "case \"$${1:var}\" in",
-      "${2:x})",
-      "\t$0",
-      "\t;;",
-      "esac"
-    ],
-    "prefix": "case"
+  ":bash + :shebang": {
+    "body": "#!/usr/bin/env bash",
+    "prefix": [
+      ":bash",
+      ":shebang"
+    ]
   },
-  "case args": {
-    "body": [
-      "case \"\\$1\" in",
-      "-$1)",
-      "\t$0",
-      "\t;;",
-      "-*)",
-      "\techo \"invalid argument '\\$1'\"",
-      "\t;;",
-      "esac"
-    ],
-    "prefix": "case args"
-  },
-  "case-1": {
+  ":case + case _ in ... esac": {
     "body": [
       "case \"\\$${1:var}\" in",
       "$2) $0;;",
       "esac"
     ],
-    "prefix": "case"
-  },
-  "command -v \"cmd\" &> /dev/null + hascommand": {
-    "body": "command -v \"$1\" &> /dev/null",
     "prefix": [
-      "command -v \"cmd\" &> /dev/null",
-      "hascommand"
+      ":case",
+      "case _ in ... esac"
+    ]
+  },
+  ":case args": {
+    "body": [
+      "case \"\\$1\" in",
+      "-h|--help)",
+      "\t$0",
+      "\treturn 0",
+      "\t;;",
+      "-*)",
+      "\techo \"Invalid argument: '\\$1'\" >&2",
+      "\treturn 1",
+      "\t;;",
+      "esac"
+    ],
+    "prefix": ":case args"
+  },
+  ":colors": {
+    "body": [
+      "if [ -t 1 ] && [ -z \"$NO_COLOR\" ]; then",
+      "\tred=\"\\033[0;31m\"",
+      "\tgrn=\"\\033[0;32m\"",
+      "\tylw=\"\\033[0;33m\"",
+      "\trst=\"\\033[0m\"",
+      "fi",
+      "_success() {",
+      "\techo -e \"[${grn}SUCCESS${rst}] $*\"",
+      "}",
+      "_warning() {",
+      "\techo -e \"[${ylw}WARNING${rst}] $*\" >&2; return 1",
+      "}",
+      "_failure() {",
+      "\techo -e \"[${red}FAILURE${rst}] $*\" >&2; return 1",
+      "}",
+      "_die() {",
+      "\t_failure \"$*\" || exit 1",
+      "}"
+    ],
+    "prefix": ":colors"
+  },
+  ":cond not empty": {
+    "body": "[ -n \"$1\" ]",
+    "prefix": ":cond not empty"
+  },
+  ":date ymd": {
+    "body": "date +%F",
+    "prefix": ":date ymd"
+  },
+  ":date ymd hms": {
+    "body": "date +'%F %H:%M:%S'",
+    "prefix": ":date ymd hms"
+  },
+  ":echo var + :debug": {
+    "body": "echo \"[DBG] ${1:var}: \\$$1\"",
+    "prefix": [
+      ":echo var",
+      ":debug"
+    ]
+  },
+  ":for args": {
+    "body": [
+      "for ${1:arg} in \"\\$@\"; do",
+      "\t$0",
+      "done"
+    ],
+    "prefix": ":for args"
+  },
+  ":for array": {
+    "body": [
+      "for ${1:each} in \"${${2:arr}[@]}\"; do",
+      "\t$0",
+      "done"
+    ],
+    "prefix": ":for array"
+  },
+  ":for array index": {
+    "body": [
+      "for ${1:i} in \"\\${!${2:arr}[@]}\"; do",
+      "\t$0\"\\${${2}[\\$${1}]}\"",
+      "done"
+    ],
+    "prefix": ":for array index"
+  },
+  ":getopts + :args options": {
+    "body": [
+      "local opts",
+      "while getopts '$1abc' opts; do",
+      "\tcase \"\\$opts\" in",
+      "\t$2a) flag_a=1 ;;",
+      "\tb) flag_b=1 ;;",
+      "\tc) flag_c=1 ;;",
+      "\t?) exit 1 ;;",
+      "\tesac",
+      "done"
+    ],
+    "prefix": [
+      ":getopts",
+      ":args options"
+    ]
+  },
+  ":has command + command -v _ &> /dev/null": {
+    "body": "command -v \"${1:cmd}\" &> /dev/null",
+    "prefix": [
+      ":has command",
+      "command -v _ &> /dev/null"
+    ]
+  },
+  ":heredoc": {
+    "body": [
+      "cat <<- EOF",
+      "$0",
+      "EOF"
+    ],
+    "prefix": ":heredoc"
+  },
+  ":if bash": {
+    "body": [
+      "if [-n \"\\$BASH_VERSINFO\" ]; then",
+      "\t$0",
+      "fi"
+    ],
+    "prefix": ":if bash"
+  },
+  ":if zsh": {
+    "body": [
+      "if [ -n \"\\$ZSH_VERSION\" ]; then",
+      "\t$0",
+      "fi"
+    ],
+    "prefix": ":if zsh"
+  },
+  ":path extension": {
+    "body": "\"\\${${1:path}##*.}\"",
+    "prefix": ":path extension"
+  },
+  ":regex": {
+    "body": "[[ \"$${1:var}\" =~ ${2:regex} ]]",
+    "prefix": ":regex"
+  },
+  ":shebang + #!/usr/bin/env _": {
+    "body": "#!/usr/bin/env ${1:bash}",
+    "prefix": [
+      ":shebang",
+      "#!/usr/bin/env _"
+    ]
+  },
+  ":stderr": {
+    "body": " >&2",
+    "prefix": ":stderr"
+  },
+  ":substring": {
+    "body": "\"\\${${1:str}:${2:offset}}\"",
+    "prefix": ":substring"
+  },
+  ":substring length": {
+    "body": "\"\\${${1:str}:${2:offset}:${3:length}}\"",
+    "prefix": ":substring length"
+  },
+  ":suppress + :no output + &> /dev/null": {
+    "body": "&> /dev/null",
+    "prefix": [
+      ":suppress",
+      ":no output",
+      "&> /dev/null"
+    ]
+  },
+  ":usage + :help": {
+    "body": [
+      "if [ $# -eq 0 ] || [ \"\\$1\" = \"--help\" ] || [ \"\\$1\" = \"-h\" ]; then",
+      "\tcat <<- EOF",
+      "\tUsage:",
+      "\t  $0",
+      "\tEOF",
+      "\treturn 1",
+      "fi"
+    ],
+    "prefix": [
+      ":usage",
+      ":help"
+    ]
+  },
+  ":while args": {
+    "body": [
+      "while [ $# -gt 0 ]; do",
+      "\t$0",
+      "\tshift",
+      "done"
+    ],
+    "prefix": ":while args"
+  },
+  "[[:space:]] + :regex space": {
+    "body": "[[:space:]]",
+    "prefix": [
+      "[[:space:]]",
+      ":regex space"
     ]
   },
   "date hms": {
@@ -83,56 +254,9 @@
     "body": "date +%s",
     "prefix": "date seconds"
   },
-  "date ymd": {
-    "body": "date +%F",
-    "prefix": "date ymd"
-  },
-  "date ymd hms": {
-    "body": "date +'%F %H:%M:%S'",
-    "prefix": "date ymd hms"
-  },
   "echo stderr": {
     "body": "echo $1 >&2",
     "prefix": "echo stderr"
-  },
-  "echo var + debug": {
-    "body": "echo \"[DBG] ${1:var}: \\$$1\"",
-    "prefix": [
-      "echo var",
-      "debug"
-    ]
-  },
-  "for args": {
-    "body": [
-      "for ${1:arg} in \"$@\"; do",
-      "\t$0",
-      "done"
-    ],
-    "prefix": "for args"
-  },
-  "for array": {
-    "body": [
-      "for ${1:each} in \"${${2:arr}[@]}\"; do",
-      "\t$0",
-      "done"
-    ],
-    "prefix": "for array"
-  },
-  "for array index": {
-    "body": [
-      "for ${1:i} in \"${!${2:arr}[@]}\"; do",
-      "\t$0\"${${2}[$${1}]}\"",
-      "done"
-    ],
-    "prefix": "for array index"
-  },
-  "heredoc": {
-    "body": [
-      "cat <<- EOF",
-      "$0",
-      "EOF"
-    ],
-    "prefix": "heredoc"
   },
   "if": {
     "body": [
@@ -145,10 +269,6 @@
   "local": {
     "body": "local ${1:var}",
     "prefix": "local"
-  },
-  "local var=\"$1\"; shift": {
-    "body": "local ${1:var}=\"\\$1\"; shift",
-    "prefix": "local var=\"$1\"; shift"
   },
   "prompt": {
     "body": [
@@ -179,32 +299,8 @@
       "while read line"
     ]
   },
-  "substring": {
-    "body": "\"\\${${1:var}:${2:1}}\"",
-    "prefix": "substring"
-  },
-  "usage + help": {
-    "body": [
-      "if [ -z \"\\$1\" ] || [ \"\\$1\" = \"--help\" ] || [ \"\\$1\" = \"-h\" ]; then",
-      "\tcat <<- EOF",
-      "\tUsage:",
-      "\t  \\$0 ${1:args}",
-      "\tEOF",
-      "\treturn 1",
-      "fi$0"
-    ],
-    "prefix": [
-      "usage",
-      "help"
-    ]
-  },
-  "while args": {
-    "body": [
-      "while [ $# -gt 0 ]; do",
-      "\t$0",
-      "\tshift",
-      "done"
-    ],
-    "prefix": "while args"
+  "split into array": {
+    "body": "IFS='${1:sep}' read -ra ${2:arr} <<< \"\\$${3:str}\"",
+    "prefix": "split into array"
   }
 }
