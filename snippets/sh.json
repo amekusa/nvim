@@ -239,13 +239,29 @@
       ":string to array"
     ]
   },
-  ":substring": {
+  ":substr offset": {
     "body": "\"\\${${1:str}:${2:offset}}\"",
-    "prefix": ":substring"
+    "prefix": ":substr offset"
   },
-  ":substring length": {
+  ":substr offset + length": {
     "body": "\"\\${${1:str}:${2:offset}:${3:length}}\"",
-    "prefix": ":substring length"
+    "prefix": ":substr offset + length"
+  },
+  ":substr remove from pattern": {
+    "body": "\"\\${${1:str}%${2:from}*}\"",
+    "prefix": ":substr remove from pattern"
+  },
+  ":substr remove from pattern (greed)": {
+    "body": "\"\\${${1:str}%%${2:from}*}\"",
+    "prefix": ":substr remove from pattern (greed)"
+  },
+  ":substr remove to pattern": {
+    "body": "\"\\${${1:str}#*${2:to}}\"",
+    "prefix": ":substr remove to pattern"
+  },
+  ":substr remove to pattern (greed)": {
+    "body": "\"\\${${1:str}##*${2:to}}\"",
+    "prefix": ":substr remove to pattern (greed)"
   },
   ":suppress + :no output + &> /dev/null": {
     "body": "&> /dev/null",
