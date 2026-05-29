@@ -33,13 +33,6 @@
     "body": "\"\\${#${1:arr}[@]}\"",
     "prefix": ":array length"
   },
-  ":bash + :shebang": {
-    "body": "#!/usr/bin/env bash",
-    "prefix": [
-      ":bash",
-      ":shebang"
-    ]
-  },
   ":case + case _ in ... esac": {
     "body": [
       "case \"\\$${1:var}\" in",
@@ -92,6 +85,14 @@
   ":cond not empty": {
     "body": "[ -n \"$1\" ]",
     "prefix": ":cond not empty"
+  },
+  ":date hms": {
+    "body": "date +'%H:%M:%S'",
+    "prefix": ":date hms"
+  },
+  ":date seconds": {
+    "body": "date +%s",
+    "prefix": ":date seconds"
   },
   ":date ymd": {
     "body": "date +%F",
@@ -164,9 +165,20 @@
     ],
     "prefix": ":heredoc"
   },
+  ":if + if _; then ... fi": {
+    "body": [
+      "if ${1:cond}; then",
+      "\t$0",
+      "fi"
+    ],
+    "prefix": [
+      ":if",
+      "if _; then ... fi"
+    ]
+  },
   ":if bash": {
     "body": [
-      "if [-n \"\\$BASH_VERSINFO\" ]; then",
+      "if [ -n \"\\$BASH_VERSINFO\" ]; then",
       "\t$0",
       "fi"
     ],
@@ -184,9 +196,34 @@
     "body": "\"\\${${1:path}##*.}\"",
     "prefix": ":path extension"
   },
+  ":prompt": {
+    "body": [
+      "while true; do",
+      "\tread -n 1 -p \"${1:msg}? (Y/N) \" ${2:answer}; echo",
+      "\tcase \"$${2:answer}\" in",
+      "\t[Yy])",
+      "\t\t$3",
+      "\t\t;;",
+      "\t[Nn])",
+      "\t\t$4",
+      "\t\t;;",
+      "\t*)",
+      "\t\techo \"Type Y or N\"",
+      "\tesac",
+      "done"
+    ],
+    "prefix": ":prompt"
+  },
   ":regex": {
     "body": "[[ \"$${1:var}\" =~ ${2:regex} ]]",
     "prefix": ":regex"
+  },
+  ":regex space + [[:space:]]": {
+    "body": "[[:space:]]",
+    "prefix": [
+      ":regex space",
+      "[[:space:]]"
+    ]
   },
   ":shebang + #!/usr/bin/env _": {
     "body": "#!/usr/bin/env ${1:bash}",
@@ -195,9 +232,12 @@
       "#!/usr/bin/env _"
     ]
   },
-  ":stderr": {
-    "body": " >&2",
-    "prefix": ":stderr"
+  ":split into array + :string to array": {
+    "body": "IFS='${1:sep}' read -ra ${2:arr} <<< \"\\$${3:str}\"",
+    "prefix": [
+      ":split into array",
+      ":string to array"
+    ]
   },
   ":substring": {
     "body": "\"\\${${1:str}:${2:offset}}\"",
@@ -214,6 +254,10 @@
       ":no output",
       "&> /dev/null"
     ]
+  },
+  ":to stderr": {
+    "body": ">&2",
+    "prefix": ":to stderr"
   },
   ":usage + :help": {
     "body": [
@@ -239,68 +283,20 @@
     ],
     "prefix": ":while args"
   },
-  "[[:space:]] + :regex space": {
-    "body": "[[:space:]]",
+  ":while lines + :read lines": {
+    "body": [
+      "local IFS ${1:line}",
+      "while IFS= read -r ${1}; do",
+      "\t$0",
+      "done < ${2:file}"
+    ],
     "prefix": [
-      "[[:space:]]",
-      ":regex space"
+      ":while lines",
+      ":read lines"
     ]
   },
-  "date hms": {
-    "body": "date +'%H:%M:%S'",
-    "prefix": "date hms"
-  },
-  "date seconds": {
-    "body": "date +%s",
-    "prefix": "date seconds"
-  },
-  "echo stderr": {
-    "body": "echo $1 >&2",
-    "prefix": "echo stderr"
-  },
-  "if": {
-    "body": [
-      "if ${1:cond}; then",
-      "\t$0",
-      "fi"
-    ],
-    "prefix": "if"
-  },
-  "local": {
+  "local _": {
     "body": "local ${1:var}",
-    "prefix": "local"
-  },
-  "prompt": {
-    "body": [
-      "while true; do",
-      "\tread -n 1 -p \"${1:msg}? (Y/N) \" ${2:answer}; echo",
-      "\tcase \"$${2:answer}\" in",
-      "\t[Yy])",
-      "\t\t$3",
-      "\t\t;;",
-      "\t[Nn])",
-      "\t\t$4",
-      "\t\t;;",
-      "\t*) echo \"Type Y or N\" ;;",
-      "\tesac",
-      "done"
-    ],
-    "prefix": "prompt"
-  },
-  "read line by line + while read line": {
-    "body": [
-      "local IFS line",
-      "while IFS= read -r line; do",
-      "\t$0",
-      "done < ${1:file}"
-    ],
-    "prefix": [
-      "read line by line",
-      "while read line"
-    ]
-  },
-  "split into array": {
-    "body": "IFS='${1:sep}' read -ra ${2:arr} <<< \"\\$${3:str}\"",
-    "prefix": "split into array"
+    "prefix": "local _"
   }
 }
