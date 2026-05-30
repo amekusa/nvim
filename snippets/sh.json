@@ -59,28 +59,32 @@
     ],
     "prefix": ":case args"
   },
-  ":colors": {
+  ":colors + :ansi": {
     "body": [
       "if [ -t 1 ] && [ -z \"$NO_COLOR\" ]; then",
-      "\tred=\"\\033[0;31m\"",
-      "\tgrn=\"\\033[0;32m\"",
-      "\tylw=\"\\033[0;33m\"",
-      "\trst=\"\\033[0m\"",
+      "\tred=$'\\e[0;31m'",
+      "\tgrn=$'\\e[0;32m'",
+      "\tylw=$'\\e[0;33m'",
+      "\tmag=$'\\e[0;35m'",
+      "\tcyn=$'\\e[0;36m'",
+      "\tbld=$'\\e[1m'",
+      "\tund=$'\\e[4m'",
+      "\trst=$'\\e[0m'",
       "fi",
-      "_success() {",
-      "\techo -e \"[${grn}SUCCESS${rst}] $*\"",
+      "_ok() {",
+      "\techo -e \"[${grn}OK${rst}] $*\"",
       "}",
-      "_warning() {",
-      "\techo -e \"[${ylw}WARNING${rst}] $*\" >&2; return 1",
+      "_warn() {",
+      "\techo -e \"[${ylw}WARN${rst}] $*\"",
       "}",
-      "_failure() {",
-      "\techo -e \"[${red}FAILURE${rst}] $*\" >&2; return 1",
-      "}",
-      "_die() {",
-      "\t_failure \"$*\" || exit 1",
+      "_error() {",
+      "\techo -e \"[${red}ERROR${rst}] $*\" >&2; return 1",
       "}"
     ],
-    "prefix": ":colors"
+    "prefix": [
+      ":colors",
+      ":ansi"
+    ]
   },
   ":cond not empty": {
     "body": "[ -n \"$1\" ]",
