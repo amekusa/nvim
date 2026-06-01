@@ -481,7 +481,10 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					keyword_length = 2,
 				},
 				confirmation = {
-					default_behavior = cmp.ConfirmBehavior.Insert
+					default_behavior = cmp.ConfirmBehavior.Insert,
+				},
+				formatting = {
+					expandable_indicator = false,
 				},
 				experimental = {
 					ghost_text = false,
