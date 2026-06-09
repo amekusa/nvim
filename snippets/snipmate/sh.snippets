@@ -1,0 +1,227 @@
+snippet (bash)_$BASH_VERSINFO
+	\$BASH_VERSINFO
+
+snippet (bash)_${FUNCNAME[0]}
+	\${FUNCNAME[0]}
+
+snippet (bash)_:regex_captured_groups (bash) ${BASH_REMATCH[_]}
+	\${BASH_REMATCH[${1:1}]}
+
+snippet (zsh)_$ZSH_VERSION
+	\$ZSH_VERSION
+
+snippet :array local -a _=(_)
+	local -a ${1:arr}=($2)
+
+snippet :array_item :array element
+	\${${1:arr}[${2:0}]}
+
+snippet :array_length
+	\${#${1:arr}[@]}
+
+snippet :array_push
+	${1:arr}+=(${2:item})
+
+snippet :case case _ in ... esac
+	case "\$${1:var}" in
+	$2) $0;;
+	esac
+
+snippet :case_args
+	case "\$1" in
+	-h|--help)
+		$0
+		return 0
+		;;
+	-*)
+		echo "Invalid argument: '\$1'" >&2
+		return 1
+		;;
+	esac
+
+snippet :colors :ansi
+	if [ -t 1 ] && [ -z "$NO_COLOR" ]; then
+		red=$'\e[0;31m'
+		grn=$'\e[0;32m'
+		ylw=$'\e[0;33m'
+		mag=$'\e[0;35m'
+		cyn=$'\e[0;36m'
+		bld=$'\e[1m'
+		und=$'\e[4m'
+		rst=$'\e[0m'
+	fi
+	_ok() {
+		echo -e "[${grn}OK${rst}] $*"
+	}
+	_warn() {
+		echo -e "[${ylw}WARN${rst}] $*"
+	}
+	_error() {
+		echo -e "[${red}ERROR${rst}] $*" >&2; return 1
+	}
+
+snippet :cond_not_empty
+	[ -n "$1" ]
+
+snippet :date_hms
+	date +'%H:%M:%S'
+
+snippet :date_seconds
+	date +%s
+
+snippet :date_ymd
+	date +%F
+
+snippet :date_ymd_hms
+	date +'%F %H:%M:%S'
+
+snippet :echo_var :debug
+	echo "[DBG] ${1:var}: \$$1"
+
+snippet :fallback_empty
+	\${${1:var}:-${fb}}
+
+snippet :for
+	local ${1:i}
+	for ((${1}=${2:0}; ${1} < ${3:n}; ${1}++)); do
+		$0
+	done
+
+snippet :for_args
+	for ${1:arg} in "\$@"; do
+		$0
+	done
+
+snippet :for_array
+	for ${1:each} in "${${2:arr}[@]}"; do
+		$0
+	done
+
+snippet :for_array_index
+	for ${1:i} in "\${!${2:arr}[@]}"; do
+		$0"\${${2}[\$${1}]}"
+	done
+
+snippet :for_string
+	local ${1:i}
+	for ((${1}=0; ${1} < \${#${2:str}}; ${1}++)); do
+		"\${${2}:${1}:1}"
+	done
+
+snippet :getopts :args options
+	local opts
+	while getopts '$1abc' opts; do
+		case "\$opts" in
+		$2a) flag_a=1 ;;
+		b) flag_b=1 ;;
+		c) flag_c=1 ;;
+		?) exit 1 ;;
+		esac
+	done
+
+snippet :has_command command -v _ &> /dev/null
+	command -v "${1:cmd}" &> /dev/null
+
+snippet :help :usage
+	if [ $# -eq 0 ] || [ "\$1" = "--help" ] || [ "\$1" = "-h" ]; then
+		cat <<- EOF
+		Usage:
+		  $0
+		EOF
+		return 1
+	fi
+
+snippet :heredoc
+	cat <<- EOF
+	$0
+	EOF
+
+snippet :if if _; then ... fi
+	if ${1:cond}; then
+		$0
+	fi
+
+snippet :if_bash
+	if [ -n "\$BASH_VERSINFO" ]; then
+		$0
+	fi
+
+snippet :if_zsh
+	if [ -n "\$ZSH_VERSION" ]; then
+		$0
+	fi
+
+snippet :path_extension
+	\${${1:path}##*.}
+
+snippet :prompt
+	while true; do
+		read -n 1 -p "${1:msg}? (Y/N) " ${2:answer}; echo
+		case "$${2:answer}" in
+		[Yy])
+			$3
+			;;
+		[Nn])
+			$4
+			;;
+		*)
+			echo "Type Y or N"
+		esac
+	done
+
+snippet :regex
+	[[ "$${1:var}" =~ ${2:regex} ]]
+
+snippet :regex_space [[:space:]]
+	[[:space:]]
+
+snippet :shebang #!/usr/bin/env _
+	#!/usr/bin/env ${1:bash}
+
+snippet :split_into_array :string to array
+	IFS='${1:sep}' read -ra ${2:arr} <<< "\$${3:str}"
+
+snippet :substr_offset
+	\${${1:str}:${2:offset}}
+
+snippet :substr_offset_+_length
+	\${${1:str}:${2:offset}:${3:length}}
+
+snippet :substr_remove_from_pattern
+	\${${1:str}%${2:from}*}
+
+snippet :substr_remove_from_pattern_(greed)
+	\${${1:str}%%${2:from}*}
+
+snippet :substr_remove_to_pattern
+	\${${1:str}#*${2:to}}
+
+snippet :substr_remove_to_pattern_(greed)
+	\${${1:str}##*${2:to}}
+
+snippet :suppress :no output, &> /dev/null
+	&> /dev/null
+
+snippet :to_stderr
+	>&2
+
+snippet :while_args
+	while [ $# -gt 0 ]; do
+		$0
+		shift
+	done
+
+snippet :while_lines :read lines
+	local IFS ${1:line}
+	while IFS= read -r ${1}; do
+		$0
+	done < ${2:file}
+
+snippet local_
+	local ${1:var}
+
+snippet then_..._fi
+	then
+		$0
+	fi
+
