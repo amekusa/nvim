@@ -1,9 +1,11 @@
 ---- PLUGINS ----
 local vim = vim
 local autocmd = vim.api.nvim_create_autocmd
+local usercmd = vim.api.nvim_create_user_command
 local my = _custom
 local map = my.fn.map
 local conf = my.conf.plugins
+local fmt = string.format
 
 -- filetypes to load treesitter
 local ts_filetypes = {
@@ -343,8 +345,21 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		'L3MON4D3/LuaSnip', enabled = true,
 		build = 'make install_jsregexp',
 		config = function()
+			local snippets = my.root..'snippets/snipmate'
 			require('luasnip.loaders.from_snipmate').lazy_load({
-				paths = {my.root..'snippets/snipmate'}
+				paths = {snippets}
+			})
+			usercmd('LuaSnipEdit', function()
+				require('luasnip.loaders').edit_snippet_files({
+					extend = function(ft, paths)
+						if #paths == 0 then -- If it doesn't exist, creat it
+							return {{ft, fmt('%s/%s.snippets', snippets, ft)}}
+						end
+						return {}
+					end
+				})
+			end, {
+				desc = 'custom: Edit snippet files'
 			})
 		end
 	},
