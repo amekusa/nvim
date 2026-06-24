@@ -1,6 +1,7 @@
 ---[ Amekusa's NeoVim Configuration ]---
 -- github.com/amekusa/nvim
 
+-- localize globals
 local vim = vim
 
 -- namespace
@@ -24,8 +25,8 @@ if conf.loader then
 	vim.loader.enable()
 end
 
--- custom global
-_custom = {
+-- globals
+local expose = {
 	ns   = ns,
 	root = root,
 	conf = conf,
@@ -33,7 +34,10 @@ _custom = {
 }
 
 -- functions
-_custom.fn = require(ns..'fn')
+expose.fn = require(ns..'fn')
+
+-- expose globals
+_custom = expose
 
 -- load modules
 if conf.options.enable then require(ns..'options') end
