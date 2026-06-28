@@ -140,8 +140,8 @@ function M.smart_indent()
 		end
 
 		-- use longer one
-		local len_prev = indents_prev:len()
-		local len_next = indents_next:len()
+		local len_prev = #indents_prev
+		local len_next = #indents_next
 		if len_prev > 0 or len_next > 0 then
 			if len_prev > len_next
 				then api.nvim_set_current_line(indents_prev)
