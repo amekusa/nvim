@@ -93,7 +93,7 @@ end
 
 -- Returns whether `str` starts with `with`
 function M.starts(str, with)
-   return string.sub(str, 1, string.len(with)) == with
+   return string.sub(str, 1, #with) == with
 end
 
 -- Alias of `vim.keymap.set` but the description comes first
