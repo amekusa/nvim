@@ -8,7 +8,7 @@ local vim = vim
 local ns = (...)..'.'
 
 -- root path
-local root = vim.fn.stdpath('config')..'/lua/'..ns:gsub('%.', '/') -- replace '.' in namespace with '/'
+local root = vim.fn.stdpath('config')..'/lua/'..string.gsub(ns, '%.', '/') -- replace '.' in namespace with '/'
 
 -- default config
 local conf = require(ns..'config-default')
