@@ -1,8 +1,12 @@
 ---- FUNCTIONS ----
+
+local type = type
+local pairs = pairs
 local vim = vim
 local api = vim.api
 local fn = vim.fn
 local my = _custom
+
 local M = {}
 
 -- Notifies the user with the given message.
