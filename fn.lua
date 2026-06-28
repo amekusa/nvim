@@ -29,7 +29,7 @@ function M.no(x)
 	return x == '' or x == 0
 end
 
--- Writes a file with the given date
+-- Writes the given data to a file
 function M.write(file, data, mode)
 	local f = io.open(file, mode or 'w')
 	if not f then
