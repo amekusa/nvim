@@ -8,12 +8,12 @@ local vim = vim
 local ns = (...)..'.'
 
 -- root path
-local root = vim.fn.stdpath('config')..'/lua/'..string.gsub(ns, '%.', '/') -- replace '.' in namespace with '/'
+local root = vim.fn.stdpath('config')..'/lua/'..string.gsub(ns, '%.', '/')
 
 -- default config
 local conf = require(ns..'config-default')
 
--- user config (if it exists)
+-- user config
 if vim.fn.filereadable(root..'config.lua') ~= 0 then
 	conf = vim.tbl_deep_extend('force', conf, require(ns..'config'))
 end
