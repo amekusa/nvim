@@ -25,19 +25,16 @@ if conf.loader then
 	vim.loader.enable()
 end
 
--- globals
-local expose = {
+-- custom globals
+_custom = {
 	ns   = ns,
 	root = root,
 	conf = conf,
 	var  = {},
 }
 
--- functions
-expose.fn = require(ns..'fn')
-
--- expose globals
-_custom = expose
+-- custom functions
+_custom.fn = require(ns..'fn')
 
 -- load modules
 if conf.options.enable then require(ns..'options') end
