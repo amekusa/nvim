@@ -7,20 +7,6 @@ local map = my.fn.map
 local conf = my.conf.plugins
 local fmt = string.format
 
--- filetypes to load treesitter
-local ts_filetypes = {
-	'vim',
-	'lua',
-	'sh', 'bash', 'zsh',
-	'json', 'yaml',
-	'markdown',
-
-	'html', 'xml', 'svg',
-	'css', 'less', 'scss',
-	'javascript', 'typescript',
-	'php',
-}
-
 -- treesitter language modules
 local ts_langs = {
 	'vim', 'vimdoc', 'query',
@@ -142,8 +128,6 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		-- #comment: comment-out utility
 		'numToStr/Comment.nvim', enabled = true,
 		dependencies = {'nvim-treesitter/nvim-treesitter'},
-		lazy = true,
-		ft = ts_filetypes,
 		config = function()
 			require('Comment').setup({
 				mappings = {
@@ -379,7 +363,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- #mason-lspconfig: total LSP management
+		-- #mason-lspconfig: a bridge between mason and lspconfig
 		'williamboman/mason-lspconfig.nvim', enabled = true,
 		dependencies = {
 			'williamboman/mason.nvim', -- LSP package manager
@@ -891,15 +875,6 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 			--'nvim-treesitter/nvim-treesitter-textobjects',
 			--'nvim-treesitter/nvim-treesitter-context',
 		},
-		lazy = true,
-		cmd = {
-			'TSInstallInfo',
-			'TSConfigInfo',
-			'TSInstall',
-			'TSUninstall',
-			'TSUpdate',
-		},
-		ft = ts_filetypes,
 		build = ':TSUpdate',
 		config = function()
 			require('nvim-treesitter.configs').setup({
