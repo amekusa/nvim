@@ -329,10 +329,14 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		'L3MON4D3/LuaSnip', enabled = true,
 		build = 'make install_jsregexp',
 		config = function()
+			local api = require('luasnip')
+			api.filetype_extend('arduino', {'cpp'})
+
 			local snippets = my.root..'snippets/snipmate'
 			require('luasnip.loaders.from_snipmate').lazy_load({
 				paths = {snippets}
 			})
+
 			usercmd('LuaSnipEdit', function()
 				require('luasnip.loaders').edit_snippet_files({
 					extend = function(ft, paths)
