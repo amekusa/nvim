@@ -336,10 +336,8 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 			usercmd('LuaSnipEdit', function()
 				require('luasnip.loaders').edit_snippet_files({
 					extend = function(ft, paths)
-						if #paths == 0 then -- If it doesn't exist, creat it
-							return {{ft, fmt('%s/%s.snippets', snippets, ft)}}
-						end
-						return {}
+						-- If it doesn't exist, creat it
+						return #paths == 0 and {{ft, fmt('%s/%s.snippets', snippets, ft)}} or {}
 					end
 				})
 			end, {
