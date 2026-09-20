@@ -74,8 +74,8 @@ if conf.clear_jumplist then
 	})
 end
 
-if conf.auto_stopinsert then
-	autocmd({'FocusLost', 'WinLeave'}, {
+if conf.escape_insert then
+	autocmd(conf.escape_insert_on, {
 		desc = 'Automatically escape insert mode',
 		callback = function()
 			if vim.fn.mode() ~= 'c' then vim_cmd.stopinsert() end
