@@ -330,7 +330,10 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		build = 'make install_jsregexp',
 		config = function()
 			local api = require('luasnip')
-			api.filetype_extend('arduino', {'cpp'})
+			api.filetype_extend('cpp',     {'c'})
+			api.filetype_extend('arduino', {'c', 'cpp'})
+			api.filetype_extend('html',    {'css', 'javascript'})
+			api.filetype_extend('vue',     {'html', 'css', 'javascript'})
 
 			local snippets = my.root..'snippets/snipmate'
 			require('luasnip.loaders.from_snipmate').lazy_load({
