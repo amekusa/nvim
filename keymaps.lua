@@ -98,6 +98,7 @@ map('custom: Left',                   'x', '<S-Left>',  '<Left>')
 map('custom: Normal Mode', 'i', 'jk', '<Esc><Right>')
 map('custom: Normal Mode', 'i', 'kj', '<Esc>')
 map('custom: Normal Mode', 'x', 'v',  '<Esc>')
+map('custom: Normal Mode', 't', '<Esc>', '<C-\\><C-n>')
 map('custom: Normal Mode', 'c', '<C-q>', '<C-c>')
 --   NOTE: for some reason, <Esc> as rhs for command line, works like <Esc><CR> actually,
 --         which is unwanted behavior. so, use <C-c> instead.
