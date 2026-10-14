@@ -94,20 +94,20 @@ map('custom: Down',                   'x', '<S-Down>',  '<Down>')
 map('custom: Left',                   'x', '<S-Left>',  '<Left>')
 
 
--- visual mode
-map('custom: Visual-Block Mode', 'x', 'v', '<C-v>')
-
-
--- normal mode
-map('custom: Normal Mode', 'i', 'jk', '<Esc><Right>')
-map('custom: Normal Mode', 'i', 'kj', '<Esc>')
+-- mode switching
+---- to normal mode
+map('custom: Normal Mode', 'i', 'jk',    '<Esc><Right>')
+map('custom: Normal Mode', 'i', 'kj',    '<Esc>')
 map('custom: Normal Mode', 't', '<Esc>', '<C-\\><C-n>')
 map('custom: Normal Mode', 'c', '<C-q>', '<C-c>')
 --   NOTE: for some reason, <Esc> as rhs for command line, works like <Esc><CR> actually,
 --         which is unwanted behavior. so, use <C-c> instead.
 
--- insert mode
+---- to insert mode
 map('custom: Insert Mode', 'x', 'i', '<Esc>i')
+
+---- to visual mode
+map('custom: Visual-Block Mode', 'x', 'v', '<C-v>')
 
 
 -- prev/next buffer
