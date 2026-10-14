@@ -1,0 +1,46 @@
+snippet @param
+	@param {$1} $2 - $3
+
+snippet date
+	os.date(${1:'%Y-%m-%d %X'})
+
+snippet for_i
+	for i = ${1:1}, #${2:arr}${3:, 1} do
+		$0
+	end
+
+snippet for_k,v
+	for k,v in pairs(${1:tbl}) do
+		$0
+	end
+
+snippet function
+	function$1($2)
+		$0
+	end
+
+snippet if_then_else
+	if $1
+		then $2
+		else $3
+	end
+
+snippet local
+	local ${1:name} = ${2:nil}
+
+snippet local_function
+	local function ${1:name}($2)
+		$0
+	end
+
+snippet not_equal
+	~=
+
+snippet self.
+	self.
+
+snippet then_..._end
+	then
+		$1
+	end$0
+

@@ -160,9 +160,11 @@ snippet :prompt
 		case "$${2:answer}" in
 		[Yy])
 			$3
+			break
 			;;
 		[Nn])
 			$4
+			break
 			;;
 		*)
 			echo "Type Y or N"

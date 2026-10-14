@@ -1,0 +1,45 @@
+snippet #pragma_once
+	#pragma once
+
+snippet #include
+	#include $0
+
+snippet #include_<string.h>
+	#include <string.h>
+
+snippet nullptr
+	nullptr
+
+snippet const
+	const
+
+snippet constexpr
+	constexpr
+
+snippet static_constexpr
+	static constexpr
+
+snippet static_constexpr_size_t
+	static constexpr size_t
+
+snippet if_(...)_{...}
+	if ($1) {
+		$0;
+	}
+
+snippet :for_i
+	for (size_t ${1:i} = ${2:0}; $1 < $3; $1++) {
+		$0;
+	}
+
+snippet :for_array
+	for (${1:TYPE} ${2:VAR} : ${3:ARR}) {
+		$0;
+	}
+
+snippet strcmp(...)
+	strcmp(${1:A}, ${2:B})
+
+snippet :str_equals
+	strcmp(${1:A}, ${2:B}) == 0
+

@@ -1,0 +1,17 @@
+snippet :setup
+	<script setup>
+		$0
+	</script>
+
+snippet <template></template>
+	<template>
+		$0
+	</template>
+
+snippet export_default_{_setup()_{_..._}_}
+	export default {
+		setup() {
+			$0
+		},
+	};
+
