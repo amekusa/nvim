@@ -47,7 +47,7 @@ map('custom: Home', nxo, '<Home>', '^')
 map('custom: Home', 'i', '<Home>', '<C-o>^')
 
 -- remap end key
-map('custom: End', nxo, ';', '<End>')
+map('custom: End', nxo, '"', '<End>')
 
 -- scrolling
 map('custom: Scroll Up',    nx, '<C-e>', '<C-u>')
@@ -62,10 +62,10 @@ map('custom: Outdent', ni,  '<S-Tab>', '<Cmd><<CR>')
 map('custom: Outdent', 'x', '<S-Tab>', ':<<CR>gv')
 
 -- insert line below/above
-map('custom: Insert Line Below', 'n', '<C-CR>', 'o')
-map('custom: Insert Line Below', 'i', '<C-CR>', '<Esc>o')
-map('custom: Insert Line Above', 'n', '<S-CR>', 'O')
-map('custom: Insert Line Above', 'i', '<S-CR>', '<Esc>O')
+map('custom: Insert Line Below', 'n', '<S-CR>', 'o')
+map('custom: Insert Line Below', 'i', '<S-CR>', '<Esc>o')
+map('custom: Insert Line Above', 'n', '<C-CR>', 'O')
+map('custom: Insert Line Above', 'i', '<C-CR>', '<Esc>O')
 
 -- move line(s) up/down
 map('custom: Move Line Up',    'n', '<C-k>', '<Cmd>m.-2<CR>==')
@@ -80,13 +80,13 @@ map('custom: Move Lines Down', 'x', '<C-j>', ":'<,'>m'>+1<CR>gv")
 --          =: autoindent
 
 -- shift + arrows = move with visual mode
-map('custom: Up with Visual Mode',    'i', '<S-Up>',    '<Esc>v<Up>')
-map('custom: Right with Visual Mode', 'i', '<S-Right>', '<Esc>v<Right>')
-map('custom: Down with Visual Mode',  'i', '<S-Down>',  '<Esc>v<Down>')
-map('custom: Left with Visual Mode',  'i', '<S-Left>',  '<Esc>v<Left>')
-map('custom: Up with Visual Mode',    'n', '<S-Up>',    'v<Up>')
+map('custom: Up with Visual Mode',    'i', '<S-Up>',    '<Right><Esc>V')
+map('custom: Right with Visual Mode', 'i', '<S-Right>', '<Right><Esc>v')
+map('custom: Down with Visual Mode',  'i', '<S-Down>',  '<Right><Esc>V')
+map('custom: Left with Visual Mode',  'i', '<S-Left>',  '<Esc>v')
+map('custom: Up with Visual Mode',    'n', '<S-Up>',    'V')
 map('custom: Right with Visual Mode', 'n', '<S-Right>', 'v<Right>')
-map('custom: Down with Visual Mode',  'n', '<S-Down>',  'v<Down>')
+map('custom: Down with Visual Mode',  'n', '<S-Down>',  'V')
 map('custom: Left with Visual Mode',  'n', '<S-Left>',  'v<Left>')
 map('custom: Up',                     'x', '<S-Up>',    '<Up>')
 map('custom: Right',                  'x', '<S-Right>', '<Right>')
@@ -94,10 +94,13 @@ map('custom: Down',                   'x', '<S-Down>',  '<Down>')
 map('custom: Left',                   'x', '<S-Left>',  '<Left>')
 
 
+-- visual mode
+map('custom: Visual-Block Mode', 'x', 'v', '<C-v>')
+
+
 -- normal mode
 map('custom: Normal Mode', 'i', 'jk', '<Esc><Right>')
 map('custom: Normal Mode', 'i', 'kj', '<Esc>')
-map('custom: Normal Mode', 'x', 'v',  '<Esc>')
 map('custom: Normal Mode', 't', '<Esc>', '<C-\\><C-n>')
 map('custom: Normal Mode', 'c', '<C-q>', '<C-c>')
 --   NOTE: for some reason, <Esc> as rhs for command line, works like <Esc><CR> actually,
