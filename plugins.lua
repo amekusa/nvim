@@ -272,6 +272,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 			local refresh = 3000
 
 			-- components
+			local mode     = {'mode', fmt = function(str) return str:sub(1,1) end}
 			local branch   = {'branch', icons_enabled = false}
 			local filetype = {'filetype', icon_only = true}
 			local diff     = {'diff', symbols = {modified = '*'}}
@@ -300,7 +301,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					}
 				},
 				sections = {
-					lualine_a = {'mode'},
+					lualine_a = {mode},
 					lualine_b = {branch},
 					lualine_c = {filetype, buffers},
 					lualine_x = {'diagnostics', diff, 'filesize'},
