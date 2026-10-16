@@ -272,7 +272,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 			local refresh = 3000
 
 			-- components
-			local mode     = {'mode', fmt = function(str) return str:sub(1,1) end}
+			local mode     = {'mode', color = {gui = 'bold'}, fmt = function(str) return str:sub(1,1) end}
 			local branch   = {'branch', icons_enabled = false}
 			local filetype = {'filetype', icon_only = true}
 			local diff     = {'diff', symbols = {modified = '*'}}
