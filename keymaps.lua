@@ -31,12 +31,12 @@ vim.g.maplocalleader = ' '
 
 
 -- move to the prev/next word
-map('custom: Prev Word', nxo, '<M-Left>',  'b')
-map('custom: Prev Word', 'i', '<M-Left>',  '<C-o>b')
-map('custom: Prev Word', 't', '<M-Left>',  '<Esc>b')
-map('custom: Next Word', nxo, '<M-Right>', 'w')
-map('custom: Next Word', 'i', '<M-Right>', '<C-o>w')
-map('custom: Next Word', 't', '<M-Right>', '<Esc>w')
+map('custom: Prev Word', nxo, '<M-Left>',  'B')
+map('custom: Prev Word', 'i', '<M-Left>',  '<C-o>B')
+map('custom: Prev Word', 't', '<M-Left>',  '<Esc>B')
+map('custom: Next Word', nxo, '<M-Right>', 'W')
+map('custom: Next Word', 'i', '<M-Right>', '<C-o>W')
+map('custom: Next Word', 't', '<M-Right>', '<Esc>W')
 
 -- delete the prev word (option + backspace)
 map('custom: Delete Word', 'n', '<M-BS>', 'BdW')
