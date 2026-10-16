@@ -47,8 +47,8 @@ map('custom: First Char', nxo, 'H', '^')
 map('custom: Last Char',  nxo, 'L', '$')
 
 -- home key
-map('custom: Home', nxo, '<Home>', '^')
-map('custom: Home', 'i', '<Home>', '<C-o>^')
+map('custom: First Char', nxo, '<Home>', '^')
+map('custom: First Char', 'i', '<Home>', '<C-o>^')
 
 
 -- scrolling
