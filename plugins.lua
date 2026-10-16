@@ -634,6 +634,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 			local actions = require('telescope.actions')
 			local layout  = require('telescope.actions.layout')
 			local mappings = {
+				['<Esc>'] = actions.close,
 				['<C-w>'] = actions.close,
 				['<C-e>'] = actions.preview_scrolling_up,
 				['<C-k>'] = actions.move_selection_previous,
