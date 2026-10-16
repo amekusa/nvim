@@ -7,20 +7,6 @@ local map = my.fn.map
 local conf = my.conf.plugins
 local fmt = string.format
 
--- treesitter language modules
-local ts_langs = {
-	'vim', 'vimdoc', 'query',
-	'lua',
-	'bash',
-	'json', 'yaml',
-	'markdown',
-
-	'html', 'xml',
-	'css', 'scss', -- no `less` module :(
-	'javascript', 'jsdoc', 'typescript',
-	'php', 'phpdoc',
-}
-
 local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	---- #A ----
 	{
@@ -893,7 +879,18 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		build = ':TSUpdate',
 		config = function()
 			require('nvim-treesitter.configs').setup({
-				ensure_installed = ts_langs,
+				ensure_installed = {
+					'vim', 'vimdoc', 'query',
+					'lua',
+					'bash',
+					'json', 'yaml',
+					'markdown',
+
+					'html', 'xml',
+					'css', 'scss',
+					'javascript', 'jsdoc', 'typescript',
+					'php', 'phpdoc',
+				},
 				sync_install = false,
 				auto_install = false,
 				highlight = {
