@@ -39,8 +39,8 @@ map('custom: Next Word', 'i', '<M-Right>', '<C-o>w')
 map('custom: Next Word', 't', '<M-Right>', '<Esc>w')
 
 -- delete the prev word (option + backspace)
-map('custom: Delete Word', 'n', '<M-BS>', 'db');
-map('custom: Delete Word', 'i', '<M-BS>', '<C-o>db');
+map('custom: Delete Word', 'n', '<M-BS>', 'BdW')
+map('custom: Delete Word', 'i', '<M-BS>', '<Esc>BdWi')
 
 -- better home key
 map('custom: Home', nxo, '<Home>', '^')
