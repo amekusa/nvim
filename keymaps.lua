@@ -42,12 +42,14 @@ map('custom: Next Word', 't', '<M-Right>', '<Esc>w')
 map('custom: Delete Word', 'n', '<M-BS>', 'BdW')
 map('custom: Delete Word', 'i', '<M-BS>', '<Esc>BdWi')
 
--- better home key
+-- first/last char
+map('custom: First Char', nxo, 'H', '^')
+map('custom: Last Char',  nxo, 'L', '$')
+
+-- home key
 map('custom: Home', nxo, '<Home>', '^')
 map('custom: Home', 'i', '<Home>', '<C-o>^')
 
--- remap end key
-map('custom: End', nxo, '"', '<End>')
 
 -- scrolling
 map('custom: Scroll Up',    nx, '<C-e>', '<C-u>')
