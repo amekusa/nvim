@@ -106,7 +106,7 @@ map('custom: Normal Mode', 'c', '<C-q>', '<C-c>')
 --         which is unwanted behavior. so, use <C-c> instead.
 
 ---- to insert mode
-map('custom: Insert Mode', 'x', 'i', '<Esc>i')
+map('custom: Insert Mode', 'x', 'i', '<Esc><Cmd>startinsert<CR>')
 
 ---- to visual mode
 map('custom: Visual-Block Mode', 'x', 'v', '<C-v>')
