@@ -40,7 +40,7 @@ map('custom: Next Word', 't', '<M-Right>', '<Esc>W')
 
 -- delete the prev word (option + backspace)
 map('custom: Delete Word', 'n', '<M-BS>', 'BdW')
-map('custom: Delete Word', 'i', '<M-BS>', '<Esc>BdWi')
+map('custom: Delete Word', 'i', '<M-BS>', '<Esc>BdW<Cmd>startinsert<CR>')
 
 -- first/last char
 map('custom: First Char', nxo, 'H', '^')
