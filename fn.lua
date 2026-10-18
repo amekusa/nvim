@@ -95,6 +95,15 @@ function M.tbl_merge(t1, t2, new)
 	return r
 end
 
+-- Concatenates two tables
+function M.tbl_concat(t1, t2, new)
+	local r = new and M.tbl_copy(t1) or t1
+	for i = 1, #t2 do
+		r[#r + 1] = t2[i]
+	end
+	return r
+end
+
 -- Returns whether `str` starts with `with`
 function M.starts(str, with)
    return string.sub(str, 1, #with) == with
