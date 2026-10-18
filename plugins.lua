@@ -731,12 +731,14 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					},
 				},
 				view = {
+					width = {
+						min = 32,
+						max = 64,
+					},
 					float = {
-						enable = false,
+						enable = true,
 						open_win_config = {
 							relative = 'cursor', col = 1, row = 0,
-							width  = 32,
-							height = 24,
 						},
 					},
 				},
