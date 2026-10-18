@@ -694,6 +694,9 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 						[[^\(\.git\|\.DS_Store\|Thumbs\.db\)$]],
 					},
 				},
+				live_filter = {
+					always_show_folders = false,
+				},
 				update_focused_file = {
 					enable = true, -- highlight the current buffer
 				},
