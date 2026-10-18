@@ -44,7 +44,7 @@ function M.write(file, data, mode)
 end
 
 -- Searches a value in the given array and returns the index or 0 if not found
-function M.arr_index_of(a, find)
+function M.index_of(a, find)
 	for i = 1, #a do
 		if a[i] == find then return i end
 	end
@@ -52,7 +52,7 @@ function M.arr_index_of(a, find)
 end
 
 -- Returns an array of keys in the given table
-function M.tbl_keys(t)
+function M.keys(t)
 	local r,i = {},1
 	for k,_ in pairs(t) do
 		r[i] = k
@@ -62,7 +62,7 @@ function M.tbl_keys(t)
 end
 
 -- Returns an array of values in the given table
-function M.tbl_values(t)
+function M.values(t)
 	local r,i = {},1
 	for _,v in pairs(t) do
 		r[i] = v
@@ -81,7 +81,7 @@ function M.tbl_copy(t)
 end
 
 -- Merges one table into another
-function M.tbl_merge(t1, t2, new)
+function M.merge(t1, t2, new)
 	local r = new and M.tbl_copy(t1) or t1
 	if t2 then
 		for k,v in pairs(t2) do
@@ -92,7 +92,7 @@ function M.tbl_merge(t1, t2, new)
 end
 
 -- Concatenates two tables
-function M.tbl_concat(t1, t2, new)
+function M.concat(t1, t2, new)
 	local r = new and M.tbl_copy(t1) or t1
 	if t2 then
 		for i = 1, #t2 do
