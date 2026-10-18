@@ -72,7 +72,7 @@ function M.values(t)
 end
 
 -- Creates a copy of the given table
-function M.tbl_copy(t)
+function M.copy(t)
 	local r = {}
 	for k,v in pairs(t) do
 		r[k] = v
@@ -82,7 +82,7 @@ end
 
 -- Merges one table into another
 function M.merge(t1, t2, new)
-	local r = new and M.tbl_copy(t1) or t1
+	local r = new and M.copy(t1) or t1
 	if t2 then
 		for k,v in pairs(t2) do
 			r[k] = v
@@ -93,7 +93,7 @@ end
 
 -- Concatenates two tables
 function M.concat(t1, t2, new)
-	local r = new and M.tbl_copy(t1) or t1
+	local r = new and M.copy(t1) or t1
 	if t2 then
 		for i = 1, #t2 do
 			r[#r + 1] = t2[i]
