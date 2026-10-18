@@ -32,15 +32,20 @@ vim.g.maplocalleader = ' '
 
 -- remap operator w to aw
 map('custom: Remap operator:w ➔ aw', 'o', 'w', 'aw')
-map('custom: Prev Word', 'i', '<M-Left>',  '<C-o>B')
-map('custom: Prev Word', 't', '<M-Left>',  '<Esc>B')
-map('custom: Next Word', nxo, '<M-Right>', 'W')
-map('custom: Next Word', 'i', '<M-Right>', '<C-o>W')
-map('custom: Next Word', 't', '<M-Right>', '<Esc>W')
 
--- delete the prev word (option + backspace)
-map('custom: Delete Word', 'n', '<M-BS>', 'BdW')
-map('custom: Delete Word', 'i', '<M-BS>', '<Esc>BdW<Cmd>startinsert<CR>')
+
+-- prev/next WORD
+map('custom: Prev WORD', nxo, '<M-Left>',  'B')
+map('custom: Prev WORD', 'i', '<M-Left>',  '<C-o>B')
+map('custom: Prev WORD', 't', '<M-Left>',  '<Esc>B')
+map('custom: Next WORD', nxo, '<M-Right>', 'W')
+map('custom: Next WORD', 'i', '<M-Right>', '<C-o>W')
+map('custom: Next WORD', 't', '<M-Right>', '<Esc>W')
+
+-- delete word (option + backspace)
+map('custom: Delete Word', 'n', '<M-BS>', 'bdaw')
+map('custom: Delete Word', 'i', '<M-BS>', '<Esc>bdaw<Cmd>startinsert<CR>')
+
 
 -- first/last char
 map('custom: First Char', nxo, 'H', '^')
@@ -63,6 +68,7 @@ map('custom: Indent',  'x', '<Tab>',   ':><CR>gv')
 map('custom: Outdent', ni,  '<S-Tab>', '<Cmd><<CR>')
 map('custom: Outdent', 'x', '<S-Tab>', ':<<CR>gv')
 
+
 -- insert line below/above
 map('custom: Insert Line Below', 'n', '<S-CR>', 'o')
 map('custom: Insert Line Below', 'i', '<S-CR>', '<Esc>o')
@@ -80,6 +86,7 @@ map('custom: Move Lines Down', 'x', '<C-j>', ":'<,'>m'>+1<CR>gv")
 --         '>: the last line of the selection
 --         gv: restart visual mode with the last selection
 --          =: autoindent
+
 
 -- shift + arrows = move with visual mode
 map('custom: Up with Visual Mode',    'i', '<S-Up>',    '<Right><Esc>V')
@@ -137,10 +144,10 @@ map('custom: Find & Replace in the Range', 'x', '<Leader>/', [[:s/\v%V//gc<Left>
 --   NOTE: "magic" allows you to use regex-special chars without escaping.
 
 -- find & replace the word
-map('custom: Find & Replace the Word', 'n', '<Leader>c', [[:%s/<C-r><C-w>//gc<Left><Left><Left>]])
+map('custom: Find & Replace the Word', 'n', '<Leader>r', [[:%s/<C-r><C-w>//gc<Left><Left><Left>]])
 
 -- find & replace the selected text
-map('custom: Find & Replace the Selected', 'x', '<Leader>c', [[y:%s/<C-r>"//gc<Left><Left><Left>]])
+map('custom: Find & Replace the Selected', 'x', '<Leader>r', [[y:%s/<C-r>"//gc<Left><Left><Left>]])
 --   NOTE: <C-r>" outputs the last yanked text
 
 
