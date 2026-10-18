@@ -82,11 +82,7 @@ end
 
 -- Merges one table into another
 function M.tbl_merge(t1, t2, new)
-	local r
-	if new
-		then r = M.tbl_copy(t1)
-		else r = t1
-	end
+	local r = new and M.tbl_copy(t1) or t1
 	if t2 then
 		for k,v in pairs(t2) do
 			r[k] = v
@@ -98,8 +94,10 @@ end
 -- Concatenates two tables
 function M.tbl_concat(t1, t2, new)
 	local r = new and M.tbl_copy(t1) or t1
-	for i = 1, #t2 do
-		r[#r + 1] = t2[i]
+	if t2 then
+		for i = 1, #t2 do
+			r[#r + 1] = t2[i]
+		end
 	end
 	return r
 end
