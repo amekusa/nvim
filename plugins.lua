@@ -831,6 +831,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					map('nvim-tree: Filter',                 'n', 'f',             api.live_filter.start,          opts)
 					map('nvim-tree: Filter',                 'n', 'F',             api.live_filter.start,          opts)
 					map('nvim-tree: Clear',                  'n', '<Esc>',         function()
+						vim.cmd('nohls') -- clear search highlight
 						api.live_filter.clear()
 						api_marks.clear()
 						api_tree.reload()
