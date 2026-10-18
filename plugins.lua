@@ -725,11 +725,8 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					},
 					file_popup = { -- settings for show_info_popup
 						open_win_config = {
-							relative = 'cursor',
-							col = 0,
-							row = 1,
+							relative = 'cursor', col = 0, row = 1,
 							border   = 'single',
-							style    = 'minimal',
 						},
 					},
 				},
@@ -737,10 +734,9 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					float = {
 						enable = false,
 						open_win_config = {
+							relative = 'cursor', col = 1, row = 0,
 							width  = 32,
 							height = 24,
-							row    = 0,
-							col    = 1,
 						},
 					},
 				},
