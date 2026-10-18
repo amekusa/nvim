@@ -32,6 +32,7 @@ vim.g.maplocalleader = ' '
 
 -- remap operator w to aw
 map('custom: Remap operator:w ➔ aw', 'o', 'w', 'aw')
+--   NOTE: This makes `dw` to be `daw`.
 
 
 -- prev/next WORD
