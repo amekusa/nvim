@@ -695,6 +695,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					},
 				},
 				live_filter = {
+					prefix = ' Filter: ',
 					always_show_folders = false,
 				},
 				update_focused_file = {
@@ -724,9 +725,9 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 					},
 					file_popup = { -- settings for show_info_popup
 						open_win_config = {
+							relative = 'cursor',
 							col = 0,
 							row = 1,
-							relative = 'cursor',
 							border   = 'single',
 							style    = 'minimal',
 						},
