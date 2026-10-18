@@ -30,8 +30,8 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 
--- move to the prev/next word
-map('custom: Prev Word', nxo, '<M-Left>',  'B')
+-- remap operator w to aw
+map('custom: Remap operator:w ➔ aw', 'o', 'w', 'aw')
 map('custom: Prev Word', 'i', '<M-Left>',  '<C-o>B')
 map('custom: Prev Word', 't', '<M-Left>',  '<Esc>B')
 map('custom: Next Word', nxo, '<M-Right>', 'W')
