@@ -30,8 +30,8 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 
--- remap operator w to aw
-map('custom: Remap operator:w ➔ aw', 'o', 'w', 'aw')
+-- remap operator x to iw
+map('custom: Remap operator:x ➔ iw', 'o', 'x', 'iw')
 --   NOTE: This makes `dw` to be `daw`.
 
 
