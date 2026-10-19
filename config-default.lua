@@ -1,6 +1,6 @@
 ---- CONFIG ----
--- @version 1.1
--- copy this file (config-default.lua) as config.lua
+-- @version 2.0
+-- copy this file to config.lua
 
 return {
 	loader = true, -- enable vim.loader ?
@@ -12,7 +12,7 @@ return {
 	},
 	plugins = {
 		enable = true,
-		themes = true,
+		theme = 'kanagawa',
 		tree = {
 			autoclose = true,
 		},
