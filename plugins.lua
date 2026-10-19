@@ -31,7 +31,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- #autopairs: automatically close brackets (****.)
+		-- autopairs: automatically close brackets (****.)
 		'windwp/nvim-autopairs', enabled = true,
 		config = function()
 			require('nvim-autopairs').setup({
@@ -152,7 +152,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- #coderunner (****.)
+		-- code_runner: (****.)
 		'CRAG666/code_runner.nvim', enabled = true,
 		lazy = true,
 		cmd = {
@@ -199,7 +199,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- #comment: comment-out utility
+		-- comment: comment-out utility
 		'numToStr/Comment.nvim', enabled = true,
 		dependencies = {'nvim-treesitter/nvim-treesitter'},
 		config = function()
@@ -223,7 +223,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	---- #E ----
 	---- #F ----
 	{
-		-- #flash: jump with keypresses (*****)
+		-- flash: jump with keypresses (*****)
 		'folke/flash.nvim', enabled = true,
 		config = function()
 			require('flash').setup({
@@ -253,7 +253,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	},
 	---- #G ----
 	{
-		-- #gitsigns: shows git related infos in the gutter (*****)
+		-- gitsigns: shows git related infos in the gutter (*****)
 		'lewis6991/gitsigns.nvim', enabled = true,
 		config = function()
 			local api = require('gitsigns')
@@ -293,7 +293,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- #guess-indent: guessing indent style (***..)
+		-- guess-indent: guessing indent style (***..)
 		'nmac427/guess-indent.nvim', enabled = true,
 		config = function()
 			map('guess-indent: Guess Indent', 'n', 'gI', '<Cmd>GuessIndent<CR>')
@@ -318,7 +318,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- #gx: browsing the page under the cursor (****.)
+		-- gx: browsing the page under the cursor (****.)
 		'chrishrb/gx.nvim', enabled = true,
 		dependencies = {'nvim-lua/plenary.nvim'},
 		lazy = true,
@@ -335,7 +335,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	---- #K ----
 	---- #L ----
 	{
-		-- #live-preview: preview files in a web browser with live-updates (****.)
+		-- live-preview: preview files in a web browser with live-updates (****.)
 		-- usage:
 		--   :LivePreview start
 		--   :LivePreview pick
@@ -346,7 +346,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		cmd = 'LivePreview',
 	},
 	{
-		-- #lualine: status bar
+		-- lualine: status bar
 		'nvim-lualine/lualine.nvim', enabled = true,
 		commit = '640260d7c2d98779cab89b1e7088ab14ea354a02',
 		--   NOTE: This is at right before the commit: 0978a6c. (https://github.com/nvim-lualine/lualine.nvim/commit/0978a6c8a862d999baf51366926c7b56eb9cf3d1)
@@ -445,7 +445,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	},
 	---- #M ----
 	{
-		-- #mini.align: aligning text interactively (****.)
+		-- mini.align: aligning text interactively (****.)
 		'echasnovski/mini.align', enabled = true,
 		-- usage:
 		--   1. select the lines to align
@@ -470,7 +470,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	---- #R ----
 	---- #S ----
 	{
-		-- #scissors: snippets manager (****.)
+		-- scissors: snippets manager (****.)
 		'chrisgrieser/nvim-scissors', enabled = true,
 		commit = '6cf49a2244dd618b88a4c8d08a8daf939219758d',
 		dependencies = {'nvim-telescope/telescope.nvim'}, -- optional
@@ -526,7 +526,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	},
 	---- #T ----
 	{
-		-- #telescope: fuzzy finder (*****)
+		-- telescope: fuzzy finder (*****)
 		'nvim-telescope/telescope.nvim', enabled = true,
 		dependencies = {'nvim-lua/plenary.nvim'},
 		config = function()
@@ -570,7 +570,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- #tree: file-tree widget (***..)
+		-- tree: file-tree widget (***..)
 		'nvim-tree/nvim-tree.lua', enabled = true,
 		dependencies = {'nvim-tree/nvim-web-devicons'},
 		config = function()
@@ -770,7 +770,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- #treesitter: parser & syntax highlighter
+		-- treesitter: parser & syntax highlighter
 		'nvim-treesitter/nvim-treesitter', enabled = true,
 		branch = 'master', -- 'main' is newer but incompatible
 		dependencies = {
@@ -824,7 +824,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	---- #V ----
 	---- #W ----
 	{
-		-- #which-key: showing pending keybinds
+		-- which-key: showing pending keybinds
 		'folke/which-key.nvim', enabled = true,
 		config = function()
 			require('which-key').setup({
