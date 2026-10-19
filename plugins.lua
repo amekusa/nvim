@@ -541,13 +541,13 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 				keymaps = {
 					normal          = '[[',
 					-- normal_cur      = '',
-					normal_line     = '[]',
-					-- normal_cur_line = '',
+					normal_line     = ']]',
+					normal_cur_line = '[]',
 					visual          = '[[',
-					visual_line     = '[]',
-					delete          = 'd[',
-					change          = 'c[',
-					change_line     = 'c]',
+					visual_line     = ']]',
+					delete          = 'd[[',
+					change          = 'c[[',
+					change_line     = 'c]]',
 				},
 			})
 		end
