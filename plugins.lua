@@ -886,7 +886,7 @@ for k,v in pairs(require(my.ns..'themes')) do
 end
 
 -- setup lazy.nvim (plugin manager)
-local lazy = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+local lazy = vim.fn.stdpath('data')..'/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazy) then
 	vim.fn.system({
 		'git', 'clone', '--filter=blob:none',
@@ -898,8 +898,7 @@ end
 vim.opt.rtp:prepend(lazy)
 
 -- install plugins
-lazy = require('lazy')
-lazy.setup(plugins, {
+require('lazy').setup(plugins, {
 	lockfile = my.root..'plugins-lock.json',
 	defaults = { -- default options for each plugin
 		lazy = false,
