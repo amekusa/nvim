@@ -1,5 +1,5 @@
 ---- THEMES ----
-local themes = {
+return {
 
 	nordic = {
 		'AlexvZyl/nordic.nvim',
@@ -67,6 +67,4 @@ local themes = {
 		}
 	},
 }
-
-return themes
 
