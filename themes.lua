@@ -68,22 +68,5 @@ local themes = {
 	},
 }
 
-local plugins = {}
-local theme = _custom.conf.plugins.theme
-for k,v in pairs(themes) do
-	v.lazy = false
-	if k == theme then
-		v.priority = 1000
-		local main = v.main or v.name or theme
-		v.config = function(_, opts)
-			require(main).setup(opts)
-			vim.cmd.colorscheme(main)
-		end
-	else
-		v.cond = false
-		v.config = true
-	end
-	plugins[#plugins+1] = v
-end
+return themes
 
-return plugins

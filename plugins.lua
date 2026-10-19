@@ -872,7 +872,20 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 concat(plugins, require(my.ns..'lsp'))
 
 -- themes
-concat(plugins, require(my.ns..'themes'))
+local theme = conf.theme
+for k,v in pairs(require(my.ns..'themes')) do
+	if k == theme then
+		v.priority = 1000
+		v.config = function(_, opts)
+			require(theme).setup(opts)
+			vim.cmd.colorscheme(theme)
+		end
+	else
+		v.cond = false
+		v.config = true
+	end
+	plugins[#plugins+1] = v
+end
 
 -- setup lazy.nvim (plugin manager)
 local lazy = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
