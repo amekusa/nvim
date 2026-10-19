@@ -534,22 +534,20 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- #surround: smartly edit surrounding chars like {}, [], "", etc.
+		-- surround: smartly edit surrounding chars like {}, [], "", etc.
 		'kylechui/nvim-surround', enabled = true,
 		config = function()
 			require('nvim-surround').setup({
 				keymaps = {
-					-- insert          = '<C-g>s',
-					-- insert_line     = '<C-g>S',
-					normal          = 's',
-					normal_cur      = 'ss',
-					normal_line     = 'S',
-					normal_cur_line = 'SS',
-					visual          = 's',
-					visual_line     = 'S',
-					-- delete          = 'ds',
-					-- change          = 'cs',
-					-- change_line     = 'cS',
+					normal          = '[[',
+					-- normal_cur      = '',
+					normal_line     = '[]',
+					-- normal_cur_line = '',
+					visual          = '[[',
+					visual_line     = '[]',
+					delete          = 'd[',
+					change          = 'c[',
+					change_line     = 'c]',
 				},
 			})
 		end
