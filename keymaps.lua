@@ -110,11 +110,11 @@ map('custom: Normal Mode', 'i', 'jk',    '<Esc><Right>')
 map('custom: Normal Mode', 'i', 'kj',    '<Esc>')
 map('custom: Normal Mode', 't', '<Esc>', '<C-\\><C-n>')
 map('custom: Normal Mode', 'c', '<C-q>', '<C-c>')
---   NOTE: for some reason, <Esc> as rhs for command line, works like <Esc><CR> actually,
+--   NOTE: For some reason, <Esc> as rhs for command line, works like <Esc><CR> actually,
 --         which is unwanted behavior. so, use <C-c> instead.
 
----- to insert mode
-map('custom: Insert Mode', 'x', 'i', '<Esc><Cmd>startinsert<CR>')
+-- map('custom: Insert Mode', 'x', 'i', '<Esc><Cmd>startinsert<CR>')
+--   NOTE: This disables `vi*` commands.
 
 ---- to visual mode
 map('custom: Visual-Block Mode', 'x', 'v', '<C-v>')
