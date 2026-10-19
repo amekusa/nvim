@@ -15,18 +15,47 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		'amekusa/auto-input-switch.nvim', enabled = true,
 		lazy = false,
 		config = function()
+			local ft = {'markdown', 'text'}
 			require('auto-input-switch').setup({
-				restore = {enable = false},
+				async = false,
+				log = false,
+				prefix = 'AIS',
+				popup = {
+					enable = true,
+				},
+				normalize = {
+					enable = true,
+					on = {'FocusGained'},
+				},
+				restore = {
+					enable = false,
+					filetypes = ft,
+				},
 				match = {
 					enable = true,
-					file_pattern = {
-						'*.md',
-						'*.txt',
+					filetypes = ft,
+					lines = {
+						above = 1,
+						below = 1,
 					},
 					languages = {
-						Ja = {enable = true},
+						-- Ru = {enable = true},
+						Ja = {enable = true, priority = 1},
+						-- Zh = {enable = true, priority = 0},
+						-- Ko = {enable = true},
 					},
 				},
+				os_settings = {
+					macos = {
+						normal_input = false,
+						lang_inputs = {
+							Ja = {
+								'com.apple.inputmethod.Kotoeri.Japanese', '104',
+								cmd_set = {'osascript', '-e', 'tell application "System Events" to key code %s'}
+							},
+						}
+					}
+				}
 			})
 		end
 	},
