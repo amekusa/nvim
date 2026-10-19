@@ -539,15 +539,15 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		config = function()
 			require('nvim-surround').setup({
 				keymaps = {
-					normal          = '[[',
+					normal          = 's',
 					-- normal_cur      = '',
-					normal_line     = ']]',
-					normal_cur_line = '[]',
-					visual          = '[[',
-					visual_line     = ']]',
-					delete          = 'd[[',
-					change          = 'c[[',
-					change_line     = 'c]]',
+					-- normal_line     = '',
+					normal_cur_line = 'S',
+					visual          = 's',
+					visual_line     = 'S',
+					delete          = 'ds',
+					change          = 'cs',
+					change_line     = 'cS',
 				},
 			})
 		end
