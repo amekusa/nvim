@@ -4,13 +4,6 @@ local plugins = {
 	{
 		-- mason: lsp package manager (***..)
 		'williamboman/mason.nvim', enabled = true,
-		lazy = true,
-		cmd = {
-			'Mason',
-			'MasonInstall',
-			'MasonUninstall',
-			'MasonUpdate',
-		},
 		config = function()
 			require('mason').setup()
 		end
@@ -19,8 +12,9 @@ local plugins = {
 		-- mason-lspconfig: a bridge between mason and lspconfig
 		'williamboman/mason-lspconfig.nvim', enabled = true,
 		dependencies = {
-			'neovim/nvim-lspconfig', -- lsp configurator
-			'hrsh7th/cmp-nvim-lsp',  -- lsp completion source
+			'williamboman/mason.nvim', -- for vim.env.PATH setup
+			'neovim/nvim-lspconfig',   -- lsp configurator
+			'hrsh7th/cmp-nvim-lsp',    -- lsp completion source
 		},
 		config = function()
 			-- make unused vars/functions more visible
