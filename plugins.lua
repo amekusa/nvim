@@ -412,20 +412,21 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		'L3MON4D3/LuaSnip', enabled = true,
 		build = 'make install_jsregexp',
 		config = function()
+			local api = require('luasnip')
 			local snippets = my.root..'snippets/snipmate'
+
 			require('luasnip.loaders.from_snipmate').lazy_load({
 				paths = {snippets}
 			})
 
-			local app = require('luasnip')
-			app.filetype_extend('cpp',      {'c'})
-			app.filetype_extend('arduino',  {'c', 'cpp'})
-			app.filetype_extend('html',     {'css', 'javascript'})
-			app.filetype_extend('markdown', {'html'})
-			app.filetype_extend('vue',      {'html', 'css', 'javascript'})
-			app.filetype_extend('less',     {'css'})
+			api.filetype_extend('cpp',      {'c'})
+			api.filetype_extend('arduino',  {'c', 'cpp'})
+			api.filetype_extend('html',     {'css', 'javascript'})
+			api.filetype_extend('markdown', {'html'})
+			api.filetype_extend('vue',      {'html', 'css', 'javascript'})
+			api.filetype_extend('less',     {'css'})
 
-			app.setup({
+			api.setup({
 				exit_roots = false,
 				region_check_events = {'InsertEnter'},
 			})
