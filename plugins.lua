@@ -4,6 +4,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local usercmd = vim.api.nvim_create_user_command
 local my = _custom
 local map = my.fn.map
+local concat = my.fn.concat
 local conf = my.conf.plugins
 local fmt = string.format
 
@@ -59,6 +60,93 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 				},
 				bundled_plugin_cheatsheets = {
 					enabled = {'telescope.nvim'}
+				},
+			})
+		end
+	},
+	{
+		-- cmp: auto-completion engine
+		'hrsh7th/nvim-cmp', enabled = true,
+		dependencies = {
+			'L3MON4D3/LuaSnip',         -- snippets engine
+			'saadparwaiz1/cmp_luasnip', -- for snippets completion
+			'hrsh7th/cmp-nvim-lsp',     -- for lsp completion
+		},
+		config = function()
+			local luasnip = require('luasnip')
+			local cmp = require('cmp')
+			cmp.setup({
+				snippet = { -- snippet engine
+					expand = function(args)
+						luasnip.lsp_expand(args.body)
+					end
+				},
+				sources = cmp.config.sources({ -- completion sources
+					{name = 'luasnip', priority = 10, max_item_count = 3},
+					{name = 'nvim_lsp', priority = 0, max_item_count = 3, keyword_length = 4},
+				}),
+				completion = {
+					keyword_length = 2,
+				},
+				confirmation = {
+					default_behavior = cmp.ConfirmBehavior.Insert,
+				},
+				formatting = {
+					expandable_indicator = false,
+				},
+				experimental = {
+					ghost_text = false,
+				},
+				mapping = {
+					-- activate manually
+					['<C-Space>'] = cmp.mapping(function(_)
+						if cmp.visible()
+							then cmp.abort()
+							else cmp.complete()
+						end
+					end),
+					-- confirm selected suggestion
+					['<CR>'] = cmp.mapping(function(fallback)
+						if cmp.visible() and cmp.get_selected_entry()
+							then cmp.confirm({select = true})
+							else fallback()
+						end
+					end),
+					-- confirm the first suggestion (or selected one)
+					['<C-CR>'] = cmp.mapping(function(fallback)
+						if cmp.visible()
+							then cmp.confirm({select = true})
+							else fallback()
+						end
+					end),
+					-- next suggestion
+					['<Tab>'] = cmp.mapping(function(fallback)
+						if cmp.visible()
+							then cmp.select_next_item({behavior = cmp.SelectBehavior.Select})
+							else fallback()
+						end
+					end),
+					-- prev suggestion
+					['<S-Tab>'] = cmp.mapping(function(fallback)
+						if cmp.visible()
+							then cmp.select_prev_item({behavior = cmp.SelectBehavior.Select})
+							else fallback()
+						end
+					end),
+					-- next placeholder in a snippet
+					['<C-n>'] = cmp.mapping(function(fallback)
+						if luasnip.locally_jumpable(1)
+							then luasnip.jump(1)
+							else fallback()
+						end
+					end, {'i','s'}),
+					-- prev placeholder in a snippet
+					['<C-p>'] = cmp.mapping(function(fallback)
+						if luasnip.locally_jumpable(-1)
+							then luasnip.jump(-1)
+							else fallback()
+						end
+					end, {'i','s'}),
 				},
 			})
 		end
@@ -320,21 +408,26 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 		end
 	},
 	{
-		-- #luasnip: snippet engine (***..)
+		-- luasnip: snippet engine (****.)
 		'L3MON4D3/LuaSnip', enabled = true,
 		build = 'make install_jsregexp',
 		config = function()
-			local api = require('luasnip')
-			api.filetype_extend('cpp',      {'c'})
-			api.filetype_extend('arduino',  {'c', 'cpp'})
-			api.filetype_extend('html',     {'css', 'javascript'})
-			api.filetype_extend('markdown', {'html'})
-			api.filetype_extend('vue',      {'html', 'css', 'javascript'})
-			api.filetype_extend('less',     {'css'})
-
 			local snippets = my.root..'snippets/snipmate'
 			require('luasnip.loaders.from_snipmate').lazy_load({
 				paths = {snippets}
+			})
+
+			local app = require('luasnip')
+			app.filetype_extend('cpp',      {'c'})
+			app.filetype_extend('arduino',  {'c', 'cpp'})
+			app.filetype_extend('html',     {'css', 'javascript'})
+			app.filetype_extend('markdown', {'html'})
+			app.filetype_extend('vue',      {'html', 'css', 'javascript'})
+			app.filetype_extend('less',     {'css'})
+
+			app.setup({
+				exit_roots = false,
+				region_check_events = {'InsertEnter'},
 			})
 
 			usercmd('LuaSnipEdit',
@@ -350,6 +443,7 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 			)
 		end
 	},
+	---- #M ----
 	{
 		-- #mini.align: aligning text interactively (****.)
 		'echasnovski/mini.align', enabled = true,
@@ -743,6 +837,9 @@ local plugins = { -- in alphabetical order (ignore 'nvim-' prefix)
 	---- #Y ----
 	---- #Z ----
 }
+
+-- lsp
+concat(plugins, require(my.ns..'lsp'))
 
 -- themes
 if conf.themes then
