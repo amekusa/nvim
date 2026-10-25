@@ -10,17 +10,26 @@ snippet (bash)_:regex_captured_groups (bash) ${BASH_REMATCH[_]}
 snippet (zsh)_$ZSH_VERSION
 	\$ZSH_VERSION
 
-snippet :array local -a _=(_)
+snippet :arr local -a _=(_)
 	local -a ${1:arr}=($2)
 
-snippet :array_item :array element
+snippet :arr_item
 	\${${1:arr}[${2:0}]}
 
-snippet :array_length
+snippet :arr_length
 	\${#${1:arr}[@]}
 
-snippet :array_push
+snippet :arr_push
 	${1:arr}+=(${2:item})
+
+snippet :arr_concat
+	${1:arr}+=("\${${2:arr2}[@]}")
+
+snippet :arr_rm
+	unset '${1:arr}[${2:0}]'
+
+snippet :arr_rm_last
+	unset '${1:arr}[\${#$1[@]}-1]'
 
 snippet :case case _ in ... esac
 	case "\$${1:var}" in
@@ -75,7 +84,10 @@ snippet :date_ymd
 snippet :date_ymd_hms
 	date +'%F %H:%M:%S'
 
-snippet :echo_var :debug
+snippet :printf_var
+	printf "$1%s\n" "\$${2:var}"
+
+snippet :echo_var
 	echo "[DBG] ${1:var}: \$$1"
 
 snippet :fallback_empty
