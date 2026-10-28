@@ -143,14 +143,18 @@ map('custom: Clear Search Highlight', 'n', '<Esc>', '<Cmd>nohls<CR><Cmd>redr!<CR
 -- find & replace with "magic (\v)"
 map('custom: Find & Replace',              'n', '<Leader>/', [[:%s/\v//gc<Left><Left><Left><Left>]])
 map('custom: Find & Replace in the Range', 'x', '<Leader>/', [[:s/\v%V//gc<Left><Left><Left><Left>]])
---   NOTE: "magic" allows you to use regex-special chars without escaping.
+--   NOTE: "magic" allows you to use regex symbols without escaping.
 
--- find & replace the word
-map('custom: Find & Replace the Word', 'n', '<Leader>r', [[:%s/<C-r><C-w>//gc<Left><Left><Left>]])
+-- find & replace the word under the cursor
+map('custom: Find & Replace the Word', 'n', '<Leader>r',
+	[[:%s/\V<C-r>=escape(expand('<cword>'), '\/')<CR>//gc<Left><Left><Left>]])
+--   NOTE:
+--     - '\V' = "no-magic"
+--     - Escapes '/' to '\/'
 
 -- find & replace the selected text
-map('custom: Find & Replace the Selected', 'x', '<Leader>r', [[y:%s/<C-r>"//gc<Left><Left><Left>]])
---   NOTE: <C-r>" outputs the last yanked text
+map('custom: Find & Replace the Selected', 'x', '<Leader>r',
+	[[y:%s/\V<C-r>=escape(@", '\/')<CR>//gc<Left><Left><Left>]])
 
 
 -- increment/decrement the number
