@@ -1,20 +1,20 @@
-snippet (bash)_$BASH_VERSINFO
+snippet $BASH_VERSINFO
 	\$BASH_VERSINFO
 
-snippet (bash)_${FUNCNAME[0]}
+snippet ${FUNCNAME[0]}
 	\${FUNCNAME[0]}
 
-snippet (bash)_:regex_captured_groups (bash) ${BASH_REMATCH[_]}
+snippet ${BASH_REMATCH[_]}
 	\${BASH_REMATCH[${1:1}]}
 
-snippet (zsh)_$ZSH_VERSION
+snippet $ZSH_VERSION
 	\$ZSH_VERSION
-
-snippet :arr local -a _=(_)
-	local -a ${1:arr}=($2)
 
 snippet :arr_item
 	\${${1:arr}[${2:0}]}
+
+snippet :arr_items
+	"\${${1:arr}[@]}"
 
 snippet :arr_length
 	\${#${1:arr}[@]}
@@ -31,24 +31,23 @@ snippet :arr_rm
 snippet :arr_rm_last
 	unset '${1:arr}[\${#$1[@]}-1]'
 
-snippet :case case _ in ... esac
+snippet :case
 	case "\$${1:var}" in
 	$2) $0;;
 	esac
 
 snippet :case_args
 	case "\$1" in
-	-h|--help)
+	$2)
 		$0
-		return 0
 		;;
 	-*)
-		echo "Invalid argument: '\$1'" >&2
+		printf "[Error] Invalid argument: '%s'\n" "$1" >&2
 		return 1
 		;;
 	esac
 
-snippet :colors :ansi
+snippet :ansi_colors
 	if [ -t 1 ] && [ -z "$NO_COLOR" ]; then
 		red=$'\e[0;31m'
 		grn=$'\e[0;32m'
@@ -85,10 +84,7 @@ snippet :date_ymd_hms
 	date +'%F %H:%M:%S'
 
 snippet :printf_var
-	printf "$1%s\n" "\$${2:var}"
-
-snippet :echo_var
-	echo "[DBG] ${1:var}: \$$1"
+	printf '\$${1:var}: %s\n' "\$$1"
 
 snippet :fallback_empty
 	\${${1:var}:-${fb}}
@@ -104,12 +100,12 @@ snippet :for_args
 		$0
 	done
 
-snippet :for_array
+snippet :for_arr
 	for ${1:each} in "${${2:arr}[@]}"; do
 		$0
 	done
 
-snippet :for_array_index
+snippet :for_arr_index
 	for ${1:i} in "\${!${2:arr}[@]}"; do
 		$0"\${${2}[\$${1}]}"
 	done
@@ -120,7 +116,7 @@ snippet :for_string
 		"\${${2}:${1}:1}"
 	done
 
-snippet :getopts :args options
+snippet :getopts
 	local opts
 	while getopts '$1abc' opts; do
 		case "\$opts" in
@@ -131,10 +127,10 @@ snippet :getopts :args options
 		esac
 	done
 
-snippet :has_command command -v _ &> /dev/null
+snippet :has_command
 	command -v "${1:cmd}" &> /dev/null
 
-snippet :help :usage
+snippet :help
 	if [ $# -eq 0 ] || [ "\$1" = "--help" ] || [ "\$1" = "-h" ]; then
 		cat <<- EOF
 		Usage:
@@ -148,7 +144,7 @@ snippet :heredoc
 	$0
 	EOF
 
-snippet :if if _; then ... fi
+snippet :if
 	if ${1:cond}; then
 		$0
 	fi
@@ -186,37 +182,37 @@ snippet :prompt
 snippet :regex
 	[[ "$${1:var}" =~ ${2:regex} ]]
 
-snippet :regex_space [[:space:]]
+snippet :regex_space
 	[[:space:]]
 
-snippet :shebang #!/usr/bin/env _
+snippet :shebang
 	#!/usr/bin/env ${1:bash}
 
-snippet :split_into_array :string to array
+snippet :split_into_arr
 	IFS='${1:sep}' read -ra ${2:arr} <<< "\$${3:str}"
 
 snippet :substr_offset
 	\${${1:str}:${2:offset}}
 
-snippet :substr_offset_+_length
+snippet :substr_offset+length
 	\${${1:str}:${2:offset}:${3:length}}
 
-snippet :substr_remove_from_pattern
+snippet :substr_remove_from
 	\${${1:str}%${2:from}*}
 
-snippet :substr_remove_from_pattern_(greed)
+snippet :substr_remove_from(greed)
 	\${${1:str}%%${2:from}*}
 
-snippet :substr_remove_to_pattern
+snippet :substr_remove_to
 	\${${1:str}#*${2:to}}
 
-snippet :substr_remove_to_pattern_(greed)
+snippet :substr_remove_to(greed)
 	\${${1:str}##*${2:to}}
 
-snippet :suppress :no output, &> /dev/null
+snippet :no_output
 	&> /dev/null
 
-snippet :to_stderr
+snippet :stderr
 	>&2
 
 snippet :while_args
@@ -225,16 +221,16 @@ snippet :while_args
 		shift
 	done
 
-snippet :while_lines :read lines
+snippet :while_lines
 	local IFS ${1:line}
 	while IFS= read -r ${1}; do
 		$0
 	done < ${2:file}
 
-snippet local_
+snippet local_***
 	local ${1:var}
 
-snippet then_..._fi
+snippet then_***_fi
 	then
 		$0
 	fi
