@@ -10,6 +10,7 @@ local opt = vim.opt
 opt.clipboard:append('unnamedplus')
 -- enable mouse integration ('a' for all modes)
 o.mouse = 'a'
+o.mousescroll = 'ver:1,hor:2'
 -- enable 24-bit color?
 o.termguicolors = true
 -- enable swap files?
